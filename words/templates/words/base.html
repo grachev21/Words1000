@@ -10,7 +10,7 @@
     <div class="menu">
         {% for m in menu %}
             <div class="menu_item">
-                <a href="">{{m}}</a>
+                <a href="{% url m.url_name %}">{{m.title}}</a>
             </div>
         {% endfor %}
     </div>
