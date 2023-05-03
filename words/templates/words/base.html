@@ -1,0 +1,21 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link type="text/css" rel="stylesheet" href="{% static 'words/css/styles.css' %}"/>
+    <meta charset="UTF-8">
+    <title>{{title}}</title>
+</head>
+<body>
+    <div class="menu">
+        {% for m in menu %}
+            <div class="menu_item">
+                <a href="">{{m}}</a>
+            </div>
+        {% endfor %}
+    </div>
+    {% block content %}
+    {% endblock %}
+    
+</body>
+</html>
