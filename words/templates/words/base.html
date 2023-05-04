@@ -1,4 +1,6 @@
+{% load TagWords %}
 {% load static %}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,13 +9,9 @@
     <title>{{title}}</title>
 </head>
 <body>
-    <div class="menu">
-        {% for m in menu %}
-            <div class="menu_item">
-                <a href="{% url m.url_name %}">{{m.title}}</a>
-            </div>
-        {% endfor %}
-    </div>
+
+    {% menu_header select %}
+
     {% block content %}
     {% endblock %}
     

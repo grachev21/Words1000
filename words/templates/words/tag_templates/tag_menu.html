@@ -1,0 +1,15 @@
+
+<div class="menu">
+        {% for m in menu %}
+            <div class="menu_item">
+                {% if select == m.title %}
+                    <a href="{% url m.url_name %}"><h3>{{m.title}}</h3></a>
+
+                {% else %}
+                    <a href="{% url m.url_name %}">{{m.title}}</a>
+                {% endif %}
+            </div>
+        {% endfor %}
+</div>
+
+

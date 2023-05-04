@@ -2,40 +2,24 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from django.http import HttpResponseNotFound
 from .models import WordsCard
-
-
-menu = [
-        {'title': 'Главная',
-        'url_name': 'home'},
-
-        {'title': 'Учить новые слова',
-        'url_name': 'learn_new_words'},
-
-        {'title': 'Повторить выученные сегодня',
-        'url_name': 'revise_learned_today'},
-
-        {'title': 'Повторить последние 50',
-        'url_name': 'repeat_last_50'},
-
-        {'title': 'Выход',
-        'url_name': 'out'}
-        ]
-
-
+from .templatetags.TagWords import menu
 
 def home(request):
+    print(menu)
     words = WordsCard.objects.all()
     context = {
             'menu': menu,
             'words': words,
-            'title': 'Words1000'
+            'title': 'Words1000',
+            'select': menu[0]['title']
             }
     return render(request, 'words/home.html', context=context)
 
 def learn_new_words(request):
     context = {
             'menu': menu,
-            'title': 'Учить новые слова'
+            'title': 'Учить новые слова',
+            'select': menu[1]['title']
             }
     return render(request, 'words/learn_new_words.html', context=context)
 
@@ -43,21 +27,24 @@ def learn_new_words(request):
 def revise_learned_today(request):
     context = {
             'menu': menu,
-            'title': 'Повторить выучинные сегодня'
+            'title': 'Повторить выучинные сегодня',
+            'select': menu[2]['title']
             }
     return render(request, 'words/revise_learned_today.html', context=context)
 
 def repeat_last_50(request):
     context = {
             'menu': menu,
-            'title': 'Повторить последнии 50'
+            'title': 'Повторить последнии 50',
+            'select': menu[3]['title']
             }
     return render(request, 'words/repeat_last_50.html', context=context)
 
 def out(request):
     context = {
             'menu': menu,
-            'title': 'Выход'
+            'title': 'Выход',
+            'select': menu[4]['title']
             }
     return render(request, 'words/out.html', context=context)
 
