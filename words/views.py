@@ -9,12 +9,11 @@ from .models import WordsToRepead
 from .models import SettingsWordNumber
 from .models import Word_Accumulator
 from .templatetags.TagWords import menu
-from .play_on_words import play
+from .separate_logic.play_on_words import play
 from .forms import WordCheck
 from .forms import WordCountForm
 from .forms import AddWordAccumulator
-
-
+from .separate_logic import str_to_list
 
 
 
@@ -58,13 +57,13 @@ def result(request):
 
 def reading_sentences(request):
     db = WordsCard.objects.get(word_en=words['correct_word'][0])
-    phrases_en = db.phrases_en
-    phrases_ru = db.phrases_ru
+
+    phrases_set = str_to_list.str_list(db.phrases_en, db.phrases_ru)
+
     context = {
             'title': 'Тесты с предложениями',
             'db': db,
-            'phrases_en': phrases_en,
-            'phrases_ru': phrases_ru,
+            'phrases_set': phrases_set,
             }
 
     return render(request, 'words/reading_sentences.html', context=context)

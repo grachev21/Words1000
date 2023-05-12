@@ -3,7 +3,11 @@
 {% block content %}
 
 <div class="list_sentences">
-        <p>{{phrases_en}}</p>
-        
+
+        {% for ps in phrases_set %}
+            <li>{{ps}}</li>
+        {% endfor %}
+
+        <a href="{% url 'learn_new_words' %}">Далее</a>        
 </div>
 {% endblock %}

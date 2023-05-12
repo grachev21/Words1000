@@ -1,8 +1,6 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*- import record_csv import re from time import sleep
 
-
-
 import re
 from time import sleep
 from selenium import webdriver
