@@ -3,4 +3,28 @@
 
 {% block content %}
 
+<div class="block_play">
+    <div class="words">
+        <div class="word_ru">
+
+                {{words}}
+                <h4>Выберете правильное слово</h4>
+                {{words.translate_ru.word_ru}}
+                <h4>
+                {{words.translate_ru.word_en}}
+
+            <form action='{% url 'result' %}' method='post'>
+                {% csrf_token %}
+                <td><input type="submit" value="{{words.random_list.0}}" name="{{words.random_list.0}}"></td>
+                <td><input type="submit" value="{{words.random_list.1}}" name="{{words.random_list.1}}"></td>
+                <td><input type="submit" value="{{words.random_list.2}}" name="{{words.random_list.2}}"></td>
+                <td><input type="submit" value="{{words.random_list.3}}" name="{{words.random_list.3}}"></td>
+            </form>
+
+        </div>
+            
+    </div>        
+
+</div>
+
 {% endblock %}

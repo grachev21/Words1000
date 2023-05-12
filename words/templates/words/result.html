@@ -1,0 +1,26 @@
+{% extends 'words/base.html' %}
+
+{% block content %}
+<div class="result">
+    <h1>
+    {{response}}
+    </h1>
+</div>
+
+{% if response == 'Вы ошиблись' %}
+    <form action="{% url 'learn_new_words' %}" method="post">
+        {% csrf_token %}
+        <button type="submit">Продолжить</button>
+    </form>
+..
+{% else %}
+<div class="form">
+    <form action="{% url 'result' %}" method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Добавить</button>
+    </form>
+    
+</div>
+{% endif %}
+{% endblock %}

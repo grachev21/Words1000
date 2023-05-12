@@ -16,6 +16,9 @@ menu = [
         {'title': 'Повторить последние 50',
         'url_name': 'repeat_last_50'},
 
+        {'title': 'Настройки',
+        'url_name': 'settings'},
+
         {'title': 'Выход',
         'url_name': 'out'}
         ]

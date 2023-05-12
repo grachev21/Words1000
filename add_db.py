@@ -17,10 +17,10 @@ with open('.parser/db_1000_words.csv', 'r') as f:
         phrases_ru.append(r[4].strip())
 
 def record():
-    for value in range(0, 1001):
+    for value in range(0, 1000):
         mod = WordsCard(word_en=words_en[value],
                         transcription=transcription[value],
                         word_ru=words_ru[value],
-                        phraze_en=phrases_en[value],
-                        phraze_ru=phrases_ru[value])
+                        phrases_en=phrases_en[value],
+                        phrases_ru=phrases_ru[value])
         mod.save()
