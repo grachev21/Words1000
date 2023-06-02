@@ -1,19 +1,32 @@
-{% load TagWords %}
 {% load static %}
+{% load TagWords %}
 
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <link type="text/css" rel="stylesheet" href="{% static 'words/css/styles.css' %}"/>
+    <link type="text/css"  href="{% static 'words/css/styles.css' %}" rel="stylesheet"/>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@300&display=swap" rel="stylesheet">
+
+
     <meta charset="UTF-8">
     <title>{{title}}</title>
 </head>
 <body>
 
+           
+
     {% menu_header select %}
 
-    {% block content %}
-    {% endblock %}
+    {% info_header %}
+    <div class="content">
+        {% block content %}
+        {% endblock %}
+    </div>
+
+    {% footer %}
     
 </body>
 </html>

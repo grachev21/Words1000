@@ -27,6 +27,16 @@ class WordsCard(models.Model):
     def __str__(self):
         return self.word_en
 
+class IntroductionWords(models.Model):
+    word_en = models.CharField(max_length=100, verbose_name='На английском')
+    transcription = models.CharField(max_length=100, verbose_name='Транскрипция')
+    word_ru = models.CharField(max_length=100, verbose_name='На русском')
+
+    class Meta:
+        verbose_name = 'Слова для ознакомления'
+        verbose_name = 'Слова для ознакомления'
+
+
 class Word_Accumulator(models.Model):
     word = models.CharField(max_length=100, verbose_name='Слово')
     word_status = models.ForeignKey(Word_status, on_delete=models.PROTECT, blank=True, verbose_name='Статус слова')
@@ -43,7 +53,7 @@ class SettingsWordNumber(models.Model):
                 MaxValueValidator(100),
                 MinValueValidator(5)
             ],
-            verbose_name='Кол.слов.день'
+            verbose_name='Количество слов за день'
         )
 
 

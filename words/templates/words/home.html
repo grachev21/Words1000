@@ -2,8 +2,24 @@
 
 {% block content %}
 
+<div class="text_info">
+
+<p>Так выглядит 1000 слов, на вид, совсем не много.</p>
+</div>
+<div class="line_monitor"></div>
 <div class="card_user">
-    <h1>Для того чтобы начать свою 1000 зарегистрируйся!!!</h1>
+
+    
+        <div class="block_circle">
+            {% for words in words_counter_home %}
+                {% if words == ' ' %}
+                    <div class="circle_red">{{words}}</div>
+                {% else %}
+                    <div class="circle"> {{words}}</div>
+                {% endif %}
+            {% endfor %}
+        </div>
+
 </div>
 
 {% endblock %}

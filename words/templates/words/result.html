@@ -1,26 +1,36 @@
 {% extends 'words/base.html' %}
 
 {% block content %}
-<div class="result">
-    <h1>
-    {{response}}
-    </h1>
-</div>
+<div class="block_play">
+    <div class="block_words">
+        <div class="result">
 
-{% if response == 'Вы ошиблись' %}
-    <form action="{% url 'learn_new_words' %}" method="post">
-        {% csrf_token %}
-        <button type="submit">Продолжить</button>
-    </form>
-..
-{% else %}
-<div class="form">
-    <form action="{% url 'result' %}" method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Добавить</button>
-    </form>
-    
+            <div class="response_result">{{response}}</div>
+                
+
+                {% if response == 'Вы ошиблись' %}
+
+                <form action="{% url 'learn_new_words' %}" method="post">
+                    {% csrf_token %}
+                    {{as_p}}
+                    <button class="button_result_false" type="submit">Продолжить</button>
+                </form>
+
+                {% else %}
+                <div class="result_gud">
+                    <form  method="post">
+                        {% csrf_token %}
+                        <div class="form_result_true_error">{{ form.non_field_errors }}</div>
+                        {% for f in form %}
+                            <label class="form_result_true__label" for="{{f.id_for_label}}">{{f.label}}{{f}}</label>
+                        {% endfor %}
+                        <button class="button_result_true" type="submit">Добавить</button>
+                    </form>
+                </div>
+                
+            </div>
+        </div>
+    </div>
 </div>
 {% endif %}
 {% endblock %}

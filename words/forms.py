@@ -4,6 +4,8 @@ from .models import Word_Accumulator
 from .models import Word_status
 
 
+list_status = ['Удалить весь прогресс', 'hello']
+
 class WordCheck(forms.Form):
     pass
 
@@ -15,7 +17,11 @@ class WordCountForm(forms.ModelForm):
     class Meta:
         model = SettingsWordNumber
         fields = ('number_words',)
+        widgets = {
+                'number_words': forms.TextInput(attrs={'class': 'number-words'})
+                }
 
-
-
+class ResettingDictionariesForm(forms.Form):
+    yes = forms.CharField(max_length=2, label='Напишите для подтверждения "да"')
+    status = forms.BooleanField(label='Подтвердите сброс прогресса')
 

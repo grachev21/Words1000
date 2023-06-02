@@ -5,7 +5,9 @@
 <div class="list_sentences">
 
         {% for ps in phrases_set %}
-            <li>{{ps}}</li>
+            <p>
+        <li>{{ps}}</li>
+            </p>
         {% endfor %}
 
         <a href="{% url 'learn_new_words' %}">Далее</a>        

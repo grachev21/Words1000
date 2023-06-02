@@ -1,0 +1,23 @@
+{% extends 'words/base.html' %}
+
+
+{% block content %}
+<div class="word-introduction">
+    <div class="word_list">
+        <div class="header_word">
+            Ознакомтесь со словами и переходите в раздел:
+            <a href="{%url 'learn_new_words'%}">Учить новые слова</a>
+
+        </div>
+        {% for d in db %}
+            <li>
+                <div class="word-en">{{d.word_en}}</div>
+                <div class="transcription">{{d.transcription}}</div>
+                <div class="word-ru">{{d.word_ru}}</div>
+            </li>
+        {% endfor %}
+
+    </div>
+</div>
+
+{% endblock %}

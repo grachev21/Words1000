@@ -22,9 +22,7 @@ def str_list(value_en, value_ru):
         base_list.append(value_ru[count])
         count += 1
 
-        del base_list[0]
-    for b in base_list:
-        print(b)
+        # del base_list[0]
     return base_list
 
 

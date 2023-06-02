@@ -5,22 +5,31 @@
 
 <div class="block_play">
     <div class="words">
-        <div class="word_ru">
+        <div class="word_container">
 
-                {{words}}
+            <div class="title_words">
                 <h4>Выберете правильное слово</h4>
-                {{words.translate_ru.word_ru}}
-                <h4>
-                {{words.translate_ru.word_en}}
+            </div>
+            
+            <div class="word-translate">
+                <p>{{words.translate_ru}}</p>
+            </div>
 
+            <div class="form_button">
             <form action='{% url 'result' %}' method='post'>
                 {% csrf_token %}
-                <td><input type="submit" value="{{words.random_list.0}}" name="{{words.random_list.0}}"></td>
-                <td><input type="submit" value="{{words.random_list.1}}" name="{{words.random_list.1}}"></td>
-                <td><input type="submit" value="{{words.random_list.2}}" name="{{words.random_list.2}}"></td>
-                <td><input type="submit" value="{{words.random_list.3}}" name="{{words.random_list.3}}"></td>
+                <td><input class="button_word" type="submit" value="{{words.random_list.0}}" name="{{words.random_list.0}}"></td>
+                <td><input class="button_word" type="submit" value="{{words.random_list.1}}" name="{{words.random_list.1}}"></td>
+                <td><input class="button_word" type="submit" value="{{words.random_list.2}}" name="{{words.random_list.2}}"></td>
+                <td><input class="button_word" type="submit" value="{{words.random_list.3}}" name="{{words.random_list.3}}"></td>
             </form>
+            </div>
 
+            <div class="basement">
+                <div class="basement_container">
+                    <a href="{% url 'learn_new_words' %}">Далее</a>
+                </div>
+            </div>
         </div>
             
     </div>        
