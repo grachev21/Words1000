@@ -19,25 +19,7 @@ from .separate_logic import str_to_list
 
 
 # Главная страница
-def home(request):
-    words = WordsCard.objects.count()
-    accum = Word_Accumulator.objects.count()
-
-    counter = words - accum
-    words_counter_home = ['']* counter
-    for a in range(accum):
-        words_counter_home.append(' ')
-
-    context = {
-            'title': 'Words1000',
-            'select': menu[0]['title'],
-            'words_counter_home': words_counter_home,
-            'counter': counter
-            }
-    return render(request, 'words/home.html', context=context)
-
-#     model = WordsCard
-#     template_name = 'words/home.html'
+# def home(request):
 #     words = WordsCard.objects.count()
 #     accum = Word_Accumulator.objects.count()
 
@@ -46,14 +28,37 @@ def home(request):
 #     for a in range(accum):
 #         words_counter_home.append(' ')
 
-#     def get_context_data(self, *, object_list=None, **kwargs):
-#        context = super().get_context_data(**kwargs)
-#        context['title'] = 'Words1000'
-#        context['select'] = menu[0]['title'] 
-#        context['words_counter_home'] = self.words_counter_home
-#        context['counter'] = self.counter
-       
-#        return context
+#     context = {
+#             'title': 'Words1000',
+#             'select': menu[0]['title'],
+#             'words_counter_home': words_counter_home,
+#             'counter': counter
+#             }
+#     return render(request, 'words/home.html', context=context)
+
+class Home(ListView):
+    def __init__(self):
+        self.words = WordsCard.objects.count()
+        self.accum = Word_Accumulator.objects.count()
+        self.counter = self.words - self.accum
+        self.words_counter_home = ['']* self.counter
+
+    model = WordsCard
+    template_name = 'words/home.html'
+    context_object_name = 'words_counter_home'
+
+    def logics_data(self):
+        for a in range(self.accum):
+            self.words_counter_home.append(' ')
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = 'Words1000'
+        context['select'] = menu[0]['title']
+        context['words_counter_home'] = self.words_counter_home
+        context['counter'] = self.counter
+
+        return context
 
 
 def introduction_words(request):
