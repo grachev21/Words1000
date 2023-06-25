@@ -4,56 +4,24 @@ from django.http import HttpResponseNotFound
 from django.shortcuts import redirect
 from django.views.generic import ListView
 
-from .models import WordsCard
-from .models import WordsToRepead
-from .models import SettingsWordNumber
-from .models import Word_Accumulator
-from .models import IntroductionWords
+from .models import *
+from .forms import *
 from .templatetags.TagWords import menu
-from .separate_logic.play_on_words import play
-from .forms import WordCheck
-from .forms import WordCountForm
-from .forms import AddWordAccumulator
-from .forms import ResettingDictionariesForm
+from .separate_logic import play_on_words
+from .separate_logic.views_logic import *
 from .separate_logic import str_to_list
 
 
-# Главная страница
-# def home(request):
-#     words = WordsCard.objects.count()
-#     accum = Word_Accumulator.objects.count()
-
-#     counter = words - accum
-#     words_counter_home = ['']* counter
-#     for a in range(accum):
-#         words_counter_home.append(' ')
-
-#     context = {
-#             'title': 'Words1000',
-#             'select': menu[0]['title'],
-#             'words_counter_home': words_counter_home,
-#             'counter': counter
-#             }
-#     return render(request, 'words/home.html', context=context)
-
-class Home(ListView):
-    def __init__(self):
-        self.words = WordsCard.objects.count()
-        self.accum = Word_Accumulator.objects.count()
-        self.counter = self.words - self.accum
-        self.words_counter_home = ['']* self.counter
+class Home(DataMixin, ListView):
 
     model = WordsCard
     template_name = 'words/home.html'
     context_object_name = 'words_counter_home'
 
-    def logics_data(self):
-        for a in range(self.accum):
-            self.words_counter_home.append(' ')
-
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['title'] = 'Words1000'
+        var = self.list_variables(title='Words1000', select=menu[0]['title'])
+        self.logics()
         context['select'] = menu[0]['title']
         context['words_counter_home'] = self.words_counter_home
         context['counter'] = self.counter
@@ -62,7 +30,23 @@ class Home(ListView):
 
 
 def introduction_words(request):
-    play()
+
+    settings = play_on_words.Settings()
+    settings.number_count_default()
+    NUMBER_WORDS = settings.value_number_settings()
+
+    config = play_on_words.Config(NUMBER_WORDS)
+    config.get_words()
+    config.base_check()
+    config.replay_base_check()
+    data_set = config.list_creation()
+
+    play = play_on_words.Run_play(data_set)
+    play.run_without()
+    play.create_list()
+    play.work_db()
+
+
     db = IntroductionWords.objects.all()
     context = {
             'select': menu[1]['title'],
@@ -133,10 +117,23 @@ def learn_new_words(request):
 
     form = WordCheck()
 
+    settings = play_on_words.Settings()
+    settings.number_count_default()
+    NUMBER_WORDS = settings.value_number_settings()
+
+    config = play_on_words.Config(NUMBER_WORDS)
+    config.get_words()
+    config.base_check()
+    config.replay_base_check()
+    data_set = config.list_creation()
+
+    play = play_on_words.Run_play(data_set)
+    play.run_without()
+    play.create_list()
+    play.work_db()
+
     global words
-    words = play()
-    # print('...', type(words))
-    # print('...', len(words))
+    words = play.return_result()
 
     context = {
             'title': 'Учить новые слова',
