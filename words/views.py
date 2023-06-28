@@ -11,7 +11,6 @@ from .separate_logic import play_on_words
 from .separate_logic.views_logic import *
 from .separate_logic import str_to_list
 
-
 class Home(DataMixin, ListView):
 
     model = WordsCard
@@ -22,37 +21,58 @@ class Home(DataMixin, ListView):
         context = super().get_context_data(**kwargs)
         var = self.list_variables(title='Words1000', select=menu[0]['title'])
         self.logics()
-        context['select'] = menu[0]['title']
-        context['words_counter_home'] = self.words_counter_home
-        context['counter'] = self.counter
 
-        return context
+        return dict(list(context.items()) + list(var.items()))
+
+# def introduction_words(request):
+#     settings = play_on_words.Settings()
+#     settings.number_count_default()
+#     NUMBER_WORDS = settings.value_number_settings()
+
+#     config = play_on_words.Config(NUMBER_WORDS)
+#     config.get_words()
+#     config.base_check()
+#     config.replay_base_check()
+#     data_set = config.list_creation()
+
+#     play = play_on_words.Run_play(data_set)
+#     play.run_without()
+#     play.create_list()
+#     play.work_db()
+
+#     db = IntroductionWords.objects.all()
+#     context = {
+#             'select': menu[1]['title'],
+#             'db': db,
+#             }
+#     return render(request, 'words/introduction_words.html', context=context)
+
+class IntroductionWords(DataMixin, ListView):
+
+    model = IntroductionWords
+    template_name = 'words/introduction_words.html'
+    context_object_name = 'db'
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        var = self.list_variables(title='Знакомство', select=menu[0]['title'])
+        settings = play_on_words.Settings()
+        settings.number_count_default()
+        NUMBER_WORDS = settings.value_number_settings()
+
+        config = play_on_words.Config(NUMBER_WORDS)
+        config.get_words()
+        config.base_check()
+        config.replay_base_check()
+        data_set = config.list_creation()
+
+        play = play_on_words.Run_play(data_set)
+        play.run_without()
+        play.create_list()
+        play.work_db()
+        return dict(list(context.items()) + list(var.items()))
 
 
-def introduction_words(request):
-
-    settings = play_on_words.Settings()
-    settings.number_count_default()
-    NUMBER_WORDS = settings.value_number_settings()
-
-    config = play_on_words.Config(NUMBER_WORDS)
-    config.get_words()
-    config.base_check()
-    config.replay_base_check()
-    data_set = config.list_creation()
-
-    play = play_on_words.Run_play(data_set)
-    play.run_without()
-    play.create_list()
-    play.work_db()
-
-
-    db = IntroductionWords.objects.all()
-    context = {
-            'select': menu[1]['title'],
-            'db': db,
-            }
-    return render(request, 'words/introduction_words.html', context=context)
 
 # Выбераем статус слова 
 def result(request):

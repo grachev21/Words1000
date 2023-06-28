@@ -7,7 +7,9 @@ class DataMixin:
         self.accum = Word_Accumulator.objects.count()
         self.counter = self.words - self.accum
         self.words_counter_home = ['']* self.counter
-        print(context)
+        context['words_counter_home'] = self.words_counter_home
+        context['counter'] = self.counter
+        return context
 
     def logics(self):
         for a in range(self.accum):
