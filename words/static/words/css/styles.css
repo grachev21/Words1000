@@ -166,6 +166,15 @@ body {
     width: 10px;
 }
 
+.info_list {
+    margin-top: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.list_circle_1_2 {
+    width: 554px;
+}
 
 .circle_1 {
     opacity: 100%;
