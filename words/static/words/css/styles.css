@@ -159,13 +159,23 @@ body {
 .circle_red {
     opacity: 100%;
     display: inline-block;
-    background: grey;
+    background: red;
     border: 1px solid white;
     border-radius: 50%;
     height: 10px;
     width: 10px;
 }
 
+
+.circle_1 {
+    opacity: 100%;
+    display: inline-block;
+    background: red;
+    border: 1px solid white;
+    border-radius: 50%;
+    height: 10px;
+    width: 10px;
+}
 
 /* Список слов */
 .word-introduction {
@@ -175,6 +185,14 @@ body {
 
 .header_word {
     margin-left: 30px;
+}
+
+.header_word a {
+    color: steelblue;
+}
+
+.word_list {
+    margin-bottom: 100px;
 }
 
 .word_list li {

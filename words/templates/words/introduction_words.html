@@ -6,8 +6,7 @@
     <div class="word_list">
         <div class="header_word">
             Ознакомтесь со словами и переходите в раздел:
-            <a href="{%url 'learn_new_words'%}">Учить новые слова</a>
-
+            <a href="{% url 'learn_new_words' %}"> Учить новые слова</a>
         </div>
         {% for d in db %}
             <li>
@@ -18,6 +17,7 @@
         {% endfor %}
 
     </div>
+    
 </div>
 
 {% endblock %}

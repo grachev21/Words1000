@@ -3,6 +3,8 @@ from django.http import HttpResponse
 from django.http import HttpResponseNotFound
 from django.shortcuts import redirect
 from django.views.generic import ListView
+from django.views.generic import CreateView
+from django.urls import reverse_lazy
 
 from .models import *
 from .forms import *
@@ -12,42 +14,20 @@ from .separate_logic.views_logic import *
 from .separate_logic import str_to_list
 
 class Home(DataMixin, ListView):
-
+    '''Домошняя страница'''
     model = WordsCard
     template_name = 'words/home.html'
     context_object_name = 'words_counter_home'
-
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
+        # Класс примиси
         var = self.list_variables(title='Words1000', select=menu[0]['title'])
         self.logics()
-
         return dict(list(context.items()) + list(var.items()))
 
-# def introduction_words(request):
-#     settings = play_on_words.Settings()
-#     settings.number_count_default()
-#     NUMBER_WORDS = settings.value_number_settings()
-
-#     config = play_on_words.Config(NUMBER_WORDS)
-#     config.get_words()
-#     config.base_check()
-#     config.replay_base_check()
-#     data_set = config.list_creation()
-
-#     play = play_on_words.Run_play(data_set)
-#     play.run_without()
-#     play.create_list()
-#     play.work_db()
-
-#     db = IntroductionWords.objects.all()
-#     context = {
-#             'select': menu[1]['title'],
-#             'db': db,
-#             }
-#     return render(request, 'words/introduction_words.html', context=context)
 
 class IntroductionWords(DataMixin, ListView):
+    '''Знакомство со словами'''
 
     model = IntroductionWords
     template_name = 'words/introduction_words.html'
@@ -55,7 +35,9 @@ class IntroductionWords(DataMixin, ListView):
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
-        var = self.list_variables(title='Знакомство', select=menu[0]['title'])
+        # Класс примиси
+        var = self.list_variables(title='Знакомство', select=menu[1]['title'])
+
         settings = play_on_words.Settings()
         settings.number_count_default()
         NUMBER_WORDS = settings.value_number_settings()
@@ -133,37 +115,73 @@ def finish(request):
     return render(request, 'words/finish.html', context=context)
 
 # Изучение слов с помощью выбора одного из четырех
-def learn_new_words(request):
+# def learn_new_words(request):
 
-    form = WordCheck()
+#     form = WordCheck()
 
-    settings = play_on_words.Settings()
-    settings.number_count_default()
-    NUMBER_WORDS = settings.value_number_settings()
+#     settings = play_on_words.Settings()
+#     settings.number_count_default()
+#     NUMBER_WORDS = settings.value_number_settings()
 
-    config = play_on_words.Config(NUMBER_WORDS)
-    config.get_words()
-    config.base_check()
-    config.replay_base_check()
-    data_set = config.list_creation()
+#     config = play_on_words.Config(NUMBER_WORDS)
+#     config.get_words()
+#     config.base_check()
+#     config.replay_base_check()
+#     data_set = config.list_creation()
 
-    play = play_on_words.Run_play(data_set)
-    play.run_without()
-    play.create_list()
-    play.work_db()
+#     play = play_on_words.Run_play(data_set)
+#     play.run_without()
+#     play.create_list()
+#     play.work_db()
 
-    global words
-    words = play.return_result()
+#     global words
+#     words = play.return_result()
 
-    context = {
-            'title': 'Учить новые слова',
-            'select': menu[2]['title'],
-            'words': words,
-            'form': form
-            }
+#     context = {
+#             'title': 'Учить новые слова',
+#             'select': menu[2]['title'],
+#             'words': words,
+#             'form': form
+#             }
 
-    return render(request, 'words/learn_new_words.html', context=context)
+#     return render(request, 'words/learn_new_words.html', context=context)
 
+class LearnNewWords(CreateView):
+    # Этот атрибут указывает на класс формы
+    form_class = WordCheck
+    # Переменная для шаблона 
+    template_name = 'words/learn_new_words.html'
+    # Перенаправление
+    success_url = reverse_lazy('home')
+    model = WordsCard
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        settings = play_on_words.Settings()
+        settings.number_count_default()
+        NUMBER_WORDS = settings.value_number_settings()
+
+        config = play_on_words.Config(NUMBER_WORDS)
+        config.get_words()
+        config.base_check()
+        config.replay_base_check()
+        data_set = config.list_creation()
+
+        play = play_on_words.Run_play(data_set)
+        play.run_without()
+        play.create_list()
+        play.work_db()
+
+        global words
+        words = play.return_result()
+
+        context['title'] = 'learn'
+        context['words'] = words
+
+        var = self.list_variables(title='Изучение', select=menu[2]['title'])
+
+        return context
 
 def revise_learned(request):
     context = {
@@ -180,27 +198,44 @@ def out(request):
             }
     return render(request, 'words/out.html', context=context)
 
-def settings(request):
+# def settings(request):
 
-    if request.method == 'POST':
-        form = WordCountForm(request.POST)
-        if form.is_valid():
-            data = WordsToRepead.objects.all()
-            data.delete()
-            db = SettingsWordNumber.objects.all()
-            db.delete()
-            form.save()
-            return redirect('home')
-    else:
-        form = WordCountForm()
+#     if request.method == 'POST':
+#         form = WordCountForm(request.POST)
+#         if form.is_valid():
+#             data = WordsToRepead.objects.all()
+#             data.delete()
+#             db = SettingsWordNumber.objects.all()
+#             db.delete()
+#             form.save()
+#             return redirect('home')
+#     else:
+#         form = WordCountForm()
 
-    context = {
-            'title': 'Настройки',
-            'form': form,
-            'select': menu[4]['title']
-            }
+#     context = {
+#             'title': 'Настройки',
+#             'form': form,
+#             'select': menu[4]['title']
+#             }
 
-    return render(request, 'words/settings.html', context=context)
+#     return render(request, 'words/settings.html', context=context)
+
+
+class SettingsPage(CreateView):
+    form_class = WordCountForm
+    template_name = 'words/settings.html'
+    success_url = reverse_lazy('home')
+
+    def write_settings(self):
+        print('xxxx')
+
+    def get_context_dataa(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        write_settings()
+        context['title'] = 'Настройки'
+        context['select'] = menu[4]['title']
+        return context
+
 
 def resetting_dictionaries(request):
     form = ResettingDictionariesForm(request.POST or None)
@@ -219,10 +254,6 @@ def resetting_dictionaries(request):
                 db_r.delete()
                 db_i.delete()
                 return redirect('home')
-
-
-
-
     return render(request, 'words/resetting_dictionaries.html', context=context)
 
 

@@ -3,13 +3,11 @@
 {% block content %}
 
 <div class="text_info">
-
-<p>Так выглядит 1000 слов, на вид, совсем не много.</p>
+    <p>Так выглядит 1000 слов, на вид, совсем не много.</p>
 </div>
-<div class="line_monitor"></div>
-<div class="card_user">
 
-    
+<div class="line_monitor"></div>
+    <div class="card_user">
         <div class="block_circle">
             {% for words in words_counter_home %}
                 {% if words == ' ' %}
@@ -20,7 +18,12 @@
                 {% endif %}
             {% endfor %}
         </div>
+    </div>
 
+<div class="info_list">
+    <div class="circle_1"></div>
+    <div class="circle_2"></div>
 </div>
+
 
 {% endblock %}
