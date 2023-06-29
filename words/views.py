@@ -35,6 +35,7 @@ class IntroductionWords(DataMixin, ListView):
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
+
         # Класс примиси
         var = self.list_variables(title='Знакомство', select=menu[1]['title'])
 

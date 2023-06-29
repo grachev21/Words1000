@@ -1,7 +1,9 @@
 import random
 from ..models import *
 
+# Класс настроек
 class Settings:
+    # Метод устанавливает количество слов 
     def number_count_default(self):
         if not SettingsWordNumber.objects.exists():
             db = SettingsWordNumber(number_words=5)

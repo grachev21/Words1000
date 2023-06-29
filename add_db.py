@@ -1,6 +1,7 @@
 import csv
 from words.models import WordsCard
 
+
 words_en = []
 transcription = []
 words_ru = []
