@@ -6,8 +6,18 @@ from django.views.generic import ListView
 from django.views.generic import CreateView
 from django.urls import reverse_lazy
 
-from .models import *
-from .forms import *
+from .models import Word_status
+from .models import WordsCard
+from .models import IntroductionWords
+from .models import Word_Accumulator
+from .models import SettingsWordNumber
+from .models import WordsToRepead
+
+from .forms import WordCheck
+from .forms import AddWordAccumulator
+from .forms import WordCountForm
+from .forms import ResettingDictionariesForm
+
 from .templatetags.TagWords import menu
 from .separate_logic import play_on_words
 from .separate_logic.views_logic import *
@@ -38,21 +48,8 @@ class IntroductionWords(DataMixin, ListView):
 
         # Класс примиси
         var = self.list_variables(title='Знакомство', select=menu[1]['title'])
+        play_on_words.main()
 
-        settings = play_on_words.Settings()
-        settings.number_count_default()
-        NUMBER_WORDS = settings.value_number_settings()
-
-        config = play_on_words.Config(NUMBER_WORDS)
-        config.get_words()
-        config.base_check()
-        config.replay_base_check()
-        data_set = config.list_creation()
-
-        play = play_on_words.Run_play(data_set)
-        play.run_without()
-        play.create_list()
-        play.work_db()
         return dict(list(context.items()) + list(var.items()))
 
 

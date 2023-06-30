@@ -84,3 +84,21 @@ class Run_play:
             'random_list': self.random_list, 'translate_ru': self.translate_ru
         }
         return return_data
+
+
+def main():
+    settings = Settings()
+    settings.number_count_default()
+    NUMBER_WORDS = settings.value_number_settings()
+
+    config = Config(NUMBER_WORDS)
+    config.get_words()
+    config.base_check()
+    config.replay_base_check()
+    data_set = config.list_creation()
+
+    play = Run_play(data_set)
+    play.run_without()
+    play.create_list()
+    play.work_db()
+
