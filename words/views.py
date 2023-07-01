@@ -1,9 +1,11 @@
 from django.shortcuts import render
+from django.views.generic.edit import FormView
 from django.http import HttpResponse
 from django.http import HttpResponseNotFound
 from django.shortcuts import redirect
 from django.views.generic import ListView
 from django.views.generic import CreateView
+from django.views.generic import DeleteView
 from django.urls import reverse_lazy
 
 from .models import Word_status
@@ -38,20 +40,14 @@ class Home(DataMixin, ListView):
 
 class IntroductionWords(DataMixin, ListView):
     '''Знакомство со словами'''
-
     model = IntroductionWords
     template_name = 'words/introduction_words.html'
     context_object_name = 'db'
-
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
-
         # Класс примиси
         var = self.list_variables(title='Знакомство', select=menu[1]['title'])
-        play_on_words.main()
-
         return dict(list(context.items()) + list(var.items()))
-
 
 
 # Выбераем статус слова 
@@ -144,48 +140,24 @@ def finish(request):
 
 #     return render(request, 'words/learn_new_words.html', context=context)
 
-class LearnNewWords(CreateView):
-    # Этот атрибут указывает на класс формы
-    form_class = WordCheck
-    # Переменная для шаблона 
+class LearnNewWords(FormView):
     template_name = 'words/learn_new_words.html'
-    # Перенаправление
-    success_url = reverse_lazy('home')
-    model = WordsCard
-
-    def get_context_data(self, *, object_list=None, **kwargs):
-        context = super().get_context_data(**kwargs)
-
-        settings = play_on_words.Settings()
-        settings.number_count_default()
-        NUMBER_WORDS = settings.value_number_settings()
-
-        config = play_on_words.Config(NUMBER_WORDS)
-        config.get_words()
-        config.base_check()
-        config.replay_base_check()
-        data_set = config.list_creation()
-
-        play = play_on_words.Run_play(data_set)
-        play.run_without()
-        play.create_list()
-        play.work_db()
-
+    form_class = WordCheck
+    def get_context_data(self, *args, **kwargs):
+        context = super().get_context_data(*args, **kwargs)
+        context['title'] = 'Учить новые слова'
+        context['select'] = menu[2]['title']
         global words
-        words = play.return_result()
-
-        context['title'] = 'learn'
+        words = play_on_words.main()
         context['words'] = words
-
-        var = self.list_variables(title='Изучение', select=menu[2]['title'])
-
         return context
+
 
 def revise_learned(request):
     context = {
-            'title': 'Повторить выучинные сегодня',
-            'select': menu[3]['title']
-            }
+        'title': 'Повторить выучинные сегодня',
+        'select': menu[3]['title']
+        }
     return render(request, 'words/revise_learned.html', context=context)
 
 
@@ -194,6 +166,7 @@ def out(request):
             'title': 'Выход',
             'select': menu[5]['title']
             }
+    print(play_on_words.main())
     return render(request, 'words/out.html', context=context)
 
 # def settings(request):

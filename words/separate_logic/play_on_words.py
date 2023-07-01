@@ -8,6 +8,9 @@ class Settings:
         if not SettingsWordNumber.objects.exists():
             db = SettingsWordNumber(number_words=5)
             db.save()
+        else:
+            for val in SettingsWordNumber.objects.all():
+                print(val, 'van n...')
 
     def value_number_settings(self):
         db = SettingsWordNumber.objects.get()
@@ -101,4 +104,5 @@ def main():
     play.run_without()
     play.create_list()
     play.work_db()
+    return play.return_result()
 
