@@ -3,7 +3,7 @@ from words.views import *
 
 urlpatterns = [
     path('', Home.as_view(), name='home'),
-    path('introduction_words/', IntroductionWords.as_view(), name='introduction_words'),
+    path('introduction_words/', IntroductionWordsList.as_view(), name='introduction_words'),
     path('learn_new_words/', LearnNewWords.as_view(), name='learn_new_words'),
     path('result/', result, name='result'),
     path('revise_learned/', revise_learned, name='revise_learned'),
