@@ -1,9 +1,11 @@
 from django.shortcuts import render
+from django.views.generic.edit import FormView
 from django.http import HttpResponse
 from django.http import HttpResponseNotFound
 from django.shortcuts import redirect
 from django.views.generic import ListView
 from django.views.generic import CreateView
+from django.views.generic import DeleteView
 from django.urls import reverse_lazy
 
 from .models import Word_status
@@ -36,22 +38,16 @@ class Home(DataMixin, ListView):
         return dict(list(context.items()) + list(var.items()))
 
 
-class IntroductionWords(DataMixin, ListView):
+class IntroductionWordsList(DataMixin, ListView):
     '''Знакомство со словами'''
-
     model = IntroductionWords
     template_name = 'words/introduction_words.html'
     context_object_name = 'db'
-
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
-
         # Класс примиси
         var = self.list_variables(title='Знакомство', select=menu[1]['title'])
-        play_on_words.main()
-
         return dict(list(context.items()) + list(var.items()))
-
 
 
 # Выбераем статус слова 
@@ -112,80 +108,24 @@ def finish(request):
             }
     return render(request, 'words/finish.html', context=context)
 
-# Изучение слов с помощью выбора одного из четырех
-# def learn_new_words(request):
-
-#     form = WordCheck()
-
-#     settings = play_on_words.Settings()
-#     settings.number_count_default()
-#     NUMBER_WORDS = settings.value_number_settings()
-
-#     config = play_on_words.Config(NUMBER_WORDS)
-#     config.get_words()
-#     config.base_check()
-#     config.replay_base_check()
-#     data_set = config.list_creation()
-
-#     play = play_on_words.Run_play(data_set)
-#     play.run_without()
-#     play.create_list()
-#     play.work_db()
-
-#     global words
-#     words = play.return_result()
-
-#     context = {
-#             'title': 'Учить новые слова',
-#             'select': menu[2]['title'],
-#             'words': words,
-#             'form': form
-#             }
-
-#     return render(request, 'words/learn_new_words.html', context=context)
-
-class LearnNewWords(CreateView):
-    # Этот атрибут указывает на класс формы
-    form_class = WordCheck
-    # Переменная для шаблона 
+class LearnNewWords(FormView):
     template_name = 'words/learn_new_words.html'
-    # Перенаправление
-    success_url = reverse_lazy('home')
-    model = WordsCard
-
-    def get_context_data(self, *, object_list=None, **kwargs):
-        context = super().get_context_data(**kwargs)
-
-        settings = play_on_words.Settings()
-        settings.number_count_default()
-        NUMBER_WORDS = settings.value_number_settings()
-
-        config = play_on_words.Config(NUMBER_WORDS)
-        config.get_words()
-        config.base_check()
-        config.replay_base_check()
-        data_set = config.list_creation()
-
-        play = play_on_words.Run_play(data_set)
-        play.run_without()
-        play.create_list()
-        play.work_db()
-
+    form_class = WordCheck
+    def get_context_data(self, *args, **kwargs):
+        context = super().get_context_data(*args, **kwargs)
+        context['title'] = 'Учить новые слова'
+        context['select'] = menu[2]['title']
         global words
-        words = play.return_result()
-
-        context['title'] = 'learn'
+        words = play_on_words.main()
         context['words'] = words
-
-        var = self.list_variables(title='Изучение', select=menu[2]['title'])
-
         return context
+
 
 def revise_learned(request):
     context = {
-            'title': 'Повторить выучинные сегодня',
-            'select': menu[3]['title']
-            }
+        'title': 'Повторить выучинные сегодня',
+        'select': menu[3]['title']
+        }
     return render(request, 'words/revise_learned.html', context=context)
 
 
@@ -194,66 +134,50 @@ def out(request):
             'title': 'Выход',
             'select': menu[5]['title']
             }
+    print(play_on_words.main())
     return render(request, 'words/out.html', context=context)
 
-# def settings(request):
-
-#     if request.method == 'POST':
-#         form = WordCountForm(request.POST)
-#         if form.is_valid():
-#             data = WordsToRepead.objects.all()
-#             data.delete()
-#             db = SettingsWordNumber.objects.all()
-#             db.delete()
-#             form.save()
-#             return redirect('home')
-#     else:
-#         form = WordCountForm()
-
-#     context = {
-#             'title': 'Настройки',
-#             'form': form,
-#             'select': menu[4]['title']
-#             }
-
-#     return render(request, 'words/settings.html', context=context)
-
-
-class SettingsPage(CreateView):
-    form_class = WordCountForm
+class SettingsPage(FormView):
     template_name = 'words/settings.html'
-    success_url = reverse_lazy('home')
+    form_class = WordCountForm
 
-    def write_settings(self):
-        print('xxxx')
-
-    def get_context_dataa(self, *, object_list=None, **kwargs):
-        context = super().get_context_data(**kwargs)
-        write_settings()
+    def get_context_data(self, *args, **kwargs):
+        context = super().get_context_data(*args, **kwargs)
         context['title'] = 'Настройки'
         context['select'] = menu[4]['title']
         return context
 
-
-def resetting_dictionaries(request):
-    form = ResettingDictionariesForm(request.POST or None)
-    context = {
-            'title': 'Сброс словаря',
-            'form': form
-            }
-
-    if request.method == 'POST':
-        if form.is_valid():
-            if form.cleaned_data['status'] == True and form.cleaned_data['yes'] == 'да':
-                db_a = Word_Accumulator.objects.all()
-                db_r = WordsToRepead.objects.all()
-                db_i = IntroductionWords.objects.all()
-                db_a.delete()
-                db_r.delete()
-                db_i.delete()
+    def post(self, request, *args, **kwargs):
+        if request.method == 'POST':
+            form = WordCountForm(request.POST)
+            if form.is_valid():
+                data = WordsToRepead.objects.all()
+                data.delete()
+                db = SettingsWordNumber.objects.all()
+                db.delete()
+                form.save()
                 return redirect('home')
-    return render(request, 'words/resetting_dictionaries.html', context=context)
+        else:
+            form = WordCountForm()
 
+
+class ResettingDictionaries(FormView):
+    template_name = 'words/resetting_dictionaries.html'
+    form_class = ResettingDictionariesForm
+    def get_context_data(self, *args, **kwargs):
+        context = super().get_context_data(*args, **kwargs)
+        context['title'] = 'Сброс словаря'
+        return context
+
+    def post(self, request, *args, **kwargs):
+        form = ResettingDictionariesForm(request.POST)
+        if request.method == 'POST':
+            if form.is_valid():
+                if form.cleaned_data['status'] == True and form.cleaned_data['yes'] == 'да':
+                    Word_Accumulator.objects.all().delete()
+                    WordsToRepead.objects.all().delete()
+                    IntroductionWords.objects.all().delete()
+                    return redirect('home')
 
 def pageNotFound(request, exception):
     return HttpResponseNotFound('Страничка не найдена')

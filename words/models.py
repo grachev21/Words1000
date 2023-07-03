@@ -34,7 +34,7 @@ class IntroductionWords(models.Model):
 
     class Meta:
         verbose_name = 'Слова для ознакомления'
-        verbose_name = 'Слова для ознакомления'
+        verbose_name_plural = 'Слова для ознакомления'
 
 
 class Word_Accumulator(models.Model):
