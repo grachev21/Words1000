@@ -6,7 +6,7 @@ from words.views import result
 from words.views import revise_learned
 from words.views import out
 from words.views import SettingsPage
-from words.views import reading_sentences
+from words.views import ReadingSentences
 from words.views import finish
 from words.views import ResettingDictionaries
 
@@ -18,7 +18,7 @@ urlpatterns = [
     path('revise_learned/', revise_learned, name='revise_learned'),
     path('out/', out, name='out'),
     path('settings/', SettingsPage.as_view(), name='settings'),
-    path('reading_sentences/', reading_sentences, name='reading_sentences'),
+    path('reading_sentences/', ReadingSentences.as_view(), name='reading_sentences'),
     path('finish/', finish, name='finish'),
     path('resetting_dictionaries/', ResettingDictionaries.as_view(), name='resetting_dictionaries')
 ]
