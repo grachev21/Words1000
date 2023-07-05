@@ -20,6 +20,7 @@ from .forms import ResettingDictionariesForm
 from .templatetags.TagWords import menu
 from .separate_logic import play_on_words
 from .separate_logic.views_logic import DataMixin
+from .separate_logic.views_logic import SaveWord
 from .separate_logic import str_to_list
 
 
@@ -51,29 +52,23 @@ class IntroductionWordsList(DataMixin, ListView):
 
 
 def result(request):
-    '''Выбераем статус слова'''
 
     # Форма с результатом статуса
     form_result = AddWordAccumulator(request.POST)
-
+    # Создается контекст
     context = {'response': '', 'form': form_result}
-
-    # Проверяет правильное ли выбранное слова
+    # Проверяет правильное ли выбранное слова, если правильно добавляет
+    # его в context
     if list(request.POST.values())[1] == words['correct_word'][0]:
         context['response'] = 'Правильно'
-
-        if WordReadingPractice.objects.exists():
-            WordReadingPractice.objects.all().delete()
-        WRP = WordReadingPractice(word=words['correct_word'][0])
-        WRP.save()
+        # Так же обновляет в базе для чтения слов
+        SaveWord(words).save()
     else:
         context['response'] = 'Вы ошиблись'
-
+    # Проверка валидности формы
     if request.method == 'POST':
         if form_result.is_valid():
             dict_set = list(request.POST.keys())
-            print(dict_set)
-            print('save_word')
             # Если ответ не равен 0 и запрос status существует,
             # сохраняем в БД.
             if dict_set[1] == 'status' and \
@@ -81,7 +76,7 @@ def result(request):
                 db = WordsToRepead.objects.get(word=words['correct_word'][0])
                 db.delete()
 
-                # Сохраняем в слова накопитель
+                # Сохраняем слова в накопитель
                 word_arg = words['correct_word'][0]
                 form_arg = form_result.cleaned_data['status']
                 dbAccum = Word_Accumulator(word=word_arg, word_status=form_arg)
@@ -105,6 +100,51 @@ class LearnNewWords(FormView):
         words = play_on_words.main()
         context['words'] = words
         return context
+
+
+# class Result(FormView):
+#     template_name = 'words/result.html'
+#     form_class = AddWordAccumulator
+
+#     def get_context_data(self, *args, **kwargs):
+#         context = super().get_context_data(*args, **kwargs)
+#         context['title'] = 'Результат'
+#         return context
+
+#     def post(self, request, *args, **kwargs):
+#         context = self.get_context_data()
+
+#         # Форма с результатом статуса
+#         form_result = AddWordAccumulator(request.POST)
+
+#         # Проверяет правильное ли выбранное слова
+#         if list(request.POST.values())[1] == words['correct_word'][0]:
+
+#             context['response'] = 'Правильно'
+
+#             if WordReadingPractice.objects.exists():
+#                 WordReadingPractice.objects.all().delete()
+#             WRP = WordReadingPractice(word=words['correct_word'][0])
+#             WRP.save()
+#         else:
+#             context['response'] = 'Вы ошиблись'
+
+#         if request.method == 'POST':
+#             if form_result.is_valid():
+#                 dict_set = list(request.POST.keys())
+#                 # Если ответ не равен 0 и запрос status существует,
+#                 # сохраняем в БД.
+#                 if dict_set[1] == 'status' and \
+#                         str(form_result.cleaned_data['status']) == 'ok':
+#                     db = WordsToRepead.objects.get(word=words['correct_word'][0])
+#                     db.delete()
+
+#                     # Сохраняем в слова накопитель
+#                     word_arg = words['correct_word'][0]
+#                     form_arg = form_result.cleaned_data['status']
+#                     dbAccum = Word_Accumulator(word=word_arg, word_status=form_arg)
+#                     dbAccum.save()
+#                 return redirect('reading_sentences')
 
 
 class ReadingSentences(LearnNewWords, TemplateView):
@@ -184,9 +224,10 @@ class ResettingDictionaries(FormView):
     template_name = 'words/resetting_dictionaries.html'
     form_class = ResettingDictionariesForm
 
-    def get_context_data(self, *args, **kwargs):
+    def get_context_data(self, request, *args, **kwargs):
         context = super().get_context_data(*args, **kwargs)
         context['title'] = 'Сброс словаря'
+        print(request)
         return context
 
     def post(self, request, *args, **kwargs):
