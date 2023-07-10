@@ -82,10 +82,10 @@ class WordsToRepead(models.Model):
         verbose_name_plural = 'Слова для повторения'
 
 
-class WordReadingPractice(models.Model):
-    '''База слов для чтения'''
-    word = models.CharField(max_length=100, verbose_name='Слово')
+class WordsConfigJson(models.Model):
+    WORD_DATA = models.JSONField(null=True)
+    WORD_USER = models.JSONField(null=True)
 
     class Meta:
-        verbose_name = 'Слово для чтения'
-        verbose_name = 'Слова для чтения'
+        verbose_name = 'Config'
+        verbose_name = 'Configs'

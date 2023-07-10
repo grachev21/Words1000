@@ -1,10 +1,13 @@
 from ..models import WordsCard
 from ..models import Word_Accumulator
-from ..models import WordReadingPractice
+from ..models import WordsConfigJson
 
 
 class DataMixin:
+    'Класс примесей'
+
     def list_variables(self, **kwargs):
+        ''' Список переменных'''
         context = kwargs
         self.words = WordsCard.objects.count()
         self.accum = Word_Accumulator.objects.count()
@@ -20,12 +23,12 @@ class DataMixin:
 
 
 class SaveWord:
-    '''Сохраняет слово переменной words'''
+    ''''''
     def __init__(self, words):
         self.savewords = words
 
     def save(self):
-        if WordReadingPractice.objects.exists():
-            WordReadingPractice.objects.all().delete()
-        WRP = WordReadingPractice(word=self.savewords['correct_word'][0])
+        if WordsConfigJson.objects.exists():
+            WordsConfigJson.objects.all().delete()
+        WRP = WordsConfigJson(word=self.savewords['correct_word'][0])
         WRP.save()

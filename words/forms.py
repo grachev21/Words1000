@@ -1,16 +1,28 @@
+from django.core.exceptions import ValidationError
 from django import forms
 from .models import SettingsWordNumber
 from .models import Word_Accumulator
 from .models import Word_status
-
 
 list_status = ['Удалить весь прогресс', 'hello']
 
 class WordCheck(forms.Form):
     pass
 
-class AddWordAccumulator(forms.Form):
-    status = forms.ModelChoiceField(queryset=Word_status.objects.all(), label='Категории', empty_label='Не выбрано')
+
+class AddWordAccumulator(forms.ModelForm):
+
+    class Meta:
+        model = Word_Accumulator
+        fields = ('word', 'word_status')
+
+    def clean_word(self):
+        val = self.cleaned_data['word']
+        if val != '1234':
+            raise ValidationError('Слово должно совпадать')
+        else:
+            return val
+
 
 class WordCountForm(forms.ModelForm):
 

@@ -1,0 +1,2 @@
+WORDS_DATA = None
+WORD_USER = None
