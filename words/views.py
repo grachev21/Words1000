@@ -61,7 +61,7 @@ class IntroductionWordsList(DataMixin, ListView):
         return dict(list(context.items()) + list(var.items()))
 
 
-class LearnNewWords(FormView):
+class LearnNewWords(DataMixin, FormView):
     '''
     В методе save_word_data - функция play_on_words возвращает коллекцию с данными в виде переменной
     WORD_DATA.
@@ -76,11 +76,11 @@ class LearnNewWords(FormView):
 
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(*args, **kwargs)
-        context['title'] = 'Учить новые слова'
-        context['select'] = menu[2]['title']
         WORD_DATA = self.save_word_data()
         context['words'] = WORD_DATA
-        return context
+        var = self.list_variables(title='Учить новые слова',
+                                        select=menu[2]['title'])
+        return dict(list(context.items()) + list(var.items()))
 
     def post(self, request, *args, **kwargs):
         WORD_USER = list(request.POST)[-1]
@@ -101,7 +101,7 @@ class LearnNewWords(FormView):
 
 
 class Result(CreateView):
-    ''' 
+    '''
     Класс обработки формы.
     Метод user_filter получает две переменные WORD_DATA, WORD_USER 
     далее эти две переменные сравниваются
@@ -161,33 +161,6 @@ class ReadingSentences(TemplateView):
 
 
 
-# Страница с поздравлением
-def finish(request):
-    '''Последняя страница'''
-    # Возвращает последнюю запись или none
-    db = SettingsWordNumber.objects.last()
-    words_card = WordsCard.objects.count()
-    word_accumulator = Word_Accumulator.objects.count()
-    number_to_finish = words_card - word_accumulator
-
-    context = {'title': 'Финиш',
-               'db': db,
-               'number_to_finish': number_to_finish}
-
-    return render(request, 'words/finish.html', context=context)
-
-
-def revise_learned(request):
-    context = {'title': 'Повторить выучинные сегодня',
-               'select': menu[3]['title']}
-    return render(request, 'words/revise_learned.html', context=context)
-
-
-def out(request):
-    context = {'title': 'Выход',
-               'select': menu[5]['title']}
-    return render(request, 'words/out.html', context=context)
-
 
 class SettingsPage(FormView):
     template_name = 'words/settings.html'
@@ -234,6 +207,35 @@ class ResettingDictionaries(FormView):
                     WordsToRepead.objects.all().delete()
                     IntroductionWords.objects.all().delete()
                     return redirect('home')
+
+
+# Страница с поздравлением
+def finish(request):
+    '''Последняя страница'''
+    # Возвращает последнюю запись или none
+    db = SettingsWordNumber.objects.last()
+    words_card = WordsCard.objects.count()
+    word_accumulator = Word_Accumulator.objects.count()
+    number_to_finish = words_card - word_accumulator
+
+    context = {'title': 'Финиш',
+               'db': db,
+               'number_to_finish': number_to_finish}
+
+    return render(request, 'words/finish.html', context=context)
+
+
+def revise_learned(request):
+    context = {'title': 'Повторить выучинные сегодня',
+               'select': menu[3]['title']}
+    return render(request, 'words/revise_learned.html', context=context)
+
+
+def out(request):
+    context = {'title': 'Выход',
+               'select': menu[5]['title']}
+    return render(request, 'words/out.html', context=context)
+
 
 
 def pageNotFound(request, exception):
