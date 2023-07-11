@@ -3,10 +3,14 @@ from django import forms
 from .models import SettingsWordNumber
 from .models import Word_Accumulator
 from .models import Word_status
+from .models import WordsConfigJson
 
 list_status = ['Удалить весь прогресс', 'hello']
 
 class WordCheck(forms.Form):
+    '''
+    Форма возвращает вариант нажотой кнопки
+    '''
     pass
 
 
@@ -18,7 +22,8 @@ class AddWordAccumulator(forms.ModelForm):
 
     def clean_word(self):
         val = self.cleaned_data['word']
-        if val != '1234':
+        user_word = WordsConfigJson.objects.first().WORD_USER
+        if val != user_word:
             raise ValidationError('Слово должно совпадать')
         else:
             return val

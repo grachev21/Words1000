@@ -101,6 +101,11 @@ class LearnNewWords(FormView):
 
 
 class Result(CreateView):
+    ''' 
+    Класс обработки формы.
+    Метод user_filter получает две переменные WORD_DATA, WORD_USER 
+    далее эти две переменные сравниваются
+    '''
     form_class = AddWordAccumulator
     template_name = 'words/result.html'
     success_url = reverse_lazy('reading_sentences')
@@ -112,34 +117,48 @@ class Result(CreateView):
         return context
 
     def user_filter(self, context):
+        word_data = WordsConfigJson.objects.first()
+        WORD_DATA = word_data.WORD_DATA
+
+        word_user = WordsConfigJson.objects.first()
+        WORD_USER = word_user.WORD_USER
+
+        print(WORD_DATA['correct_word'][0], '<<<')
         if WORD_DATA['correct_word'][0] == WORD_USER:
             context['response'] = 'Ваш ответ правильный!'
-            # Удаляем угаданное слова из дневной базы слов
-            db = WordsToRepead.objects.get(word=WORD_DATA['correct_word'][0])
-            db.delete()
             return redirect('reading_sentences')
         else:
             context['response'] = 'Вы ошиблись'
 
+    def post(self, request, *args, **kwargs):
+        # Удаляем угаданное слова из дневной базы слов
+        WORD_USER = WordsConfigJson.objects.first().WORD_USER
+        db = WordsToRepead.objects.get(word=WORD_USER).delete()
+        return super().post(request, *args, **kwargs)
 
-class ReadingSentences(LearnNewWords, TemplateView):
-    '''Читать предложения с угаданном словом'''
+
+class ReadingSentences(TemplateView):
+    '''
+    Читать словом
+    Метод init  получает переменную со словом пользователя и находит это слово в общей базе слов 
+    '''
 
     template_name = 'words/reading_sentences.html'
-
-    def init_word(self):
-        word = WordsConfigJson.objects.first()
-        db = WordsCard.objects.get(word_en=word.word)
-        phrases_set = str_to_list.str_list(db.phrases_en, db.phrases_ru)
-        if not WordsToRepead.objects.exists():
-            return redirect('finish')
-        return phrases_set
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
         context['title'] = 'Тесты'
         context['phrases_set'] = self.init_word()
         return context
+
+    def init_word(self):
+        word = WordsConfigJson.objects.first().WORD_USER
+        db = WordsCard.objects.get(word_en=word)
+        phrases_set = str_to_list.str_list(db.phrases_en, db.phrases_ru)
+        if not WordsToRepead.objects.exists():
+            return redirect('finish')
+        return phrases_set
+
 
 
 # Страница с поздравлением
