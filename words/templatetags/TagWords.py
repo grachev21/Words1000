@@ -34,12 +34,12 @@ def menu_header(select):
 
 
 @register.inclusion_tag('words/tag_templates/tag_info.html')
-def info_header():
+def info_header(line_off_on):
     total_words = WordsCard.objects.count() - Word_Accumulator.objects.count()
     counter_word = WordsToRepead.objects.all().count()
     number = SettingsWordNumber.objects.first()
     total = Word_Accumulator.objects.count()
-    return {'number': number, 'counter_word': counter_word, 'total_words': total_words, 'total': total}
+    return {'number': number, 'counter_word': counter_word, 'total_words': total_words, 'total': total, 'line_off_on':line_off_on}
 
 
 @register.inclusion_tag('words/tag_templates/tag_footer.html')

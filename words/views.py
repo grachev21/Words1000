@@ -5,6 +5,7 @@ from django.shortcuts import redirect
 from django.views.generic import ListView
 from django.views.generic import TemplateView
 from django.urls import reverse_lazy
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 from .models import WordsCard
 from .models import IntroductionWords
@@ -61,7 +62,7 @@ class IntroductionWordsList(DataMixin, ListView):
         return dict(list(context.items()) + list(var.items()))
 
 
-class LearnNewWords(DataMixin, FormView):
+class LearnNewWords(LoginRequiredMixin, DataMixin, FormView):
     '''
     В методе save_word_data - функция play_on_words возвращает коллекцию с данными в виде переменной
     WORD_DATA.
@@ -73,6 +74,8 @@ class LearnNewWords(DataMixin, FormView):
     '''
     template_name = 'words/learn_new_words.html'
     form_class = WordCheck
+    # перенаправление для не авторизованых пользователей
+    login_url = reverse_lazy('mes_reg')
 
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(*args, **kwargs)
@@ -135,6 +138,12 @@ class Result(CreateView):
         WORD_USER = WordsConfigJson.objects.first().WORD_USER
         db = WordsToRepead.objects.get(word=WORD_USER).delete()
         return super().post(request, *args, **kwargs)
+
+
+class MesReg(ListView):
+    template_name = 'words/mes_reg.html'
+    model = WordsCard
+
 
 
 class ReadingSentences(TemplateView):
@@ -205,6 +214,11 @@ class ResettingDictionaries(FormView):
                     IntroductionWords.objects.all().delete()
                     return redirect('home')
 
+def out(request):
+    context = {'title': 'Выход',
+               'select': menu[5]['title']}
+    return render(request, 'words/out.html', context=context)
+
 
 # Страница с поздравлением
 def finish(request):
@@ -227,11 +241,6 @@ def revise_learned(request):
                'select': menu[3]['title']}
     return render(request, 'words/revise_learned.html', context=context)
 
-
-def out(request):
-    context = {'title': 'Выход',
-               'select': menu[5]['title']}
-    return render(request, 'words/out.html', context=context)
 
 
 

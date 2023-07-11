@@ -19,15 +19,23 @@ class DataMixin:
         # 1000 точек
         context['words_counter_home'] = self.words_counter_home
         context['counter'] = self.counter
+        if self.request.user.is_authenticated:
+            context['line_off_on'] = 'on'
+        else:
+            context['line_off_on'] = 'off'
         return context
 
     def logics(self):
+        dot = None
+        if self.request.user.is_authenticated:
+            dot = ' '
+        else:
+            dot = ''
         for a in range(self.accum):
-            self.words_counter_home.append(' ')
+            self.words_counter_home.append(dot)
 
 
 class SaveWord:
-    ''''''
     def __init__(self, words):
         self.savewords = words
 
