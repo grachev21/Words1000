@@ -103,7 +103,7 @@ class LearnNewWords(DataMixin, FormView):
 class Result(CreateView):
     '''
     Класс обработки формы.
-    Метод user_filter получает две переменные WORD_DATA, WORD_USER 
+    Метод user_filter получает две переменные WORD_DATA, WORD_USER
     далее эти две переменные сравниваются
     '''
     form_class = AddWordAccumulator
@@ -160,17 +160,14 @@ class ReadingSentences(TemplateView):
         return phrases_set
 
 
-
-
-class SettingsPage(FormView):
+class SettingsPage(DataMixin, FormView):
     template_name = 'words/settings.html'
     form_class = WordCountForm
 
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(*args, **kwargs)
-        context['title'] = 'Настройки'
-        context['select'] = menu[4]['title']
-        return context
+        var = self.list_variables(title='Настройки', select=menu[4]['title'])
+        return dict(list(context.items()) + list(var.items()))
 
     def post(self, request, *args, **kwargs):
         if request.method == 'POST':
