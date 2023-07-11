@@ -1,19 +1,17 @@
 from django.shortcuts import render
-from django.views.generic.edit import FormView
-from django.http import HttpResponse
+from django.views.generic.edit import FormView, CreateView
 from django.http import HttpResponseNotFound
 from django.shortcuts import redirect
 from django.views.generic import ListView
-from django.views.generic import CreateView
-from django.views.generic import DeleteView
+from django.views.generic import TemplateView
 from django.urls import reverse_lazy
 
-from .models import Word_status
 from .models import WordsCard
 from .models import IntroductionWords
 from .models import Word_Accumulator
 from .models import SettingsWordNumber
 from .models import WordsToRepead
+from .models import WordsConfigJson
 
 from .forms import WordCheck
 from .forms import AddWordAccumulator
@@ -22,14 +20,23 @@ from .forms import ResettingDictionariesForm
 
 from .templatetags.TagWords import menu
 from .separate_logic import play_on_words
-from .separate_logic.views_logic import *
+from .separate_logic.views_logic import DataMixin
 from .separate_logic import str_to_list
 
+
 class Home(DataMixin, ListView):
-    '''Домошняя страница'''
+    '''
+    Отображает клавную страницу и отображает 1000 слов в виде зеленых точек,
+    красные точки отображают выученные слова.
+    '''
+    # Ссылка на модель
     model = WordsCard
+    # Ссылка на шаблон
     template_name = 'words/home.html'
+    # Имя переменной контекста в шаблоне
     context_object_name = 'words_counter_home'
+
+    # Контекст
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
         # Класс примиси
@@ -40,9 +47,13 @@ class Home(DataMixin, ListView):
 
 class IntroductionWordsList(DataMixin, ListView):
     '''Знакомство со словами'''
+    # Ссылка на модель
     model = IntroductionWords
+    # Ссылка на шаблон
     template_name = 'words/introduction_words.html'
+    # Имя переменной контекста в шаблоне
     context_object_name = 'db'
+
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
         # Класс примиси
@@ -50,92 +61,133 @@ class IntroductionWordsList(DataMixin, ListView):
         return dict(list(context.items()) + list(var.items()))
 
 
-# Выбераем статус слова 
-def result(request):
-    # Форма с результатом статуса
-    form_result  = AddWordAccumulator(request.POST)
-    context = {
-                'response': '',
-                'form': form_result,
-                }
-    # Проверяет правильное ли выбранное слова
-    if list(request.POST.values())[1] ==  words['correct_word'][0]:
-        context['response'] = 'Правильно'
-    else:
-        context['response'] = 'Вы ошиблись'
-    if request.method == 'POST':
-        if form_result.is_valid():
-            dict_set = list(request.POST.keys())
-            # Если ответ не равен 0 и запрос status существует, 
-            # сохраняем в БД.
-            if dict_set[1] == 'status' and str(form_result.cleaned_data['status']) == 'Знаю':
-                db = WordsToRepead.objects.get(word=words['correct_word'][0])
-                db.delete()
-                # Сохраняем в слова накопитель
-                dbAccum = Word_Accumulator(word=words['correct_word'][0],
-                          word_status=form_result.cleaned_data['status'])
-                dbAccum.save()
-
-            return redirect('reading_sentences')
-
-    return render(request, 'words/result.html', context=context)
-
-# Чтение фраз на английском
-def reading_sentences(request):
-    db = WordsCard.objects.get(word_en=words['correct_word'][0])
-
-    phrases_set = str_to_list.str_list(db.phrases_en, db.phrases_ru)
-
-    context = {
-            'title': 'Тесты с предложениями',
-            'db': db,
-            'phrases_set': phrases_set,
-            }
-    if not WordsToRepead.objects.exists():
-        return redirect('finish')
-
-    return render(request, 'words/reading_sentences.html', context=context)
-
-def finish(request):
-    db = SettingsWordNumber.objects.last()
-    words_card = WordsCard.objects.count()
-    word_accumulator = Word_Accumulator.objects.count()
-    number_to_finish = words_card - word_accumulator
-    context = {
-            'title': 'Финиш',
-            'db': db,
-            'number_to_finish': number_to_finish
-            }
-    return render(request, 'words/finish.html', context=context)
-
 class LearnNewWords(FormView):
+    '''
+    В методе save_word_data - функция play_on_words возвращает коллекцию с данными в виде переменной
+    WORD_DATA.
+
+    Страница для тестирования.
+    В методе post мы получаем выбранное пользователем слово и сохраняем его в базу.
+
+    Метод save_word_data сохраняет коллецию WORD_DATA в базу данных WordsConfigJson
+    '''
     template_name = 'words/learn_new_words.html'
     form_class = WordCheck
+
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(*args, **kwargs)
         context['title'] = 'Учить новые слова'
         context['select'] = menu[2]['title']
-        global words
-        words = play_on_words.main()
-        context['words'] = words
+        WORD_DATA = self.save_word_data()
+        context['words'] = WORD_DATA
         return context
+
+    def post(self, request, *args, **kwargs):
+        WORD_USER = list(request.POST)[-1]
+        if WordsConfigJson.objects.exists():
+            WordsConfigJson.objects.update(WORD_USER=WORD_USER)
+        else:
+            WordsConfigJson.objects.create(WORD_USER=WORD_USER)
+        return redirect('result')
+
+    def save_word_data(self):
+        WORD_DATA = play_on_words.main()
+        if WordsConfigJson.objects.exists():
+            WordsConfigJson.objects.update(WORD_DATA=WORD_DATA)
+        else:
+            WordsConfigJson.objects.create(WORD_DATA=WORD_DATA)
+        return WORD_DATA
+
+
+
+class Result(CreateView):
+    ''' 
+    Класс обработки формы.
+    Метод user_filter получает две переменные WORD_DATA, WORD_USER 
+    далее эти две переменные сравниваются
+    '''
+    form_class = AddWordAccumulator
+    template_name = 'words/result.html'
+    success_url = reverse_lazy('reading_sentences')
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = 'Результат'
+        self.user_filter(context)
+        return context
+
+    def user_filter(self, context):
+        word_data = WordsConfigJson.objects.first()
+        WORD_DATA = word_data.WORD_DATA
+
+        word_user = WordsConfigJson.objects.first()
+        WORD_USER = word_user.WORD_USER
+
+        print(WORD_DATA['correct_word'][0], '<<<')
+        if WORD_DATA['correct_word'][0] == WORD_USER:
+            context['response'] = 'Ваш ответ правильный!'
+            return redirect('reading_sentences')
+        else:
+            context['response'] = 'Вы ошиблись'
+
+    def post(self, request, *args, **kwargs):
+        # Удаляем угаданное слова из дневной базы слов
+        WORD_USER = WordsConfigJson.objects.first().WORD_USER
+        db = WordsToRepead.objects.get(word=WORD_USER).delete()
+        return super().post(request, *args, **kwargs)
+
+
+class ReadingSentences(TemplateView):
+    '''
+    Читать словом
+    Метод init  получает переменную со словом пользователя и находит это слово в общей базе слов 
+    '''
+
+    template_name = 'words/reading_sentences.html'
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = 'Тесты'
+        context['phrases_set'] = self.init_word()
+        return context
+
+    def init_word(self):
+        word = WordsConfigJson.objects.first().WORD_USER
+        db = WordsCard.objects.get(word_en=word)
+        phrases_set = str_to_list.str_list(db.phrases_en, db.phrases_ru)
+        if not WordsToRepead.objects.exists():
+            return redirect('finish')
+        return phrases_set
+
+
+
+# Страница с поздравлением
+def finish(request):
+    '''Последняя страница'''
+    # Возвращает последнюю запись или none
+    db = SettingsWordNumber.objects.last()
+    words_card = WordsCard.objects.count()
+    word_accumulator = Word_Accumulator.objects.count()
+    number_to_finish = words_card - word_accumulator
+
+    context = {'title': 'Финиш',
+               'db': db,
+               'number_to_finish': number_to_finish}
+
+    return render(request, 'words/finish.html', context=context)
 
 
 def revise_learned(request):
-    context = {
-        'title': 'Повторить выучинные сегодня',
-        'select': menu[3]['title']
-        }
+    context = {'title': 'Повторить выучинные сегодня',
+               'select': menu[3]['title']}
     return render(request, 'words/revise_learned.html', context=context)
 
 
 def out(request):
-    context = {
-            'title': 'Выход',
-            'select': menu[5]['title']
-            }
-    print(play_on_words.main())
+    context = {'title': 'Выход',
+               'select': menu[5]['title']}
     return render(request, 'words/out.html', context=context)
+
 
 class SettingsPage(FormView):
     template_name = 'words/settings.html'
@@ -162,8 +214,10 @@ class SettingsPage(FormView):
 
 
 class ResettingDictionaries(FormView):
+    '''Сброс настроек словаря'''
     template_name = 'words/resetting_dictionaries.html'
     form_class = ResettingDictionariesForm
+
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(*args, **kwargs)
         context['title'] = 'Сброс словаря'
@@ -173,11 +227,18 @@ class ResettingDictionaries(FormView):
         form = ResettingDictionariesForm(request.POST)
         if request.method == 'POST':
             if form.is_valid():
-                if form.cleaned_data['status'] == True and form.cleaned_data['yes'] == 'да':
+                if form.cleaned_data['status'] \
+                        and form.cleaned_data['yes'] == 'да':
+
                     Word_Accumulator.objects.all().delete()
                     WordsToRepead.objects.all().delete()
                     IntroductionWords.objects.all().delete()
                     return redirect('home')
 
+
 def pageNotFound(request, exception):
     return HttpResponseNotFound('Страничка не найдена')
+
+
+
+

@@ -10,11 +10,7 @@
 
                 {% if response == 'Вы ошиблись' %}
 
-                <form action="{% url 'learn_new_words' %}" method="post">
-                    {% csrf_token %}
-                    {{as_p}}
-                    <button class="button_result_false" type="submit">Продолжить</button>
-                </form>
+                <a class="button_result_false" href="{% url 'learn_new_words' %}">Продолжить</a>
 
                 {% else %}
                 <div class="result_gud">

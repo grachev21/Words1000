@@ -383,6 +383,22 @@ body {
     border-radius: 30px;
 }
 
+.button_result_false { 
+    padding-left:15px;
+    padding-right: 15px;
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 30px;
+    background: teal;
+    border-radius: .5rem;
+    cursor: pointer;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+    color: white;
+}
 
 /* settings */
 .settings-container {

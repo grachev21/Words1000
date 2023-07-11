@@ -16,7 +16,7 @@
             </div>
 
             <div class="form_button">
-            <form action='{% url 'result' %}' method='post'>
+            <form method='post'>
                 {% csrf_token %}
                 <td><input class="button_word" type="submit" value="{{words.random_list.0}}" name="{{words.random_list.0}}"></td>
                 <td><input class="button_word" type="submit" value="{{words.random_list.1}}" name="{{words.random_list.1}}"></td>

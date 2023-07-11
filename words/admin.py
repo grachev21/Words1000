@@ -6,6 +6,7 @@ from .models import Word_Accumulator
 from .models import SettingsWordNumber
 from .models import WordsToRepead
 from .models import IntroductionWords
+from .models import WordsConfigJson
 
 class WordStatusAdmin(admin.ModelAdmin):
     list_display = ('status',)
@@ -36,6 +37,12 @@ class SettingsWordNumberAdmin(admin.ModelAdmin):
 class WordsToRepeadAdmin(admin.ModelAdmin):
     list_display = ('word',)
 
+class WordsConfigJsonAdmin(admin.ModelAdmin):
+    list_display = (
+            'WORD_DATA',
+            'WORD_USER'
+            )
+
 
 admin.site.register(Word_status, WordStatusAdmin)
 admin.site.register(WordsCard, WordsCardAdmin)
@@ -43,3 +50,4 @@ admin.site.register(Word_Accumulator, Word_AccumulatorAdmin)
 admin.site.register(SettingsWordNumber, SettingsWordNumberAdmin)
 admin.site.register(WordsToRepead, WordsToRepeadAdmin)
 admin.site.register(IntroductionWords, IntroductionWordsAdmin)
+admin.site.register(WordsConfigJson, WordsConfigJsonAdmin)
