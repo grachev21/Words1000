@@ -22,8 +22,8 @@ menu = [
         {'title': 'Настройки',
         'url_name': 'settings'},
 
-        {'title': 'Выход',
-        'url_name': 'out'},
+        # {'title': 'Выход',
+        # 'url_name': 'out'},
         ]
 
 register = template.Library()

@@ -18,6 +18,7 @@ from .forms import WordCheck
 from .forms import AddWordAccumulator
 from .forms import WordCountForm
 from .forms import ResettingDictionariesForm
+from .forms import RegisterUserForm
 
 from .templatetags.TagWords import menu
 from .separate_logic import play_on_words
@@ -27,7 +28,7 @@ from .separate_logic import str_to_list
 
 class Home(DataMixin, ListView):
     '''
-    Отображает клавную страницу и отображает 1000 слов в виде зеленых точек,
+    Отображает главную страницу и отображает 1000 слов в виде зеленых точек,
     красные точки отображают выученные слова.
     '''
     # Ссылка на модель
@@ -57,6 +58,11 @@ class IntroductionWordsList(DataMixin, ListView):
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
+        context['words_card'] = WordsCard.objects.all()
+        if self.request.user.is_authenticated:
+            context['user_check'] = 'on'
+        else:
+            context['user_check'] = 'off'
         # Класс примиси
         var = self.list_variables(title='Знакомство', select=menu[1]['title'])
         return dict(list(context.items()) + list(var.items()))
@@ -64,18 +70,22 @@ class IntroductionWordsList(DataMixin, ListView):
 
 class LearnNewWords(LoginRequiredMixin, DataMixin, FormView):
     '''
-    В методе save_word_data - функция play_on_words возвращает коллекцию с данными в виде переменной
+    Страница для тестирования.
+
+    В методе save_word_data - функция play_on_words возвращает коллекцию с
+    данными в виде переменной
     WORD_DATA.
 
-    Страница для тестирования.
-    В методе post мы получаем выбранное пользователем слово и сохраняем его в базу.
+    В методе post мы получаем выбранное пользователем слово и сохраняем его в
+    базу.
 
-    Метод save_word_data сохраняет коллецию WORD_DATA в базу данных WordsConfigJson
+    Метод save_word_data сохраняет коллекцию WORD_DATA в базу данных
+    WordsConfigJson
     '''
     template_name = 'words/learn_new_words.html'
     form_class = WordCheck
-    # перенаправление для не авторизованых пользователей
-    login_url = reverse_lazy('mes_reg')
+    # Переведет на другую страницу не авторизованных пользователей
+    login_url = reverse_lazy('register')
 
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(*args, **kwargs)
@@ -103,7 +113,7 @@ class LearnNewWords(LoginRequiredMixin, DataMixin, FormView):
 
 
 
-class Result(CreateView):
+class Result(LoginRequiredMixin, CreateView):
     '''
     Класс обработки формы.
     Метод user_filter получает две переменные WORD_DATA, WORD_USER
@@ -112,6 +122,7 @@ class Result(CreateView):
     form_class = AddWordAccumulator
     template_name = 'words/result.html'
     success_url = reverse_lazy('reading_sentences')
+    login_url = reverse_lazy('register')
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -140,19 +151,26 @@ class Result(CreateView):
         return super().post(request, *args, **kwargs)
 
 
-class MesReg(ListView):
+class Register(DataMixin, CreateView):
+    form_class = RegisterUserForm
     template_name = 'words/mes_reg.html'
-    model = WordsCard
+    # При успешной регистрации направить сюда
+    success_url = reverse_lazy('home')
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        val = self.list_variables(title='Регистрация')
+        return dict(list(context.items()) + list(val.items()))
 
 
-
-class ReadingSentences(TemplateView):
+class ReadingSentences(LoginRequiredMixin, TemplateView):
     '''
     Читать словом
     Метод init  получает переменную со словом пользователя и находит это слово в общей базе слов 
     '''
 
     template_name = 'words/reading_sentences.html'
+    login_url = reverse_lazy('register')
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -169,9 +187,10 @@ class ReadingSentences(TemplateView):
         return phrases_set
 
 
-class SettingsPage(DataMixin, FormView):
+class SettingsPage(LoginRequiredMixin, DataMixin, FormView):
     template_name = 'words/settings.html'
     form_class = WordCountForm
+    login_url = reverse_lazy('register')
 
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(*args, **kwargs)
@@ -192,10 +211,11 @@ class SettingsPage(DataMixin, FormView):
             form = WordCountForm()
 
 
-class ResettingDictionaries(FormView):
+class ResettingDictionaries(LoginRequiredMixin, FormView):
     '''Сброс настроек словаря'''
     template_name = 'words/resetting_dictionaries.html'
     form_class = ResettingDictionariesForm
+    login_url =  reverse_lazy('register')
 
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(*args, **kwargs)
