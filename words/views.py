@@ -6,6 +6,9 @@ from django.views.generic import ListView
 from django.views.generic import TemplateView
 from django.urls import reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.views import LoginView
+from django.contrib.auth import login
+from django.contrib.auth import logout
 
 from .models import WordsCard
 from .models import IntroductionWords
@@ -19,6 +22,7 @@ from .forms import AddWordAccumulator
 from .forms import WordCountForm
 from .forms import ResettingDictionariesForm
 from .forms import RegisterUserForm
+from .forms import LoginUserForm
 
 from .templatetags.TagWords import menu
 from .separate_logic import play_on_words
@@ -155,13 +159,32 @@ class Register(DataMixin, CreateView):
     form_class = RegisterUserForm
     template_name = 'words/mes_reg.html'
     # При успешной регистрации направить сюда
-    success_url = reverse_lazy('home')
+    success_url = reverse_lazy('login')
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
         val = self.list_variables(title='Регистрация')
         return dict(list(context.items()) + list(val.items()))
 
+    def form_valid(self, form):
+        user = form.save()
+        login(self.request, user)
+        return redirect('home')
+
+class LoginUser(DataMixin, LoginView):
+    form_class = LoginUserForm
+    template_name = 'words/login.html'
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        val = self.get_user_context(title='Авторизация')
+        return dict(list(context.items()) + list(val.items()))
+    def get_success_url(self):
+        return reverse_lazy('home')
+
+def logout_user(request):
+    logout(request)
+    return redirect('login')
 
 class ReadingSentences(LoginRequiredMixin, TemplateView):
     '''
