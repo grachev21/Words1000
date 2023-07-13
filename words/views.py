@@ -9,6 +9,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.views import LoginView
 from django.contrib.auth import login
 from django.contrib.auth import logout
+from django.contrib.auth.forms import UserCreationForm
 
 from .models import WordsCard
 from .models import IntroductionWords
@@ -155,9 +156,9 @@ class Result(LoginRequiredMixin, CreateView):
         return super().post(request, *args, **kwargs)
 
 
-class Register(DataMixin, CreateView):
+class RegisterUser(DataMixin, CreateView):
     form_class = RegisterUserForm
-    template_name = 'words/mes_reg.html'
+    template_name = 'words/register.html'
     # При успешной регистрации направить сюда
     success_url = reverse_lazy('login')
 
@@ -177,8 +178,9 @@ class LoginUser(DataMixin, LoginView):
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
-        val = self.get_user_context(title='Авторизация')
+        val = self.list_variables(title='Авторизация')
         return dict(list(context.items()) + list(val.items()))
+
     def get_success_url(self):
         return reverse_lazy('home')
 
@@ -276,7 +278,7 @@ def finish(request):
                'db': db,
                'number_to_finish': number_to_finish}
 
-    return render(request, 'words/finish.html', context=context)
+    return render(request, 'word s/finish.html', context=context)
 
 
 def revise_learned(request):

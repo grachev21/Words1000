@@ -9,7 +9,7 @@ from words.views import SettingsPage
 from words.views import ReadingSentences
 from words.views import finish
 from words.views import ResettingDictionaries
-from words.views import Register
+from words.views import RegisterUser
 from words.views import LoginUser
 from words.views import logout_user
 
@@ -24,8 +24,10 @@ urlpatterns = [
     path('reading_sentences/', ReadingSentences.as_view(), name='reading_sentences'),
     path('finish/', finish, name='finish'),
     path('resetting_dictionaries/', ResettingDictionaries.as_view(), name='resetting_dictionaries'),
-    path('register/', Register.as_view(), name='register'),
+
+    path('register/', RegisterUser.as_view(), name='register'),
     path('login/', LoginUser.as_view(), name='login'),
+
     path('logout/', logout_user, name='logout')
 
 
