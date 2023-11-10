@@ -1,0 +1,15 @@
+.progressbar { 
+	height: 20px;
+	position: relative;
+	background: #b7c5d1;
+	box-shadow: inset 0 -1px 1px rgba(255,255,255,0.3);
+  margin-bottom: 50px;
+}
+
+.progressbar > span {
+  display: block;
+  height: 100%;
+  background-color: #69bfbb;
+  position: relative;
+  overflow: hidden;
+}

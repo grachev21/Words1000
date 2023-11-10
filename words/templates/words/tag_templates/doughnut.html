@@ -1,0 +1,25 @@
+{% load static %}
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+             <div class="doughnut">
+              <canvas id="myDoughnut" width="450px" height="450px"></canvas>
+            </div>
+
+
+<script>
+ const ctx2 = document.getElementById('myDoughnut');
+
+  new Chart(ctx2, {
+    type: 'doughnut',
+    data: {
+      labels: ['Количество слов за день', 'Осталось за день', 'Всего', 'Выучено'],
+      datasets: [{
+        label: '# of Votes',
+              data: {{value}},
+        borderWidth: 1
+      }]
+    },
+  });
+</script>
+
+

@@ -1,0 +1,94 @@
+{% extends 'words/base.html' %}
+
+{% block content %}
+
+{% if user_result != 'ok' %}
+<!-- Header Start -->
+<div class="block_window">
+    <div class="revise_block">
+        {% if check_true_list >= 10 %}
+            {% if response_result %}
+                <div class="response_result_user">{{response_result}}, правильный ответ <h4>{{word}}</h4></div>
+                {% else %}
+                <h1>Выберите правильное слово из четырех представленных</h1>
+                <p class="words_translate_ru">{{word_accum_object.word_ru}}</p>
+            {% endif %}
+                <div class="next_learn_new_words">
+                <a class="next" href="{% url 'revise_learned' %}">Продолжить</a>
+              </div>
+        {% else %}
+            <h1>Повторить слова вы сможете только тогда, когда у вас накопится более 10 угаданных слов. сейчас у вас - {{check_true_list}} слов.</h1>
+          {% endif %}
+    </div>
+</div>
+<!-- Header End -->
+
+{% if not response_result %}
+<!-- Service Start -->
+<form method="post">
+    {% csrf_token %}
+<div class="container-xxl py-5">
+    <div class="container">
+        <div class="row g-4">
+            {% for random in random_words %}
+            <div class="col-lg-3 col-sm-6 wow fadeInUp" data-wow-delay="0.1s">
+                <div class="service-item text-center pt-3">
+                    <div class="p-4">
+                        <i class="fa fa-3x fa-book-open text-primary mb-4"></i>
+                        <h5 class="mb-3"><input  type="submit" value="{{random}}" name="{{random}}"></h5>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+</form>
+{% endif %}
+<!-- Service End -->
+{% else %}
+    <!-- Testimonial Start -->
+    <div class="container-xxl py-5 wow fadeInUp" data-wow-delay="0.1s">
+        <div class="container">
+            <div class="text-center">
+                <h6 class="section-title bg-white text-center text-primary px-3">Test</h6>
+                <h1 class="mb-5">Потренируйтесь в чтении</h1>
+            </div>
+                <div class="owl-carousel testimonial-carousel position-relative">
+                    {% for ps in phrases_set %}
+                    <div class="testimonial-item text-center">
+                        <h5 class="mb-0">{{ps.en}}</h5>
+                        <p>
+                        <div class="testimonial-text bg-light text-center p-4">
+                            <p class="mb-0">{{ps.ru}}</p>
+                        </div>
+                    </div>
+                    {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="next_learn_new_words">
+        <a class="next" href="{% url 'revise_learned' %}">Продолжить</a>
+    </div>
+<!-- Header Start -->
+<div class="container-fluid bg-primary py-5 mb-5 page-header">
+    <div class="container py-5">
+        <div class="row justify-content-center">
+            <div class="col-lg-10 text-center">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb justify-content-center">
+                    </ol>
+                </nav>
+            </div>
+                <div class="next_learn_new_words">
+                    <a class="next" href="{% url 'revise_learned' %}">Продолжить</a>
+                </div>
+        </div>
+    </div>
+</div>
+<!-- Header End -->
+
+{% endif %}
+{% endblock %}

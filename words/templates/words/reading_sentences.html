@@ -1,0 +1,74 @@
+{% extends 'words/base.html' %}
+
+{% block content %}
+    <!-- Spinner Start -->
+    <div id="spinner" class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
+        <div class="spinner-border text-primary" style="width: 3rem; height: 3rem;" role="status">
+            <span class="sr-only">Loading...</span>
+        </div>
+    </div>
+    <!-- Spinner End -->
+
+
+    <!-- Header Start -->
+    <div class="container-fluid bg-primary py-5 mb-5 page-header">
+        <div class="container py-5">
+            <div class="row justify-content-center">
+                <div class="col-lg-10 text-center">
+                    {% if check_congratulation == 'on' %}
+                    <h1 class="display-3 text-white animated slideInDown">{{result_word}}</h1>
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb justify-content-center">
+                            <li class="breadcrumb-item"><a class="text-white" href="{% url 'learn_new_words' %}">Продолжить</a></li>
+                        </ol>
+                    </nav>
+                    {% else %}
+                    <h1 class="display-3 text-white animated slideInDown">Осталось - {{total_words}}</h1>
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb justify-content-center">
+                            <li class="breadcrumb-item"><a class="text-white" href="{% url 'learn_new_words' %}">Продолжить</a></li>
+                        </ol>
+                    </nav>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Header End -->
+
+    <!-- Testimonial Start -->
+    {% if check_congratulation == 'on' %}
+    <div class="container-xxl py-5 wow fadeInUp" data-wow-delay="0.1s">
+        <div class="container">
+            <div class="text-center">
+                <h6 class="section-title bg-white text-center text-primary px-3">Test</h6>
+                <h1 class="mb-5">Потренируйтесь в чтении</h1>
+            </div>
+                <div class="owl-carousel testimonial-carousel position-relative">
+                    {% for ps in phrases_set %}
+                    <div class="testimonial-item text-center">
+                        <h5 class="mb-0">{{ps.en}}</h5>
+                        <p>
+                        <div class="testimonial-text bg-light text-center p-4">
+                            <p class="mb-0">{{ps.ru}}</p>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+        </div>
+    </div>
+    {% else %}
+    <div class="container-xxl py-5 wow fadeInUp" data-wow-delay="0.1s">
+        <div class="container">
+            <div class="text-center">
+                <h6 class="section-title bg-white text-center text-primary px-3">Test</h6>
+                <h1 class="mb-5">Поздравляем, вы выучили - {{number.number_words}} слов!!!</h1>
+            </div>
+                <div class="owl-carousel testimonial-carousel position-relative">
+                </div>
+        </div>
+    </div>
+    {% endif %}
+    <!-- Testimonial End -->
+ 
+{% endblock %}

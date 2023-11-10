@@ -1,0 +1,18 @@
+{% extends 'words/base.html' %}
+
+{% block content %}
+<div class="settings-container">
+
+    <div class="settings">
+            <form method="post">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <div class="warning">
+                    Внимание! После этих действий будет удален весь прогресс ваших занятий.
+                </div>
+            <button class="resetting_button" type="submit">Сбросить данные</button>
+        </form>
+    </div>
+
+</div>
+{% endblock %}
