@@ -239,6 +239,12 @@ class RegisterUser(DataMixin, CreateView):
         val = self.list_variables(title='Регистрация', user=self.request.user)
         return dict(list(context.items()) + list(val.items()))
 
+    # def post(self, request):
+        # pass
+        
+        
+        
+
 # EndRegister ====================================================================
 class LoginUser(DataMixin, LoginView):
     form_class = LoginUserForm

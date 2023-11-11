@@ -26,7 +26,7 @@ SECRET_KEY = 'l9b@9wl&8hkmnklfk(%msg-evs%xrcf$uf1v9aj@igril^9!*e'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['62.217.181.208']
+ALLOWED_HOSTS = ['words1000run.ru', '62.217.181.208']
 
 
 # Application definition
@@ -68,6 +68,7 @@ TEMPLATES = [
         },
     },
 ]
+
 
 WSGI_APPLICATION = 'words1000config.wsgi.application'
 
@@ -125,3 +126,11 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
+
+
+
+EMAIL_USE_TLS = True 
+EMAIL_HOST = 'smtp.gmail.com' 
+EMAIL_HOST_USER = 'grachev613@gmail.com' 
+EMAIL_HOST_PASSWORD = 'pckklmngcas21'
+EMAIL_PORT = 587 

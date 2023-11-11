@@ -1,6 +1,6 @@
 from django.db import models
 from django.core.validators import MaxValueValidator, MinValueValidator
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User 
 from django.utils import timezone
 
 
@@ -126,3 +126,34 @@ class WordsConfigJson(models.Model):
     class Meta:
         verbose_name = 'Config'
         verbose_name = 'Configs'
+
+
+    # class EmailRegister(AbstractUser):
+    #     username = models.CharField(
+    #         ("username"),
+    #         max_length=150,
+    #         help_text=(
+    #             "Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only."
+    #         ),
+    #         validators=[AbstractUser.username_validator],
+    #         error_messages={
+    #             "unique": ("A user with that username already exists."),
+    #         },
+    #         null=True,
+    #         blank=True,
+    #     )
+    #
+    #     email = models.EmailField(("email address"), unique=True, )
+    #
+    #     is_active = models.BooleanField(
+    #         ("active"),
+    #         default=False,
+    #         help_text=(
+    #             "Designates whether this user should be treated as active. "
+    #             "Unselect this instead of deleting accounts."
+    #         ),
+    #     )
+    #
+    #     USERNAME_FIELD = "email"
+    #     REQUIRED_FIELDS = []
+    #     user = models.ForeignKey(User, on_delete=models.CASCADE)

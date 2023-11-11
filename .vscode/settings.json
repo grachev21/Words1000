@@ -1,0 +1,16 @@
+{
+  "folder-color.pathColors": [
+    {
+      "folderPath": "Words1000/venv/",
+      "color": "foldercolorizer.MediumLightGray"
+    },
+    {
+      "folderPath": "Words1000/words/",
+      "color": "foldercolorizer.green"
+    },
+    {
+      "folderPath": "Words1000/words1000config/",
+      "color": "foldercolorizer.red"
+    }
+  ]
+}

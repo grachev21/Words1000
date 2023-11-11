@@ -52,7 +52,7 @@ class ResettingDictionariesForm(forms.Form):
 
 
 class RegisterUserForm(UserCreationForm):
-    username = forms.CharField(label='Логин', widget=forms.TextInput(attrs={'class': 'login_form_input'}))
+    username = forms.CharField(label='Логин', widget=forms.TextInput(attrs={'class': 'login_form_input'}), help_text='Логин')
     email = forms.EmailField(label='Email', widget=forms.EmailInput(attrs={'class': 'login_form_input'}))
     password1 = forms.CharField(label='Пароль', widget=forms.PasswordInput(attrs={'class': 'login_form_input'}))
     password2 = forms.CharField(label='Повтор пароля', widget=forms.PasswordInput(attrs={'class': 'login_form_input'}))
