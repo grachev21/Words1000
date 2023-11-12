@@ -6,6 +6,7 @@ from django.shortcuts import redirect
 from ..models import *
 from ..forms import *
 from ..separate_logic.views_logic import DataMixin
+from django.contrib.auth import get_user_model
 
 
 # class RegisterUser(DataMixin, CreateView):
