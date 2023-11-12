@@ -127,10 +127,11 @@ USE_TZ = True
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
 
+# pgtm ozsq jqeu gzig
 
-
+# Config for email
 EMAIL_USE_TLS = True 
 EMAIL_HOST = 'smtp.gmail.com' 
 EMAIL_HOST_USER = 'grachev613@gmail.com' 
-EMAIL_HOST_PASSWORD = 'pckklmngcas21'
+EMAIL_HOST_PASSWORD = 'pgtm ozsq jqeu gzig'
 EMAIL_PORT = 587 

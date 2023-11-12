@@ -50,7 +50,6 @@ class ResettingDictionariesForm(forms.Form):
     yes = forms.CharField(max_length=2, label='Напишите для подтверждения "да"')
     status = forms.BooleanField(label='Подтвердите сброс прогресса')
 
-
 class RegisterUserForm(UserCreationForm):
     username = forms.CharField(label='Логин', widget=forms.TextInput(attrs={'class': 'login_form_input'}), help_text='Логин')
     email = forms.EmailField(label='Email', widget=forms.EmailInput(attrs={'class': 'login_form_input'}))

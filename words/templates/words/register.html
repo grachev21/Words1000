@@ -1,24 +1,30 @@
-{% extends 'words/base.html' %}
 
-{% block content %}
 
+{% extends 'words/base.html' %} 
+
+
+{% block content %} 
 <div class="block_window">
-    <div class="login_form">
-         
-        <div class="login_form_container">
-        <p class="message">Для прохождения тестов нужно зарегилстрироваться</p>
-
-            <form method="post">
-                {% csrf_token %}
-            <div class="form_error_login">{{ form.non_field_errors }}</div>
-
-                {% for f in form %}
-                <label class"form_label_login" for="{{f.id_for_label }}">{{f.label}}: </label><p>{{f}}</p></label>
-                <div class="form-error">{{f.errors}}</div>
-                {% endfor %}
-                <button class="button_login" type="submit">Регистрация</button>
-            </form>
-        </div>
-    </div>
+  <div class="login_form">
+    <div class = "container"> 
+    <h2>Sign up</h2> 
+    <form method="post"> 
+    {% csrf_token %} 
+    {% for field in form %} 
+    <p> 
+    {{ field.label_tag }}<br> 
+    {{ field }} 
+    {% if field.help_text %} 
+    <small style="display: none ">{{ field.help_text }}</small> 
+    {% endif %} 
+    {% for error in field.errors %} 
+    <p style="color: red">{{ error }}</p> 
+    {% endfor %} 
+    </p> 
+    {% endfor %} 
+    <button type="submit">Sign up</button> 
+    </form> 
+    </div> 
+  </div>
 </div>
 {% endblock %}
