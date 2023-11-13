@@ -51,8 +51,8 @@ class ResettingDictionariesForm(forms.Form):
     status = forms.BooleanField(label='Подтвердите сброс прогресса')
 
 class RegisterUserForm(UserCreationForm):
-    username = forms.CharField(label='Логин', widget=forms.TextInput(attrs={'class': 'login_form_input'}), help_text='Логин')
-    email = forms.EmailField(label='Email', widget=forms.EmailInput(attrs={'class': 'login_form_input'}))
+    username = forms.CharField(help_text='gggg', widget=forms.TextInput(attrs={'class': 'login_form_input'}))
+    email = forms.EmailField(help_text='hello', widget=forms.EmailInput(attrs={'class': 'login_form_input'}))
     password1 = forms.CharField(label='Пароль', widget=forms.PasswordInput(attrs={'class': 'login_form_input'}))
     password2 = forms.CharField(label='Повтор пароля', widget=forms.PasswordInput(attrs={'class': 'login_form_input'}))
     class Meta:

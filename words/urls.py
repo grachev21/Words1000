@@ -11,6 +11,8 @@ from words.views.register_login import RegisterUser
 from words.views.register_login import LoginUser
 from words.views.register_login import logout_user
 from words.views.register_login import activate
+from django.urls import path, re_path
+
 
 urlpatterns = [
     path('', Home.as_view(), name='home'),
@@ -24,7 +26,5 @@ urlpatterns = [
     path('register/', RegisterUser, name='register'),
     path('login/', LoginUser.as_view(), name='login'),
     path('logout/', logout_user, name='logout'),
-    path('activate/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/', 
-    activate, name='activate'), 
+    path('activate/(<uidb64>xxx<token>yyyy/', activate, name='activate'), 
 ]
-

@@ -1,25 +1,21 @@
-from django.views.generic.edit import CreateView
 from django.urls import reverse_lazy
 from django.contrib.auth.views import LoginView
 from django.contrib.auth import logout
-from django.shortcuts import redirect
 from ..models import *
 from ..forms import *
 from ..separate_logic.views_logic import DataMixin
 from django.contrib.auth import get_user_model
+from django.http import HttpResponse 
+from django.shortcuts import render, redirect 
+from words.forms import RegisterUserForm
+from django.contrib.sites.shortcuts import get_current_site 
+from django.utils.encoding import force_bytes, force_text 
+from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode 
+from django.template.loader import render_to_string 
+from words.token import account_activation_token 
+from django.core.mail import EmailMessage 
 
 
-# class RegisterUser(DataMixin, CreateView):
-#     form_class = RegisterUserForm
-#     template_name = 'words/register.html'
-#     # При успешной регистрации направить сюда
-#     success_url = reverse_lazy('login')
-#
-#     def get_context_data(self, **kwargs):
-#         context = super().get_context_data(**kwargs)
-#         val = self.list_variables(title='Регистрация', user=self.request.user)
-#         return dict(list(context.items()) + list(val.items()))
-#
 class LoginUser(DataMixin, LoginView):
     form_class = LoginUserForm
     template_name = 'words/login.html'
@@ -32,18 +28,6 @@ class LoginUser(DataMixin, LoginView):
     def get_success_url(self):
         return reverse_lazy('home')
 
-
-from django.http import HttpResponse 
-from django.shortcuts import render, redirect 
-from django.contrib.auth import login, authenticate 
-from words.forms import RegisterUserForm
-from django.contrib.sites.shortcuts import get_current_site 
-from django.utils.encoding import force_bytes, force_text 
-from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode 
-from django.template.loader import render_to_string 
-from words.token import account_activation_token 
-from django.contrib.auth.models import User 
-from django.core.mail import EmailMessage 
  
 def RegisterUser(request): 
     if request.method == 'POST': 
