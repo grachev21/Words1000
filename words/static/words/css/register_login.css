@@ -20,8 +20,7 @@
 }
 
 .button_login {
-  background: #1fc2d8;
-  border-color: #1fc2d8;
+  background: var(--button-color);
   border: none;
   color: white;
   padding-top: 1rem;
@@ -36,11 +35,15 @@
   margin-bottom: 20px;
 }
 
-.button_login button:hover {
-    background: #2bc5d4;
+.button_login:hover {
+    background: red;
+    cursor: pointer;
+
 }
 
 .login_form_input {
+  margin-bottom: 20px;
+  margin-top: 20px;
 	display: block;
 	width: 400px;
 	padding: .375rem .75rem;
@@ -59,11 +62,6 @@
 
 }
 
-.form_label_login {
-  margin-top: 20px;
-  margin-bottom: 10px;
-}
-
 .form_error_login {
 	display: block;
 	width: 400px;
@@ -72,7 +70,6 @@
 	font-weight: 400;
 	line-height: 1.5;
 	color: #52565b;
-	/* background-color: #fff; */
 	background-clip: padding-box;
 	appearance: none;
 	border-radius: 0px;
