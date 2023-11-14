@@ -1,11 +1,12 @@
-from django.views.generic.edit import FormView 
+from words import clue
+from django.views.generic.edit import FormView
 from django.shortcuts import redirect
 from django.urls import reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin
 from ..models import *
 from ..forms import *
 from ..separate_logic.views_logic import menu, DataMixin
-from ..separate_logic import play_on_words 
+from ..separate_logic import play_on_words
 
 
 class LearnNewWords(LoginRequiredMixin, DataMixin, FormView):
@@ -40,13 +41,13 @@ class LearnNewWords(LoginRequiredMixin, DataMixin, FormView):
             self.update(context)
             context['user'] = self.request.user
             # test
-            # clue.clue_ru_fun(context['words']['translate_ru'].split(',')[0])
-            # clue.clue_en_fun(context['words']['correct_word'][0])
-            # clue.clue_index_fun(str(context['words']['random_list'].index(context['words']['correct_word'][0])))
+            clue.clue_ru_fun(context['words']['translate_ru'].split(',')[0])
+            clue.clue_en_fun(context['words']['correct_word'][0])
+            clue.clue_index_fun(str(context['words']['random_list'].index(context['words']['correct_word'][0])))
             # end test
             var = self.list_variables(title='Учить новые слова', select=menu[2]['url_name'], user=self.request.user)
             return dict(list(context.items()) + list(var.items()))
-    
+
     def update(self, context):
         data = {'WORD_DATA': context['words']}
         WordsConfigJson.objects.select_related('user').update_or_create(defaults=data, user=self.request.user)

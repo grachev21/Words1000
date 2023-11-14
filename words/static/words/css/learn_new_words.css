@@ -22,12 +22,16 @@
 .container_value_words {
   width: 100%;
   display: flex;
+  border: none;
 }
 
 .next_learn_new_words {
   margin: 50px;
 }
 
+.next_learn_new_words a {
+  background: var(--button-color);
+  }
 
 .value_words {
   background: var(--card-color-contrast);
@@ -41,9 +45,8 @@
   transition: .5s;
 }
 
-
 .value_words:hover {
   background: var(--hover-color);
-
+  cursor: pointer;
 }
 

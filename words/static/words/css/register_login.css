@@ -36,20 +36,20 @@
 }
 
 .button_login:hover {
-    background: red;
+    background: var(--hover-color);
     cursor: pointer;
 
 }
 
 .login_form_input {
-  margin-bottom: 20px;
-  margin-top: 20px;
+    margin-bottom: 20px;
+    margin-top: 20px;
 	display: block;
 	width: 400px;
 	padding: .375rem .75rem;
 	font-size: 1rem;
 	font-weight: 400;
-  font-family: 'Ubuntu', sans-serif;
+    font-family: 'Ubuntu', sans-serif;
 	line-height: 1.5;
 	color: #52565b;
 	background-color: #fff;
