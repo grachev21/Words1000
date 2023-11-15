@@ -23,17 +23,19 @@ class StrList:
 
     def create_dict_list_10(self):
         count = 0
+        num = 1
         for base_loop in self.base:
             # count ограничивает длинну списка
             if count != 10 and base_loop['en'] != '':
+                base_loop['num'] = num
                 self.base_list.append(base_loop)
                 count += 1
+                num += 1
 
         return self.base_list
 
 
 def str_list(en, ru):
-    print(len(en), len(ru), '<<<<')
     strlist = StrList(en, ru)
     value = strlist.search_long_list()
     strlist.create_dict(value)
