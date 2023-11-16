@@ -3,57 +3,38 @@
 {% block content %}
 
 
-    <div class="block_window">
-        {% if check_congratulation == 'on' %}
-            <h1 class="title">{{result_word}}h1>
-            <a href="{% url 'learn_new_words' %}">Продолжить</a>
-        {% else %}
-            <h1 class="title">Осталось - {{total_words}}</h1>
-            <a href="{% url 'learn_new_words' %}">Продолжить</a>
-            {% endif %}
-    </div>
+<div class="block_window">
+  <h3 class="title">Осталось - {{total_words}}</h3>
 
-    {% if check_congratulation == 'on' %}
-        <h1>Потренируйтесь в чтении</h1>
+    <h1 class="title_reading_sentences">Потренируйтесь в чтении</h1>
+    <div class="slideshow-container">
+    {% for ps in phrases_set %}
+    <div class="mySlides fade">
+      <div class="block_reading">
+          <div class="text_block">
+          <h1>{{ps.en}}</h1>
+          <p>{{ps.ru}}</p>
+          <div class="text">{{result_word}} - {{word_ru.translate_ru}}</div>
+      </div>
+      </div>
+    </div>
+    {% endfor %}
 
-<div class="slideshow-container">
-{% for ps in phrases_set %}
-  <div class="mySlides fade">
-    <div class="block_reading">
-        <div class="text_block">
-        <h1>{{ps.en}}</h1>
-        <p>{{ps.ru}}</p>
-    </div>
-    </div>
+    <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+    <a class="next" onclick="plusSlides(1)">&#10095;</a>
   </div>
-{% endfor %}
-    {% else %}
-        <h1{{number.number_words}} слов!!!</h1>
-    {% endif %}
 
+  <br>
 
-
-
-
-
-<!-- Slideshow container -->
-
-  <!-- Full-width images with number and caption text -->
-
-  <!-- Next and previous buttons -->
-  <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
-  <a class="next" onclick="plusSlides(1)">&#10095;</a>
-</div>
-<br>
-
-<!-- The dots/circles -->
-<div style="text-align:center">
+  <div style="text-align:center">
     {% for num in phrases_set %}
     <span class="dot" onclick="currentSlide({{num.num}})"></span>
     {% endfor %}
+  </div>
+
+    <div class="link_next">
+    <a href="{% url 'learn_new_words' %}">Продолжить</a>
+    </div>
 </div>
-
- 
 <script src="{% static 'words/js/reading_sentences.js' %}"></script>
-
 {% endblock %}

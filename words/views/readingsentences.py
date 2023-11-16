@@ -19,6 +19,7 @@ class ReadingSentences(DataMixin, LoginRequiredMixin, TemplateView):
         context['title'] = 'Тесты'
         context['result_word'] = WordsConfigJson.objects.select_related('user').get(user=self.request.user).WORD_USER
         context['phrases_set'], context = self.init_word(context)
+        context['word_ru'] = WordsConfigJson.objects.select_related('user').get(user=self.request.user).WORD_DATA
         print(context['phrases_set'])
         context['words_count'] = SettingsWordNumber.objects.select_related('user').get(user=self.request.user).number_words
 
