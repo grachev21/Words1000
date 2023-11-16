@@ -17,16 +17,17 @@
 }
 
 .block_circle {
-	position: relative;
-	left: 0px;
-	top: 0px;
-	width: 480px;
+    position: relative;
+    left: 0px;
+    top: 0px;
+    max-width: 29em;
+    min-width: 29em;
 }
 
 .circle {
 	opacity: 100%;
 	display: inline-block;
-  background: var(--master-color);
+    background: var(--master-color);
 	border: 1px solid var(--master-color);
 	border-radius: 50%;
 	height: 6px;
