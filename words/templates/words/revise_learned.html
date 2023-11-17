@@ -1,15 +1,16 @@
 {% extends 'words/base.html' %}
+{% load static %}
 {% block content %}
 {% if user_result != 'ok' %}
-<div class="block_window">
-    <div class="learn_new_words_block">
-        {% if check_true_list >= 10 %}
-            {% if response_result %}
-            <h1>{{response_result}}, правильный ответ <h4>{{word}}</h4>
-        {% else %}
-            <h1>Выберите правильное слово из четырех представленных</h1>
-            <p class="words_translate_ru">{{word_accum_object.word_ru}}</p>
-        {% endif %}
+    <div class="block_window">
+        <div class="learn_new_words_block">
+            {% if check_true_list >= 10 %}
+                {% if response_result %}
+                <h1>{{response_result}}, правильный ответ <h4>{{word}}</h4>
+            {% else %}
+                <h1>Выберите правильное слово из четырех представленных</h1>
+                <p class="words_translate_ru">{{word_accum_object.word_ru}}</p>
+            {% endif %}
     <div class="next_learn_new_words">
     <a href="{% url 'revise_learned' %}">Продолжить</a>
     </div>
@@ -27,14 +28,37 @@
 {% endif %}
 
 {% else %}
-    <h1>Потренируйтесь в чтении</h1>
+  <h3 class="title">Осталось - {{total_words}}</h3>
+
+    <h1 class="title_reading_sentences">Потренируйтесь в чтении</h1>
+    <div class="slideshow-container">
     {% for ps in phrases_set %}
-        <h5>{{ps.en}}</h5>
-        <p>{{ps.ru}}</p>
-    {% endfor %}
-        <a href="{% url 'revise_learned' %}">Продолжить</a>
-        <a href="{% url 'revise_learned' %}">Продолжить</a>
+    <div class="mySlides fade">
+      <div class="block_reading">
+          <div class="text_block">
+          <h1>{{ps.en}}</h1>
+          <p>{{ps.ru}}</p>
+          <div class="text">{{result_word}} - {{word_ru.translate_ru}}</div>
+      </div>
+      </div>
     </div>
-</div>
+    {% endfor %}
+
+    <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+    <a class="next" onclick="plusSlides(1)">&#10095;</a>
+  </div>
+
+  <br>
+
+  <div style="text-align:center">
+    {% for num in phrases_set %}
+    <span class="dot" onclick="currentSlide({{num.num}})"></span>
+    {% endfor %}
+  </div>
+
+    <div class="link_next">
+    <a href="{% url 'learn_new_words' %}">Продолжить</a>
+    </div>
+<script src="{% static 'words/js/reading_sentences.js' %}"></script>
 {% endif %}
 {% endblock %}

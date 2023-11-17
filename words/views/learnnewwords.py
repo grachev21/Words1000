@@ -45,7 +45,7 @@ class LearnNewWords(LoginRequiredMixin, DataMixin, FormView):
             clue.clue_en_fun(context['words']['correct_word'][0])
             clue.clue_index_fun(str(context['words']['random_list'].index(context['words']['correct_word'][0])))
             # end test
-            var = self.list_variables(title='Учить новые слова', select=menu[2]['url_name'], user=self.request.user)
+            var = self.list_variables(title='Учить новые слова', select=menu[1]['url_name'], user=self.request.user)
             return dict(list(context.items()) + list(var.items()))
 
     def update(self, context):

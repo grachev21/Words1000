@@ -24,6 +24,7 @@ class IntroductionWordsList(DataMixin, LoginRequiredMixin, TemplateView):
             context['user_check'] = 'off'
         # Класс примиси
         var = self.list_variables(title='Знакомство', select=menu[0]['url_name'], user=self.request.user)
+        print(menu[0]['url_name'])
         return dict(list(context.items()) + list(var.items()))
 
     def save_word_data(self):

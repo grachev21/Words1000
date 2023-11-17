@@ -1,5 +1,5 @@
 import random
-from django.views.generic import ListView 
+from django.views.generic import ListView
 from ..models import *
 from ..forms import *
 from ..separate_logic.views_logic import DataMixin
