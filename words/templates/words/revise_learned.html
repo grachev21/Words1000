@@ -1,12 +1,13 @@
 {% extends 'words/base.html' %}
 {% load static %}
 {% block content %}
+
 {% if user_result != 'ok' %}
-    <div class="block_window">
-        <div class="learn_new_words_block">
+  <div class="block_window">
+      <div class="learn_new_words_block">
             {% if check_true_list >= 10 %}
                 {% if response_result %}
-                <h1>{{response_result}}, правильный ответ <h4>{{word}}</h4>
+                <h1>{{response_result}}, правильный ответ {{word}}</h1>
             {% else %}
                 <h1>Выберите правильное слово из четырех представленных</h1>
                 <p class="words_translate_ru">{{word_accum_object.word_ru}}</p>
@@ -15,7 +16,9 @@
     <a href="{% url 'revise_learned' %}">Продолжить</a>
     </div>
 {% else %}
-    <h1>Повторить слова вы сможете только тогда, когда у вас накопится более 10 угаданных слов. сейчас у вас - {{check_true_list}} слов.</h1>
+    <p>Повторить слова вы сможете только <br> 
+    тогда, когда у вас накопится более 10 <br> 
+    угаданных слов. сейчас у вас: {{check_true_list}} слов.</p>
 {% endif %}
 
 {% if not response_result %}

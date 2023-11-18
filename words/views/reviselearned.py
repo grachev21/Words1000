@@ -19,8 +19,7 @@ class ReviseLearned(LoginRequiredMixin, DataMixin, ReviseLearnedMixin, FormView)
     def get_context_data(self, *args, **kwargs ):
         context = super().get_context_data(*args, **kwargs)
         var = self.list_variables(title='Повтор', select=menu[2]['url_name'], user=self.request.user)
-        # context['check_true_list'] = Word_Accumulator.objects.select_related('user').filter(user=self.request.user).count()
-        context['check_true_list'] = 33
+        context['check_true_list'] = Word_Accumulator.objects.select_related('user').filter(user=self.request.user).count()
         if Word_Accumulator.objects.select_related('user').filter(user=self.request.user).exists():
             context['word_accum_object'] = self.create_variables_word_accum(user=self.request.user)
             context['random_words'] = self.random_words()
