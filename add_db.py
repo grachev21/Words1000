@@ -2,7 +2,6 @@ import json
 from words.models import WordsCard
 from words.models import RepeatNumber
 
-
 def record():
 
     list_repeat = ['one', 'two', 'tree']
