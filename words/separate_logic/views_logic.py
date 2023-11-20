@@ -44,7 +44,6 @@ class DataMixin:
             context['words_counter_home'] = [''] * (WordsCard.objects.count() - Word_Accumulator.objects.count())
             context['counter'] = WordsCard.objects.count() - Word_Accumulator.objects.count()
             context['line_off_on'] = 'off'
-            
         return context
 
     def logics(self):
@@ -57,7 +56,6 @@ class DataMixin:
             dot = ''
             for a in range(Word_Accumulator.objects.count()):
                 self.words_counter_home.append(dot)
-        
 
 class ReviseLearnedMixin:
 

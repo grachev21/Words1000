@@ -50,3 +50,11 @@
   cursor: pointer;
 }
 
+
+.finish_text {
+  color: var(--text-color-contrast);
+  font-size: 33px;
+  font-style: normal;
+  font-weight: bold;
+  padding: 30px
+}
