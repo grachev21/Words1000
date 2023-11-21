@@ -19,7 +19,6 @@ class DataMixin:
 
         # info_bar
         if self.request.user.is_authenticated:
-
             # Количество слов из основной
             self.words = WordsCard.objects.count()
             # Количество слов из базы накопления
@@ -37,14 +36,16 @@ class DataMixin:
             context['counter'] = self.counter
             context['line_off_on'] = 'on'
         else:
+            self.words_counter_home = [''] * (WordsCard.objects.count() - Word_Accumulator.objects.count())
+
             context['total_words'] = int(WordsCard.objects.count()) - int(Word_Accumulator.objects.count())
             context['counter_word'] = WordsToRepeat.objects.count()
             context['number'] = SettingsWordNumber.objects.first()
             context['total'] = Word_Accumulator.objects.count()
-            context['words_counter_home'] = [''] * (WordsCard.objects.count() - Word_Accumulator.objects.count())
+            context['words_counter_home'] = self.words_counter_home
             context['counter'] = WordsCard.objects.count() - Word_Accumulator.objects.count()
             context['line_off_on'] = 'off'
-            
+
         return context
 
     def logics(self):
@@ -57,7 +58,6 @@ class DataMixin:
             dot = ''
             for a in range(Word_Accumulator.objects.count()):
                 self.words_counter_home.append(dot)
-        
 
 class ReviseLearnedMixin:
 

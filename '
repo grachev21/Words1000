@@ -14,24 +14,23 @@ def footer():
 @register.inclusion_tag('words/tag_templates/chart_week.html')
 def chart_week(user):
 
-    count = set()
-    calendarList = []
-    calendarFinish = {}
+    count = []
+    calendarListCheck = []
+    calendarFinish = []
 
     for calendar in Word_Accumulator.objects.select_related('user').filter(user=user):
         calStr = str(calendar.date.date())
-        count.add(calStr)
-        calendarList.append(calStr)
-
-    for cou in count:
-        num = 1
-        for cal in calendarList:
-            if cal == cou:
-                num += 1
-        calendarFinish[cou] = num
+        if calStr not in calendarListCheck:
+            calendarListCheck.append(calStr)
+            calendarFinish.append(count)
+            # count.clear()
+            print('xx')
+        else:
+            count.append(calStr)
             
-    print(calendarFinish)
 
+    # print(calendarListCheck)
+    print(calendarFinish)
 
 
 

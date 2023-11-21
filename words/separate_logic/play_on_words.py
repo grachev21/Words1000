@@ -51,7 +51,6 @@ class Config:
             # если нет то заполняем ее словами
             for wor in words_add_in_repead:
                 # ставим статус zero и имя пользователя
-                # print('rec word to WordsToRepeat')
                 num = RepeatNumber.objects.get(pk=1)
                 WordsToRepeat.objects.select_related('user').create(word=wor, repeat_number=num, user=self.USER)
             # Далее проверяем если модель для ознакомления со словами не пуста 
@@ -66,8 +65,6 @@ class Config:
                                         transcription=data_Words.transcription,
                                         word_ru=data_Words.word_ru, user=self.USER
                                         )
-        # else:
-            # print('yes words WordsToRepeat')
 
     def list_creation(self):
         '''Формируем список для отправки его в Run_play'''

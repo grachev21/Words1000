@@ -25,17 +25,17 @@ while True:
     with open('clue_ru.txt', 'r') as file_object:
         ru = file_object.readline()
     if driver.current_url != 'http://127.0.0.1:8000/reading_sentences/':
-        time.sleep(1)
+        time.sleep(0.1)
         learn_new_words = driver.find_elements(By.CLASS_NAME, 'value_words')[int(num)].click()
-        time.sleep(1)
+        time.sleep(0.1)
         driver.find_elements(By.CLASS_NAME, 'user_form_add_word_accum')[0].send_keys(en)
         driver.find_elements(By.CLASS_NAME, 'user_form_add_word_accum')[1].send_keys(ru)
-        time.sleep(1)
+        time.sleep(0.1)
         learn_new_words =driver.find_element(By.CLASS_NAME, 'button_result_true').click()
-        time.sleep(1)
+        time.sleep(0.1)
     else:
         learn_new_words =driver.find_element(By.CLASS_NAME, 'link_next').click()
-        time.sleep(1)
+        time.sleep(0.1)
 
 driver.quit()
 
