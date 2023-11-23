@@ -6,10 +6,10 @@
       <canvas id="myChart" width="450px" height="450px"></canvas>
     </div>
   </div>
-          {% for c in calendar %}
-            {{c.0}},
-          {% endfor %}
 <!-- <script src="{% static 'words/js/chart.js' %}"></script> -->
+            {% for dl in dateList %}
+              {{dl.0}}
+            {% endfor %}
 <script>
 
  const ctx1 = document.getElementById('myChart');
@@ -18,16 +18,16 @@
     type: 'bar',
     data: {
       labels: [
-          {% for c in calendar %}
-            '{{c.0}}',
-          {% endfor %}
+            {% for dl in dateList %}
+              '{{dl.0}}',
+            {% endfor %}
       ],
       datasets: [{
         label: 'График выученых слов',
         data: [
-          {% for c in calendar %}
-            {{c.1}},
-          {% endfor %}
+            {% for dl in dateList %}
+                '{{dl.1}}',
+            {% endfor %}
 
         ],
         borderWidth: 1,

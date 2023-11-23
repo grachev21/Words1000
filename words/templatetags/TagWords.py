@@ -18,7 +18,7 @@ def chart_week(user):
     def create_dict_result():
         count = set()
         calendarList = []
-        calendarFinish = {}
+        calendarFinish = []
 
         for calendar in Word_Accumulator.objects.select_related('user').filter(user=user):
             calStr = str(calendar.date.date())
@@ -30,28 +30,24 @@ def chart_week(user):
             for cal in calendarList:
                 if cal == cou:
                     num += 1
-            calendarFinish[cou] = num
-        sorted_calendar = dict(sorted(calendarFinish.items()))
-        return sorted_calendar
+            calendarFinish.append((cou, num))
+        return calendarFinish
 
     def connect_date_value(value):
-        finish_dict = {}
-        dateList = [str(dc.datetime.today() - dc.timedelta(days=x))[0:10] for x in range(7)]
+        dateList = [(str(dc.datetime.today() - dc.timedelta(days=x))[0:10], '') for x in range(7)]
 
-        for date in dateList:
-            for v in value:
-                if str(v) == str(date):
-                    finish_dict[date] = value[date]
-                else:
-                    finish_dict[date] = ''
+        for index in reversed(range(len(dateList))):
+            for val in value:
+                if dateList[index][0] == val[0]:
+                    dateList[index] = val
+        x = dateList.reverse()
+        print(x)
+        return dateList
 
-        return finish_dict
-
-
-    date_value = connect_date_value(create_dict_result())
+    dateList = connect_date_value(create_dict_result())
 
     data = {
-        'date_value': date_value
+        'dateList': dateList
         }
 
     return data
