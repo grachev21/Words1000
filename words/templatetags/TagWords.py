@@ -24,22 +24,30 @@ def chart_week(user):
         calendarList.append(calStr)
 
     for cou in count:
-        num = 1
+        num = 0
         for cal in calendarList:
             if cal == cou:
                 num += 1
         calendarFinish[cou] = num
-            
-    print(calendarFinish)
+
+    sorted_calendar = dict(sorted(calendarFinish.items()))
+    print(sorted_calendar)
 
 
+    list_label_value = {llv: 'x' for llv in range(0, 7)}
+    print(list_label_value)
 
+    for l in range(len(list_label_value)):
+        list_label_value['x'] = 33
 
+    print(list_label_value)
 
     data = {
-        'week': 0
-    }
+        }
+
     return data
+
+
 
 @register.inclusion_tag('words/tag_templates/doughnut.html')
 def doughnut(*args):
@@ -47,6 +55,7 @@ def doughnut(*args):
             'value': list(args)
         }
     return data
+
 
 @register.inclusion_tag('words/tag_templates/progress_bar_learn_new_words.html')
 def progress_bar_learn_new_words(**kwargs):

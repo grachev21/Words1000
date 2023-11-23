@@ -17,13 +17,7 @@
                 <a href="{% url 'learn_new_words' %}">Продолжить</a>
             </div>
         {% else %}
-            <div class="col-lg-10 text-center">
-                <h1 class="display-3 text-white animated slideInDown">Ура вы выучили все слова!!!</h1>
-                <nav aria-label="breadcrumb">
-                    <ol class="breadcrumb justify-content-center">
-                    </ol>
-                </nav>
-            </div>
+                <div class="finish_text"> Ура вы выучили все слова!!!</div>
         {% endif %}
 
 
@@ -36,7 +30,7 @@
             {% endfor %}
           </div>
         {% else %}
-                <h1>Наконец вы прошли этот долгий и тернистый путь, длинною в 1000 слов!!! Мы желаем вам успеха и удачи в творчестве!</h1>
+                <div class="finish_text">Наконец вы прошли этот долгий и тернистый путь, длинною в 1000 слов!!! Мы желаем вам успеха и удачи в творчестве!</div>
         {% endif %}
 </form>
 

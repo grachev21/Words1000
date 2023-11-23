@@ -1,7 +1,6 @@
 import random
 from ..models import *
 
-
 class Settings:
     '''
     При попадании на страницу, learn_new_words метод number_count_default,
@@ -92,7 +91,17 @@ class Run_play:
     def create_list(self):
         '''Формирует wrong_words - три слова без правильного варианта, random_list -
         перемешанные слова'''
-        self.wrong_words = random.sample(self.without_word, 3)
+        print(self.without_word)
+        if len(self.without_word) >= 3:
+            self.wrong_words = random.sample(self.without_word, 3)
+        else:
+            finish_list = []
+            for w in WordsCard.objects.all():
+                if w.word_en != self.correct_word:
+                    finish_list.append(w.word_en)
+            self.wrong_words = random.sample(finish_list, 3)
+
+
         self.random_list = self.wrong_words + self.correct_word
         self.random_list = random.sample(self.random_list, 4)
 
