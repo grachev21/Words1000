@@ -1,3 +1,4 @@
+import datetime as dc
 from datetime import datetime
 from django import template
 from ..models import SettingsWordNumber
@@ -14,35 +15,43 @@ def footer():
 @register.inclusion_tag('words/tag_templates/chart_week.html')
 def chart_week(user):
 
-    count = set()
-    calendarList = []
-    calendarFinish = {}
+    def create_dict_result():
+        count = set()
+        calendarList = []
+        calendarFinish = {}
 
-    for calendar in Word_Accumulator.objects.select_related('user').filter(user=user):
-        calStr = str(calendar.date.date())
-        count.add(calStr)
-        calendarList.append(calStr)
+        for calendar in Word_Accumulator.objects.select_related('user').filter(user=user):
+            calStr = str(calendar.date.date())
+            count.add(calStr)
+            calendarList.append(calStr)
 
-    for cou in count:
-        num = 0
-        for cal in calendarList:
-            if cal == cou:
-                num += 1
-        calendarFinish[cou] = num
+        for cou in count:
+            num = 0
+            for cal in calendarList:
+                if cal == cou:
+                    num += 1
+            calendarFinish[cou] = num
+        sorted_calendar = dict(sorted(calendarFinish.items()))
+        return sorted_calendar
 
-    sorted_calendar = dict(sorted(calendarFinish.items()))
-    print(sorted_calendar)
+    def connect_date_value(value):
+        finish_dict = {}
+        dateList = [str(dc.datetime.today() - dc.timedelta(days=x))[0:10] for x in range(7)]
+
+        for date in dateList:
+            for v in value:
+                if str(v) == str(date):
+                    finish_dict[date] = value[date]
+                else:
+                    finish_dict[date] = ''
+
+        return finish_dict
 
 
-    list_label_value = {llv: 'x' for llv in range(0, 7)}
-    print(list_label_value)
-
-    for l in range(len(list_label_value)):
-        list_label_value['x'] = 33
-
-    print(list_label_value)
+    date_value = connect_date_value(create_dict_result())
 
     data = {
+        'date_value': date_value
         }
 
     return data
