@@ -7,9 +7,6 @@
     </div>
   </div>
 <!-- <script src="{% static 'words/js/chart.js' %}"></script> -->
-            {% for dl in dateList %}
-              {{dl.0}}
-            {% endfor %}
 <script>
 
  const ctx1 = document.getElementById('myChart');
@@ -19,7 +16,7 @@
     data: {
       labels: [
             {% for dl in dateList %}
-              '{{dl.0}}',
+              '{{dl.0}}'.slice(5),
             {% endfor %}
       ],
       datasets: [{
@@ -31,7 +28,7 @@
 
         ],
         borderWidth: 1,
-        backgroundColor: 'red'
+        backgroundColor: '#4170c7'
       }]
     },
     options: {

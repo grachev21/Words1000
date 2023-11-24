@@ -34,7 +34,7 @@ def chart_week(user):
         return calendarFinish
 
     def connect_date_value(value):
-        dateList = [(str(dc.datetime.today() - dc.timedelta(days=x))[0:10], '') for x in range(7)]
+        dateList = [(str(dc.datetime.today() - dc.timedelta(days=x))[0:10], '') for x in range(14)]
 
         for index in reversed(range(len(dateList))):
             for val in value:
