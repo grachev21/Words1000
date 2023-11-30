@@ -6,7 +6,6 @@ from ..models import WordsToRepeat
 
 menu = [{'title': 'Читаь слова', 'url_name': 'introduction_words'},
         {'title': 'Учить слова', 'url_name': 'learn_new_words'},
-        {'title': 'Повторить', 'url_name': 'revise_learned'},
         {'title': 'Настройки', 'url_name': 'settings'}]
 
 class DataMixin:

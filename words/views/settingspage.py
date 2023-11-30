@@ -15,7 +15,7 @@ class SettingsPage(LoginRequiredMixin, DataMixin, CreateView):
 
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(*args, **kwargs)
-        var = self.list_variables(title='Настройки', select=menu[3]['url_name'], user=self.request.user)
+        var = self.list_variables(title='Настройки', select=menu[2]['url_name'], user=self.request.user)
         return dict(list(context.items()) + list(var.items()))
 
     def get_initial(self):

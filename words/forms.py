@@ -63,5 +63,3 @@ class LoginUserForm(AuthenticationForm):
     username = forms.CharField(label='', widget=forms.TextInput(attrs={'class': 'login_form_input', 'placeholder': 'Логин'}))
     password = forms.CharField(label='', widget=forms.PasswordInput(attrs={'class': 'login_form_input', 'placeholder':'Пароль'}))
 
-class ReviseLearnedForm(forms.Form):
-    pass
