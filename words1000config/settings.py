@@ -24,7 +24,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'l9b@9wl&8hkmnklfk(%msg-evs%xrcf$uf1v9aj@igril^9!*e'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 # ALLOWED_HOSTS = ['words1000run.ru', '62.217.181.208', '127.0.0.1']
 # ALLOWED_HOSTS = ['127.0.0.1']
@@ -131,8 +131,8 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
 # pgtm ozsq jqeu gzig
 
 # Config for email
-EMAIL_USE_TLS = True 
-EMAIL_HOST = 'smtp.gmail.com' 
-EMAIL_HOST_USER = 'grachev613@gmail.com' 
+EMAIL_USE_TLS = True
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'grachev613@gmail.com'
 EMAIL_HOST_PASSWORD = 'pgtm ozsq jqeu gzig'
-EMAIL_PORT = 587 
+EMAIL_PORT = 587

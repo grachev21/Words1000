@@ -4,7 +4,7 @@ from ..models import Word_Accumulator
 from ..models import SettingsWordNumber
 from ..models import WordsToRepeat
 
-menu = [{'title': 'Читаь слова', 'url_name': 'introduction_words'},
+menu = [{'title': 'Список слов', 'url_name': 'introduction_words'},
         {'title': 'Учить слова', 'url_name': 'learn_new_words'},
         {'title': 'Настройки', 'url_name': 'settings'}]
 
@@ -58,23 +58,3 @@ class DataMixin:
             for a in range(Word_Accumulator.objects.count()):
                 self.words_counter_home.append(dot)
 
-class ReviseLearnedMixin:
-
-    def create_variables_word_accum(self, **kwargs):
-        '''Возвращает обхект с тем словом у которого самое малое число повторений'''
-        # Получаем статуc того слова у которого самое малое число повторений
-        w_a_min = min([words.status for words in Word_Accumulator.objects.select_related('user').filter(user=kwargs['user'])])
-        # Получаем список статусов всех слов
-        w_a_status = [words.status for words in Word_Accumulator.objects.select_related('user').filter(user=kwargs['user'])]
-        # Получаем индекс нужного слова
-        w_a_index = w_a_status.index(w_a_min)
-        # Получаем по индексу нужное слова
-        w_a_object = [words for words in Word_Accumulator.objects.select_related('user').filter(user=kwargs['user'])]
-        word = w_a_object[w_a_index]
-        self.word = word
-        return word
-
-    def random_words(self, **kwargs):
-        list_without_word = random.sample([w.word_en for w in WordsCard.objects.all() if w.word_en != self.word.word_en], 3)
-        list_without_word.append(self.word.word_en)
-        return random.sample(list_without_word, 4)
