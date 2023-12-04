@@ -117,6 +117,58 @@
 
 /* ==== */
 
+
+.about_block {
+  color: var(--text-color);
+  display: flex;
+  font-family: 'Ubuntu', sans-serif;
+}
+
+.about_img {
+width: 50%;
+height: 50%;
+}
+
+.text_about {
+  margin-left: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.about_us_logo {
+  font-weight: bold;
+  color: var(--master-color);
+}
+
+.welcom_about {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.text_about_1 {
+  margin-bottom: 10px;
+}
+
+.text_about_2 {
+  margin-bottom: 10px;
+}
+
+.about_list p {
+  margin-bottom: 10px;
+  display: flex;
+}
+
+.about_list img {
+  margin-right: 10px;
+}
+.list_icon {
+  width: 20px;
+}
+
+/* ==== */
+
 .chart_content {
   display: flex;
   flex-direction: row;
