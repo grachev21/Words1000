@@ -1,3 +1,168 @@
+/* Main */
+
+
+html {
+	background: var(--background-color);
+}
+/*
+	TODO remove settings on BODY since we can't namespace it.
+*/
+/*
+	TODO test putting a class on HEAD.
+		- Fails on FF.
+*/
+body,
+div,
+dl,
+dt,
+dd,
+ul,
+ol,
+li,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+pre,
+code,
+form,
+fieldset,
+legend,
+input,
+textarea,
+p,
+blockquote,
+th,
+td {
+	margin: 0;
+	padding: 0;
+  font-family: 'Ubuntu', sans-serif;
+  max-width: 100%;
+}
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+fieldset,
+img {
+	border: 0;
+}
+/*
+	TODO think about hanlding inheritence differently, maybe letting IE6 fail a bit...
+*/
+address,
+caption,
+cite,
+code,
+dfn,
+em,
+strong,
+th,
+var {
+	font-style: normal;
+	font-weight: normal;
+}
+
+ol,
+ul {
+	list-style: none;
+}
+
+caption,
+th {
+	text-align: left;
+}
+
+/* h1,h2,h3,h4,h5, */
+/* h6 { */
+/* 	font-size:100%; */
+/* 	font-weight:normal; */
+/* } */
+
+q:before,
+q:after {
+	content: '';
+}
+abbr,
+acronym {
+	border: 0;
+	font-variant: normal;
+}
+/* to preserve line-height and selector appearance */
+sup {
+	vertical-align: text-top;
+}
+sub {
+	vertical-align: text-bottom;
+}
+input,
+textarea,
+select {
+	font-family: inherit;
+	font-size: inherit;
+	font-weight: inherit;
+	font-size: 100%; /*to enable resizing for IE*/
+}
+/*because legend doesn't inherit in IE */
+legend {
+	color: #000;
+}
+
+a {
+	text-decoration: none;
+	color: var(--text-color);
+}
+
+:root {
+  --background-color: #bbd0e4;
+  --master-color: #4170c7;
+  --text-color: #4d4d5a;
+	--text-color-contrast: rgb(255, 255, 255);
+	--card-color: #6c98be;
+	--card-color-contrast:#445b85 ;
+	--mark-color: red;
+	--button-color: #697ce2;
+	--hover-color: rgb(57, 112, 109);
+	--hover-contrast-color: #738ec0;
+}
+.root_container {
+	display: flex;
+	justify-content: center;
+}
+
+.container {
+    width: 80%;
+    height: 100%;
+}
+
+.block_window {
+	margin-top: 120px;
+}
+
+/* Start Form correct word */
+.form_correct_word {
+    display: flex;
+    align-items: center;
+    flex-flow: column wrap;
+}
+
+.form_correct_word button {
+    background: var(--button-color);
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    padding-right: 3rem;
+    padding-left: 3rem;
+    width: 400px;
+    transition: .5s;
+}
+
+.form_correct_word button:hover {
+    background: var(--hover-color);
+}
+
+
 /* Block card */
 .home_block_info {
   font-family: 'Ubuntu', sans-serif;
@@ -167,7 +332,7 @@ height: 50%;
   width: 20px;
 }
 
-/* ==== */
+/* Chart home */
 
 .chart_content {
   display: flex;
@@ -181,7 +346,7 @@ height: 50%;
   width: 450px;
 }
 
-/* ==== */
+/* Footer */
 
 .footer {
   display: flex;
@@ -218,7 +383,7 @@ height: 50%;
 }
 
 
-/* ==== */
+/* Info_block */
 
 .info_block {
   margin-top: 80px;
@@ -255,7 +420,7 @@ height: 50%;
 }
 
 
-/* ==== */
+/* Leart new words */
 
 .learn_new_words_block{
   display: flex;
@@ -318,46 +483,8 @@ height: 50%;
   padding: 30px
 }
 
-/* ==== */
 
-
-.root_container {
-	display: flex;
-	justify-content: center;
-}
-
-.container {
-    width: 80%;
-    height: 100%;
-}
-
-.block_window {
-	margin-top: 120px;
-}
-
-/* Start Form correct word */
-.form_correct_word {
-    display: flex;
-    align-items: center;
-    flex-flow: column wrap;
-}
-
-.form_correct_word button {
-    background: var(--button-color);
-    padding-top: 1rem;
-    padding-bottom: 1rem;
-    padding-right: 3rem;
-    padding-left: 3rem;
-    width: 400px;
-    transition: .5s;
-}
-
-.form_correct_word button:hover {
-    background: var(--hover-color);
-}
-
-/* ==== */
-
+/* Menu */
 
 .nav_container {
 	position: fixed;
@@ -414,37 +541,38 @@ height: 50%;
 }
 
 /* menu list  */
-.dropdown {
-  position: relative;
-  display: inline-block;
-}
+/* .dropdown { */
+/*   position: relative; */
+/*   display: inline-block; */
+/* } */
 
-.dropdown-content {
-  display: none;
-  position: absolute;
-  background-color: var(--background-color);
-  min-width: 160px;
-  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-  z-index: 1;
-}
+/* .dropdown-content { */
+/*   display: none; */
+/*   position: absolute; */
+/*   background-color: var(--background-color); */
+/*   min-width: 160px; */
+/*   box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2); */
+/*   z-index: 1; */
+/* } */
 
-.dropdown-content a {
-  color: var(--text-color);
-  padding: 12px 16px;
-  text-decoration: none;
-  display: block;
-}
+/* .dropdown-content a { */
+/*   color: var(--text-color); */
+/*   padding: 12px 16px; */
+/*   text-decoration: none; */
+/*   display: block; */
+/* } */
 
-.dropdown-content a:hover {background-color: var(--hover-contrast-color);}
-.dropdown:hover .dropdown-content {display: block;}
-.dropdown:hover .dropbtn {background-color: var(--hover-contrast-color);}
-.user_name {
+/* .dropdown-content a:hover {background-color: var(--hover-contrast-color);} */
+/* .dropdown:hover .dropdown-content {display: block;} */
+/* .dropdown:hover .dropbtn {background-color: var(--hover-contrast-color);} */
+/* .user_name { */
 
-    font-weight: bold;
-}
+/*     font-weight: bold; */
+/* } */
 
-/* ==== */
 
+
+/* Prgogress bar */
 
 .progressbar { 
 	height: 20px;
@@ -604,7 +732,9 @@ height: 50%;
   margin-bottom: 50px;
 }
 
-/* ==== */
+
+/* Login */ 
+
 
 .login_form{
   display: flex;
@@ -691,135 +821,6 @@ height: 50%;
 }
 
 
-/* ==== */
-
-
-html {
-	background: var(--background-color);
-}
-/*
-	TODO remove settings on BODY since we can't namespace it.
-*/
-/*
-	TODO test putting a class on HEAD.
-		- Fails on FF.
-*/
-body,
-div,
-dl,
-dt,
-dd,
-ul,
-ol,
-li,
-h1,
-h2,
-h3,
-h4,
-h5,
-h6,
-pre,
-code,
-form,
-fieldset,
-legend,
-input,
-textarea,
-p,
-blockquote,
-th,
-td {
-	margin: 0;
-	padding: 0;
-  font-family: 'Ubuntu', sans-serif;
-  max-width: 100%;
-}
-table {
-	border-collapse: collapse;
-	border-spacing: 0;
-}
-fieldset,
-img {
-	border: 0;
-}
-/*
-	TODO think about hanlding inheritence differently, maybe letting IE6 fail a bit...
-*/
-address,
-caption,
-cite,
-code,
-dfn,
-em,
-strong,
-th,
-var {
-	font-style: normal;
-	font-weight: normal;
-}
-
-ol,
-ul {
-	list-style: none;
-}
-
-caption,
-th {
-	text-align: left;
-}
-
-/* h1,h2,h3,h4,h5, */
-/* h6 { */
-/* 	font-size:100%; */
-/* 	font-weight:normal; */
-/* } */
-
-q:before,
-q:after {
-	content: '';
-}
-abbr,
-acronym {
-	border: 0;
-	font-variant: normal;
-}
-/* to preserve line-height and selector appearance */
-sup {
-	vertical-align: text-top;
-}
-sub {
-	vertical-align: text-bottom;
-}
-input,
-textarea,
-select {
-	font-family: inherit;
-	font-size: inherit;
-	font-weight: inherit;
-	font-size: 100%; /*to enable resizing for IE*/
-}
-/*because legend doesn't inherit in IE */
-legend {
-	color: #000;
-}
-
-a {
-	text-decoration: none;
-	color: var(--text-color);
-}
-
-:root {
-  --background-color: #bbd0e4;
-  --master-color: #4170c7;
-  --text-color: #4d4d5a;
-	--text-color-contrast: rgb(255, 255, 255);
-	--card-color: #6c98be;
-	--card-color-contrast:#445b85 ;
-	--mark-color: red;
-	--button-color: #697ce2;
-	--hover-color: rgb(57, 112, 109);
-	--hover-contrast-color: #738ec0;
-}
 
 /* ==== */
 
