@@ -1,20 +1,3 @@
-
-@import url("reset.css"); 
-@import url("nav.css");
-@import url("block_card.css");
-@import url("info_block.css");
-@import url("chart_home.css");
-@import url("about_home.css");
-@import url("spinner_home.css");
-@import url("footer.css");
-@import url("settings.css");
-@import url("learn_new_words.css");
-@import url("progressbar.css");
-@import url("register_login.css");
-@import url("result.css");
-@import url("revise_learned.css");
-
-
 .root_container {
 	display: flex;
 	justify-content: center;

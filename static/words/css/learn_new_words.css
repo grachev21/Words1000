@@ -9,41 +9,52 @@
 
 .learn_new_words_block h1{
   margin: 22px;
-  margin-top: 100px;
+  margin-top: 30px;
   color: var(--text-color)
 }
 
 .learn_new_words_block p {
   color: var(--text-color-contrast);
-  margin: 22px;
+  margin: 40px;
   font-size: 22px;
 }
 
 .container_value_words {
   width: 100%;
   display: flex;
+  border: none;
 }
 
 .next_learn_new_words {
-  margin: 50px;
+  margin: 20px;
 }
 
+.next_learn_new_words a {
+  background: var(--button-color);
+  }
 
 .value_words {
   background: var(--card-color-contrast);
   border: none;
-  height: 200px;
+  height: 140px;
   color: var(--text-color-contrast);
   width: 200px;
-  margin: 22px;
-  margin-bottom: 100px;
+  margin: 20px;
+  margin-bottom: 20px;
   font-size: 22px;
   transition: .5s;
 }
 
-
 .value_words:hover {
   background: var(--hover-color);
-
+  cursor: pointer;
 }
 
+
+.finish_text {
+  color: var(--text-color-contrast);
+  font-size: 33px;
+  font-style: normal;
+  font-weight: bold;
+  padding: 30px
+}

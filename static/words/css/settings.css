@@ -38,8 +38,8 @@
 
 .settings_buttom {
     margin-top: 1em;
-    background-color: red;
-    color: white;
+    background-color: var(--mark-color);
+    color: ;
     border-radius: 0px;
     padding: 10px;
     margin-right: 30px;
@@ -50,7 +50,7 @@
 }
 
 .settings_buttom:hover { 
-    background-color:#2bc5d4;
+    background-color: var(--hover-color);
 
 }
 
@@ -64,7 +64,7 @@
 }
 .resetting_dictionaries a {
     margin-top: 1em;
-    background-color: red;
+    background-color: var(--mark-color);
     color: var(--text-color-contrast);
     border-radius: 0px;
     padding: 10px;
@@ -72,14 +72,14 @@
 }
 
 .resetting_dictionaries a:hover {
-    background-color:#2bc5d4;
+    background-color: var(--hover-color);
 }
 
 
 /* resetting dictionaries */
 .resetting_button {
     margin-top: 1em;
-    background-color: red;
+    background-color: var(--mark-color);
     color: var(--text-color-contrast);
     border-radius: 0px;
     padding: 10px;
@@ -90,7 +90,7 @@
 
 
 .nav-link {
-    color: red;
+    color: var(--mark-color);
     font-weight: bold;
 }
 
@@ -117,6 +117,6 @@
 }
 
 .next_learn_new_words a:hover {
-    background: #1fc2d8;
+    background: var(--hover-color);
 }
 

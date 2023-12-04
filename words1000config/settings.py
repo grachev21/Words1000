@@ -26,9 +26,9 @@ SECRET_KEY = 'l9b@9wl&8hkmnklfk(%msg-evs%xrcf$uf1v9aj@igril^9!*e'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-# ALLOWED_HOSTS = ['words1000run.ru', '62.217.181.208', '127.0.0.1']
+ALLOWED_HOSTS = ['words1000run.ru', '62.217.181.208', '127.0.0.1']
 # ALLOWED_HOSTS = ['127.0.0.1']
-ALLOWED_HOSTS = []
+# ALLOWED_HOSTS = []
 
 # Application definition
 

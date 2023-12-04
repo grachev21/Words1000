@@ -17,9 +17,9 @@
 }
 
 .block_circle {
-    position: relative;
-    left: 0px;
-    top: 0px;
+	position: relative;
+	left: 0px;
+	top: 0px;
     max-width: 29em;
     min-width: 29em;
 }

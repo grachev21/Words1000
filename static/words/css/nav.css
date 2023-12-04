@@ -75,15 +75,10 @@
 }
 
 .dropdown-content a:hover {background-color: var(--hover-contrast-color);}
-
 .dropdown:hover .dropdown-content {display: block;}
-
 .dropdown:hover .dropbtn {background-color: var(--hover-contrast-color);}
-/* end menu list */
-
-
-
 .user_name {
+
     font-weight: bold;
 }
 

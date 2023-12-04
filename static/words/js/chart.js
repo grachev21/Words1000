@@ -3,12 +3,12 @@
   new Chart(ctx1, {
     type: 'bar',
     data: {
-      labels: [1,2,3,4,5,6,7,],
+      labels: [1,2,3,4,5,6,7,8],
       datasets: [{
         label: 'График выученых слов',
         data: [12, 19, 3, 5, 2, 3],
         borderWidth: 1,
-        backgroundColor: '#69bfbb'
+        backgroundColor: 'red'
       }]
     },
     options: {
