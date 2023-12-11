@@ -39,7 +39,7 @@ def RegisterUser(request):
             user.save()
             # to get the domain of the current site 
             current_site = get_current_site(request)
-            mail_subject = 'Activation link has been sent to your email id'
+            mail_subject = 'Ссылка для активации была отправлена на ваш адрес электронной почты.'
             message = render_to_string('words/acc_active_email.html', {
                 'user': user,
                 'domain': current_site.domain,
@@ -51,7 +51,7 @@ def RegisterUser(request):
                         mail_subject, message, to=[to_email]
             )
             email.send()
-            return HttpResponse('Please confirm your email address to complete the registration') 
+            return HttpResponse('Пожалуйста зайдите на вашу почту и пройдите по ссылке') 
     else:
         form = RegisterUserForm()
     return render(request, 'words/register.html', {'form': form})
