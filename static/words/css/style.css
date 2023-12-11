@@ -749,6 +749,11 @@ height: 50%;
 
 }
 
+
+.title_register {
+  color: var(--text-color)
+}
+
 .login_form_container form {
   display: flex;
   flex-direction: column;
@@ -760,7 +765,7 @@ height: 50%;
 .button_login {
   background: var(--button-color);
   border: none;
-  color: white;
+  color: var(--text-color-contrast);
   padding-top: 1rem;
   padding-bottom: 1rem;
   padding-right: 3rem;
@@ -970,7 +975,6 @@ height: 50%;
 .settings_buttom {
     margin-top: 1em;
     background-color: var(--mark-color);
-    color: ;
     border-radius: 0px;
     padding: 10px;
     margin-right: 30px;
