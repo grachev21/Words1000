@@ -1,0 +1,18 @@
+/* 640 */
+/* 768 */
+/* 1024 */
+/* 1280 */
+/* 1536 */
+
+@media (min-width: 640px) {
+  .dropdown-item {
+    display: block;
+  }
+
+  .block_user {
+    display: block;
+    display: flex;
+    flex-direction: column;
+  }
+
+}

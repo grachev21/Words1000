@@ -1,0 +1,12 @@
+:root {
+  --background-color: #bbd0e4;
+  --master-color: #4170c7;
+  --text-color: #4d4d5a;
+  --text-color-contrast: rgb(255, 255, 255);
+  --card-color: #6c98be;
+  --card-color-contrast: #445b85;
+  --mark-color: red;
+  --button-color: #697ce2;
+  --hover-color: rgb(57, 112, 109);
+  --hover-contrast-color: #738ec0;
+}
