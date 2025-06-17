@@ -2,16 +2,16 @@ from django.views.generic import ListView, TemplateView, CreateView
 from django.shortcuts import render, redirect
 from django.views.generic.edit import FormView
 from django.contrib.sites.shortcuts import get_current_site
-from separate_logic.views_logic import DataMixin
+from core.services.views_logic import DataMixin
 from django.urls import reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin
-from separate_logic import play_on_words
-from separate_logic import str_to_list
+from core.services import play_on_words
+from core.services import str_to_list
 from django.contrib.auth.views import LoginView
 from django.contrib.auth import logout
 from django.contrib.auth import get_user_model
 from django.http import HttpResponse
-from django.utils.encoding import force_bytes, force_text
+from django.utils.encoding import force_bytes, force_str
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.template.loader import render_to_string
 from core.token import account_activation_token
@@ -19,9 +19,9 @@ from django.core.mail import EmailMessage
 from .models import (WordsCard, WordsConfigJson,
                      IntroductionWords, Word_Accumulator,
                      SettingsWordNumber, WordsToRepeat, RepeatNumber)
-from forms import (WordCheck, LoginUserForm, RegisterUserForm,
-                   WordCountForm, ResettingDictionariesForm,
-                   AddWordAccumulator)
+from .forms import (WordCheck, LoginUserForm, RegisterUserForm,
+                    WordCountForm, ResettingDictionariesForm,
+                    AddWordAccumulator)
 import random
 
 
@@ -203,7 +203,7 @@ def RegisterUser(request):
 def activate(request, uidb64, token):
     User = get_user_model()
     try:
-        uid = force_text(urlsafe_base64_decode(uidb64))
+        uid = force_str(urlsafe_base64_decode(uidb64))
         user = User.objects.get(pk=uid)
     except (TypeError, ValueError, OverflowError, User.DoesNotExist):
         user = None
