@@ -6,13 +6,13 @@ from ..models import SettingsWordNumber, WordsToRepeat, Word_Accumulator
 register = template.Library()
 
 
-@register.inclusion_tag("templatetags/tag_footer.html")
+@register.inclusion_tag("templatetags/core/tag_footer.html")
 def footer():
     current_datetime = datetime.now()
     return {"current_date": current_datetime.year}
 
 
-@register.inclusion_tag("templatetags/chart_week.html")
+@register.inclusion_tag("templatetags/core/chart_week.html")
 def chart_week(user):
 
     def create_dict_result():
@@ -56,13 +56,13 @@ def chart_week(user):
     return data
 
 
-@register.inclusion_tag("templatetags/doughnut.html")
+@register.inclusion_tag("templatetags/core/doughnut.html")
 def doughnut(*args):
     data = {"value": list(args)}
     return data
 
 
-@register.inclusion_tag("templatetags/progress_bar_learn_new_words.html")
+@register.inclusion_tag("templatetags/core/progress_bar_learn_new_words.html")
 def progress_bar_learn_new_words(**kwargs):
     settin_words = (
         SettingsWordNumber.objects.select_related("user")
@@ -81,7 +81,7 @@ def progress_bar_learn_new_words(**kwargs):
     return data
 
 
-@register.inclusion_tag("templatetags/progress_bar_revise_learned.html")
+@register.inclusion_tag("templatetags/core/progress_bar_revise_learned.html")
 def progress_bar_revise_learned():
     data = {}
 

@@ -18,16 +18,14 @@
   <body>
     <div class="root_container">
       <div class="container">
-
         {% header %}
         {% block content %}
 
         {% endblock %}
+        {% footer %}
       </div>
     </div>
 
-    {% footer %}
-    {% include "includes/footer.html" %}
     <script src="{% static 'words/js/menu.js' %}"></script>
   </body>
 </html>
