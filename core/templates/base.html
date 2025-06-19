@@ -1,5 +1,6 @@
 {% load static %}
 {% load TagWords %}
+{% load header_tag %}
 
 <!DOCTYPE html>
 <html lang="ru">
@@ -17,8 +18,8 @@
   <body>
     <div class="root_container">
       <div class="container">
-        {% include 'includes/header.html' %}
 
+        {% header %}
         {% block content %}
 
         {% endblock %}
