@@ -1,0 +1,120 @@
+{% extends 'core/base.html' %} 
+{% load TagWords %} 
+
+
+{% block content %} 
+
+{% if response == 1 %}
+
+<div class="block_window">
+	{% progress_bar_learn_new_words user=user %}
+	<div class="result_block">
+		<h1 class="display-1">Вы угадали</h1>
+		<h1>{{correct_word}} - {{word_ru}}</h1>
+		<form method="post">
+			{% csrf_token %}
+			<div class="formr">{{ form.non_field_errors }}</div>
+			{% for f in form %}
+        <label for="{{f.id_for_label}}">{{form.content.errors}}{{f.label}}{{f}}</label>
+        {{ f.errors }} 
+      {% endfor %}
+			<button class="button_result_true" type="submit">Добавить</button>
+		</form>
+	</div>
+</div>
+{% else %}
+<div class="block_window">
+	{% progress_bar_learn_new_words user=user %}
+	<div class="result_block">
+        <h1>Вы ошиблись</h1>
+        <h1>Правильное слово</h1>
+        <h1>{{correct_word}}</h1>
+        <a class="next_result" href="{% url 'learn_new_words' %}">Продолжить</a>
+	</div>
+</div>
+{% endif %}
+
+<script>
+	const ruInput = document.querySelector('#id_word_ru')
+	const enInput = document.querySelector('#id_word_en')
+
+	const ruKeyCodes = {
+		81: 'й',
+		87: 'ц',
+		69: 'у',
+		82: 'к',
+		84: 'е',
+		89: 'н',
+		85: 'г',
+		73: 'ш',
+		79: 'щ',
+		80: 'з',
+		219: 'х',
+		221: 'ъ',
+		65: 'ф',
+		83: 'ы',
+		68: 'в',
+		70: 'а',
+		71: 'п',
+		72: 'р',
+		74: 'о',
+		75: 'л',
+		76: 'д',
+		186: 'ж',
+		222: 'э',
+		90: 'я',
+		88: 'ч',
+		67: 'с',
+		86: 'м',
+		66: 'и',
+		78: 'т',
+		77: 'ь',
+		188: 'б',
+		190: 'ю',
+		192: 'ё',
+	}
+
+	const enKeyCodes = {
+		81: 'q',
+		87: 'w',
+		69: 'e',
+		82: 'r',
+		84: 't',
+		89: 'y',
+		85: 'u',
+		73: 'i',
+		79: 'o',
+		80: 'p',
+		65: 'a',
+		83: 's',
+		68: 'd',
+		70: 'f',
+		71: 'g',
+		72: 'h',
+		74: 'j',
+		75: 'k',
+		76: 'l',
+		90: 'z',
+		88: 'x',
+		67: 'c',
+		86: 'v',
+		66: 'b',
+		78: 'n',
+		77: 'm',
+	}
+
+	ruInput.addEventListener('keydown', evt => {
+		if (evt.keyCode in ruKeyCodes) {
+			evt.preventDefault()
+			evt.currentTarget.value += ruKeyCodes[evt.keyCode]
+		}
+	})
+
+	enInput.addEventListener('keydown', evt => {
+		if (evt.keyCode in enKeyCodes) {
+			evt.preventDefault()
+			evt.currentTarget.value += enKeyCodes[evt.keyCode]
+		}
+	})
+</script>
+{% endblock %}

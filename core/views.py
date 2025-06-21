@@ -27,7 +27,7 @@ import random
 
 class Home(DataMixin, ListView):
     model = WordsCard
-    template_name = "home.html"
+    template_name = "core/home.html"
     context_object_name = "words_counter_home"
 
     def get_context_data(self, **kwargs):
@@ -58,7 +58,7 @@ class Home(DataMixin, ListView):
 
 class IntroductionWordsList(DataMixin, LoginRequiredMixin, TemplateView):
 
-    template_name = "introduction_words.html"
+    template_name = "core/introduction_words.html"
     login_url = reverse_lazy("register")
 
     def get_context_data(self, **kwargs):
@@ -87,7 +87,7 @@ class IntroductionWordsList(DataMixin, LoginRequiredMixin, TemplateView):
 
 
 class LearnNewWords(LoginRequiredMixin, DataMixin, FormView):
-    template_name = 'learn_new_words.html'
+    template_name = 'core/learn_new_words.html'
     form_class = WordCheck
     # Переведет на другую страницу не авторизованных пользователей
     login_url = reverse_lazy('register')
@@ -124,7 +124,7 @@ class LearnNewWords(LoginRequiredMixin, DataMixin, FormView):
 
 
 class ReadingSentences(DataMixin, LoginRequiredMixin, TemplateView):
-    template_name = 'reading_sentences.html'
+    template_name = 'core/reading_sentences.html'
     login_url = reverse_lazy('register')
 
     def get_context_data(self, **kwargs):
@@ -158,7 +158,7 @@ class ReadingSentences(DataMixin, LoginRequiredMixin, TemplateView):
 
 class LoginUser(DataMixin, LoginView):
     form_class = LoginUserForm
-    template_name = 'login.html'
+    template_name = 'core/login.html'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -197,7 +197,7 @@ def RegisterUser(request):
             )
     else:
         form = RegisterUserForm()
-    return render(request, 'register.html', {'form': form})
+    return render(request, 'core/register.html', {'form': form})
 
 
 def activate(request, uidb64, token):
@@ -229,7 +229,7 @@ class Result(DataMixin, LoginRequiredMixin, CreateView):
     Метод user_filter получает две переменные WORD_DATA, WORD_USER
     '''
     form_class = AddWordAccumulator
-    template_name = 'result.html'
+    template_name = 'core/result.html'
     success_url = reverse_lazy('reading_sentences')
     login_url = reverse_lazy('register')
 
@@ -292,7 +292,7 @@ class Result(DataMixin, LoginRequiredMixin, CreateView):
 
 
 class SettingsPage(LoginRequiredMixin, DataMixin, CreateView):
-    template_name = 'settings.html'
+    template_name = 'core/settings.html'
     form_class = WordCountForm
     success_url = reverse_lazy('home')
     login_url = reverse_lazy('register')
@@ -324,7 +324,7 @@ class SettingsPage(LoginRequiredMixin, DataMixin, CreateView):
 class ResettingDictionaries(LoginRequiredMixin, FormView):
     '''Сбрасывает прогресс словаря пользователя'''
 
-    template_name = 'resetting_dictionaries.html'
+    template_name = 'core/resetting_dictionaries.html'
     form_class = ResettingDictionariesForm
     login_url = reverse_lazy('register')
 

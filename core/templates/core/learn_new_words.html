@@ -1,0 +1,39 @@
+{% extends 'core/base.html' %}
+{% load TagWords %}
+
+{% block content %}
+<div class="block_window">
+{% progress_bar_learn_new_words user=user %}
+<div class="learn_new_words_block">
+        {% if not check_finish %}
+          {% if user_check == 'on' %}
+                  <h1>Ознакомтесь со словами и переходите в раздел</h1>
+                  <li><a href="#">Учить новые слова</a></li>
+          {% else %}
+                <h1>Выберите правильное слово из четырех представленных</h1>
+                <p>{{words.translate_ru}}</p>
+          {% endif %}
+            <div class="next_learn_new_words">
+                <a href="{% url 'learn_new_words' %}">Продолжить</a>
+            </div>
+        {% else %}
+                <div class="finish_text"> Ура вы выучили все слова!!!</div>
+        {% endif %}
+
+
+<form method="post" >
+{% csrf_token %}
+        {% if not check_finish %}
+          <div class="container_value_words">
+            {% for w in words.random_list %}
+                  <input class="value_words" type="submit" value="{{w}}" name="{{w}}">
+            {% endfor %}
+          </div>
+        {% else %}
+                <div class="finish_text">Наконец вы прошли этот долгий и тернистый путь, длинною в 1000 слов!!! Мы желаем вам успеха и удачи в творчестве!</div>
+        {% endif %}
+</form>
+
+</div>
+</div>
+{% endblock %}

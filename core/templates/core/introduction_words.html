@@ -1,0 +1,16 @@
+{% extends 'core/base.html' %} {% load TagWords %} {% block content %}
+<div class="block_window">
+  <div class="info_block">
+    <div class="container_info">
+      {% for d in db %}
+      <div class="block_info_container">
+        <img class="icon_img" src="/static/words/icon/aperture.png" alt="" />
+        <h5 class="">{{ d.word_en }}</h5>
+        <p>{{ d.transcription }}</p>
+        <p class="introduction_words_word_ru">{{ d.word_ru }}</p>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+{% endblock %}
