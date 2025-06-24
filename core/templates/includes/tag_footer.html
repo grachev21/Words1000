@@ -1,10 +1,14 @@
 {% load static %}
-<div class="block_window">
-  <div class="footer">
-    <div class="links">
-      <a href="https://vk.com/id803449847"><img src="{% static 'words/icon/VK.png' %}" class="symbol" alt="VK icon" /></a>
-    </div>
-
-    <div class="name">2022-{{ current_date }} Денис Грачев</div>
+<div class="card mt-5">
+  <div class="card-header">
+    <a class="text-black nav-link" href=""> 
+      <img src="{% static 'icons/VK.png' %}" alt="Моя иконка" class="img-fluid bg-secondary rounded-circle" width="32px" height="32px" />
+      Мой vk
+    </a>
+  </div>
+  <div class="card-body">
+    <h5 class="card-title">Words1000</h5>
+    <p class="card-text">2022-{{ current_date }} Денис Грачев.</p>
+    <a href="#" class="btn btn-primary">Поддержать проект</a>
   </div>
 </div>

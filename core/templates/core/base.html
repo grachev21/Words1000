@@ -7,8 +7,10 @@
     <title>{{ title }}</title>
     {% include 'includes/fonts_styles.html' %}
   </head>
-  <body>
-    {% header %} {% block content %} {% endblock %}
+  <body class="d-flex flex-column min-vh-100">
+    {% header %}
+    <div class="flex-grow-1 d-flex flex-column justify-content-center">{% block content %} {% endblock %}</div>
+    {% footer %}
     <script src="{% static 'words/js/menu.js' %}"></script>
   </body>
 </html>

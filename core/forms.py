@@ -10,9 +10,7 @@ from .models import WordsConfigJson
 list_status = ['Удалить весь прогресс', 'hello']
 
 class WordCheck(forms.Form):
-    '''
-    Форма возвращает вариант нажотой кнопки
-    '''
+    '''The form returns the option of pressed button'''
     pass
 
 class AddWordAccumulator(forms.ModelForm):
@@ -60,6 +58,12 @@ class RegisterUserForm(UserCreationForm):
         fields = ('username', 'email', 'password1', 'password2')
 
 class LoginUserForm(AuthenticationForm):
-    username = forms.CharField(label='', widget=forms.TextInput(attrs={'class': 'login_form_input', 'placeholder': 'Логин'}))
-    password = forms.CharField(label='', widget=forms.PasswordInput(attrs={'class': 'login_form_input', 'placeholder':'Пароль'}))
+    username = forms.CharField(
+        widget=forms.TextInput(attrs={'class': 'form-control'}),
+        label='Имя пользователя'
+    )
+    password = forms.CharField(
+        widget=forms.PasswordInput(attrs={'class': 'form-control'}),
+        label='Пароль'
+    )
 

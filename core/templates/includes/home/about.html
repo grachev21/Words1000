@@ -1,43 +1,24 @@
-<div class="block_window">
-  <div class="about_block">
-    <img class="about_img" src="{% static 'words/img/about.jpg' %}" alt="" />
+{% load static %}
 
-    <div class="text_about">
-      <h3 class="about_us_logo">О нас</h3>
-      <h1 class="welcom_about">Добро пожаловать в Words1000</h1>
-      <p class="text_about_1">
-        Здесь вы сможете изучить 1000 слов, которая составляют необходимую словарно-лексическую базу любого человека
-      </p>
-      <p class="text_about_2">
-        Выше был представлен график прогресса в виде белых точек, как вы уже догадались их там ровно тысяча. Белые точки
-        это те слова которые вы еще не выучили а зеленые которые вы уже знаете.
-      </p>
-      <div class="about_list">
-        <p>
-          <img class="list_icon" src="{% static 'words/icon/check.png' %}" alt="" />
-          Повысите словарный запас
-        </p>
-        <p>
-          <img class="list_icon" src="{% static 'words/icon/check.png' %}" alt="" />
-          Начнете читать литературу на английском
-        </p>
-        <p>
-          <img class="list_icon" src="{% static 'words/icon/check.png' %}" alt="" />
-          Расширите кругазор досуга
-        </p>
-        <p>
-          <img class="list_icon" src="{% static 'words/icon/check.png' %}" alt="" />
-          Снимите рамки в учебе
-        </p>
-        <p>
-          <img class="list_icon" src="{% static 'words/icon/check.png' %}" alt="" />
-          Найдете работу мечты
-        </p>
-        <p>
-          <img class="list_icon" src="{% static 'words/icon/check.png' %}" alt="" />
-          Удивите колег
-        </p>
-      </div>
+<div class="container bg-light mt-xl-5 border rounded-2 p-3">
+  <div class="row">
+    <div class="col">
+      <img class="img-fluid rounded-2 shadow-sm w-75" src="{% static 'img/about.jpg' %}" alt="" />
+    </div>
+    <div class="col">
+      <figure class="text-end">
+        <blockquote class="blockquote">
+          <p>Добро пожаловать на сервис изучения английского языка.</p>
+          <h5>Words1000</h5>
+        </blockquote>
+        <figcaption class="blockquote-footer my-3">
+          Здесь вы сможете изучить 1000 слов, которая составляют необходимую словарно-лексическую базу любого человека
+        </figcaption>
+        <figcaption class="blockquote-footer my-3">
+          Пройдите регистрацию и настройте тренажер под себя и свои возможности
+        </figcaption>
+        <figcaption class="blockquote-footer my-3">Проходите тесты каждый день, это даст лучший результат</figcaption>
+      </figure>
     </div>
   </div>
 </div>

@@ -1,6 +1,6 @@
 {% extends 'core/base.html' %} {% load TagWords %} {% load static %} {% block content %}
 
-<div class="container bg-light mt-xl-5">
+<div class="container bg-light mt-xl-5 border rounded-2 p-3">
   <div class="row mb-4">
     <h3>Все слова</h3>
     <div class="col">{% include 'includes/home/running_line.html' %}</div>
@@ -19,9 +19,7 @@
   <div class="row g-4">
     {% if request.user.is_authenticated %}
     <div class="col-md-6">
-      <div class="m-5 border border-black rounded-2">
-        {% chart_week user=user %}
-      </div>
+      <div class="m-5 border border-black rounded-2">{% chart_week user=user %}</div>
     </div>
     <div class="col-md-6">
       <div class="m-5 border border-black rounded-2">
@@ -31,5 +29,4 @@
     {% endif %}
   </div>
 </div>
-
-{% endblock %}
+{% include 'includes/home/about.html' %} {% endblock %}
