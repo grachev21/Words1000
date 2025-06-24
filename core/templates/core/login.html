@@ -5,12 +5,10 @@
       <div class="card shadow">
         <div class="card-body p-4">
           <h2 class="text-center mb-4">Вход в систему</h2>
-
           <form method="post">
             {% csrf_token %} {% bootstrap_form form %}
-
             <div class="d-grid gap-2">
-              <button type="submit" class="btn btn-primary btn-lg mt-3">Войти</button>
+              <button type="submit" class="btn btn-secondary btn-lg mt-3">Войти</button>
             </div>
           </form>
         </div>

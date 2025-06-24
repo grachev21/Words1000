@@ -1,16 +1,17 @@
 {% extends 'core/base.html' %} {% load TagWords %} {% block content %}
-<div class="block_window">
-  <div class="info_block">
-    <div class="container_info">
-      {% for d in db %}
-      <div class="block_info_container">
-        <img class="icon_img" src="/static/words/icon/aperture.png" alt="" />
-        <h5 class="">{{ d.word_en }}</h5>
-        <p>{{ d.transcription }}</p>
-        <p class="introduction_words_word_ru">{{ d.word_ru }}</p>
+
+<div class="container bg-light mt-xl-5 border rounded-2 p-3">
+  <div class="list-group">
+    {% for d in db %}
+    <a href="#" class="list-group-item list-group-item-action">
+      <div class="d-flex w-100 justify-content-between">
+        <h5 class="mb-1">{{ d.word_en }}</h5>
+        <small class="text-muted">{{ d.created }}</small>
       </div>
-      {% endfor %}
-    </div>
+      <p class="mb-1">{{ d.word_ru }}</p>
+      <small class="text-muted">{{ d.transcription }}</small>
+    </a>
+    {% endfor %}
   </div>
 </div>
 {% endblock %}
