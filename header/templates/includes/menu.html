@@ -1,0 +1,26 @@
+<div class="mobile-menu">
+  <div class="menu">
+    {% for m in menu %}
+    <a
+      class="link {% if request.resolver_match.url_name == m.link %}link_active{% endif %}"
+      href="{% url m.link %}"
+      >{{ m.name }}</a
+    >
+    {% endfor %}
+  </div>
+
+  <div class="login_logout">
+    {% if request.user.is_authenticated %}
+    <a class="link_user" href="{% url login_logout.1.link %}"
+      >{{ login_logout.1.name }}</a
+    >
+    {% else %}
+    <a class="link_user" href="{% url login_logout.0.link %}"
+      >{{ login_logout.0.name }}</a
+    >
+    <a class="link_user" href="{% url login_logout.2.link %}"
+      >{{ login_logout.2.name }}</a
+    >
+    {% endif %}
+  </div>
+</div>

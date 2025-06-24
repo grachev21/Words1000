@@ -4,20 +4,11 @@
 <html lang="ru">
   <head>
     <meta charset="utf-8" />
-
     <title>{{ title }}</title>
-
     {% include 'includes/fonts_styles.html' %}
-
-    <link rel="shortcut icon" href="{% static 'words/icon/favicon.png' %}" type="image/x-icon" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   </head>
-
   <body>
-    <div class="root_container">
-      <div class="container">{% header %} {% block content %} {% endblock %} {% footer %}</div>
-    </div>
-
+    {% header %} {% block content %} {% endblock %}
     <script src="{% static 'words/js/menu.js' %}"></script>
   </body>
 </html>

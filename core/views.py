@@ -36,6 +36,7 @@ class Home(DataMixin, ListView):
         self.logics()
         context["user"] = self.request.user
         context["spinner_data"] = self.word_dict()
+        context["all_words"] = WordsCard.objects.all()
         return dict(list(context.items()) + list(var.items()))
 
     def word_dict(self):

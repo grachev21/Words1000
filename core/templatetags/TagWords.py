@@ -6,13 +6,29 @@ from ..models import SettingsWordNumber, WordsToRepeat, Word_Accumulator
 register = template.Library()
 
 
+@register.inclusion_tag("includes/home/services.html")
+def services(name, serv_data, index=0):
+    description = [
+        "Общее количество слов выученные за текущий день",
+        "Эти слова вы должны выучить сегодня",
+        "Это все слова которые присутствуют в словаре",
+        "Это общее количество слов которое вы выучили за все время",
+    ]
+
+    return {
+        "name": name,
+        "serv_data": serv_data,
+        "description": description[index],
+    }
+
+
 @register.inclusion_tag("includes/tag_footer.html")
 def footer():
     current_datetime = datetime.now()
     return {"current_date": current_datetime.year}
 
 
-@register.inclusion_tag("includes/chart_week.html")
+@register.inclusion_tag("includes/home/chart_week.html")
 def chart_week(user):
 
     def create_dict_result():
@@ -56,7 +72,7 @@ def chart_week(user):
     return data
 
 
-@register.inclusion_tag("includes/doughnut.html")
+@register.inclusion_tag("includes/home/doughnut.html")
 def doughnut(*args):
     data = {"value": list(args)}
     return data
