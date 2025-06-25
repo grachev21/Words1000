@@ -1,13 +1,11 @@
 {% extends 'core/base.html' %} {% load TagWords %} {% load static %} {% block content %}
 
-<div class="container bg-light mt-xl-5 border rounded-2 p-3">
+<div class="container bg-body-tertiary mt-xl-5 border rounded-2 p-3">
   <div class="row mb-4">
     <h3>Все слова</h3>
     <div class="col">{% include 'includes/home/running_line.html' %}</div>
   </div>
-  <div class="row">
     <h3>Ваши настройки</h3>
-  </div>
   <div class="row gap-4 mb-4">
     <div class="col">{% services name='Количество слов за день' serv_data=number.number_words index=0 %}</div>
     <div class="col">{% services name='Осталось за день' serv_data=counter_word index=1 %}</div>
@@ -15,7 +13,7 @@
     <div class="col">{% services name='Выучено' serv_data=total index=3 %}</div>
   </div>
 
-  <h3>Ваши настройки</h3>
+  <h3>Ваши графики</h3>
   <div class="row g-4">
     {% if request.user.is_authenticated %}
     <div class="col-md-6">

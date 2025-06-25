@@ -24,7 +24,7 @@ class IntroductionWords(models.Model):
     transcription = models.CharField(max_length=100, verbose_name="Транскрипция")
     word_ru = models.CharField(max_length=100, verbose_name="На русском")
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    created = models.DateTimeField(auto_created=True, verbose_name="Дата создания")
+    created = models.DateTimeField(auto_created=True, null=True, verbose_name="Дата создания")
 
     class Meta:
         verbose_name = "Слова для ознакомления"
