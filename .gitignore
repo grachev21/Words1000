@@ -23,12 +23,9 @@ ENV/
 
 # Node.js / Webpack (если используется)
 node_modules/
-staticfiles/
 *.css.map
 *.js.map
 
-# Статика (если собирается через collectstatic)
-/static/
 
 # Миграции (можно исключить, но лучше оставить)
 # /migrations/
