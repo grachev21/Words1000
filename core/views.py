@@ -155,7 +155,6 @@ class ReadingSentences(DataMixin, LoginRequiredMixin, TemplateView):
             .get(user=self.request.user)
             .WORD_DATA
         )
-        print(context["phrases_set"])
         context["words_count"] = (
             SettingsWordNumber.objects.select_related("user")
             .get(user=self.request.user)
@@ -344,18 +343,19 @@ class SettingsPage(LoginRequiredMixin, DataMixin, CreateView):
         return initial
 
     def form_valid(self, form):
-        WordsToRepeat.objects.select_related("user").filter(
-            user=self.request.user
-        ).delete()
-        WordsConfigJson.objects.select_related("user").filter(
-            user=self.request.user
-        ).delete()
-        SettingsWordNumber.objects.select_related("user").filter(
-            user=self.request.user
-        ).delete()
-        IntroductionWords.objects.select_related("user").filter(
-            user=self.request.user
-        ).delete()
+        # Delete old notes
+        WordsToRepeat.objects.filter(user=self.request.user).delete()
+        WordsConfigJson.objects.filter(user=self.request.user).delete()
+        SettingsWordNumber.objects.filter(user=self.request.user).delete()
+        IntroductionWords.objects.filter(user=self.request.user).delete()
+
+        # Create an object, but do not save in the database
+        self.object = form.save(commit=False)
+        # Set the current user
+        self.object.user = self.request.user
+        # Save the object with the user
+        self.object.save()
+
         return super().form_valid(form)
 
 
@@ -388,4 +388,6 @@ class ResettingDictionaries(LoginRequiredMixin, FormView):
                     WordsConfigJson.objects.select_related("user").filter(
                         user=self.request.user
                     ).delete()
-                    return HttpResponseRedirect(reverse('home'))  # Пример перенаправления
+                    return HttpResponseRedirect(
+                        reverse("home")
+                    )  # Пример перенаправления

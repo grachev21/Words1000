@@ -49,7 +49,7 @@ class SettingsWordNumber(models.Model):
         validators=[MaxValueValidator(100), MinValueValidator(5)],
         verbose_name="Количество слов за день",
     )
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
 
     class Meta:
         verbose_name = "Количество слов за день"

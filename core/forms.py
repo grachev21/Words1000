@@ -69,7 +69,6 @@ class AddWordAccumulator(forms.ModelForm):
 
 
 class WordCountForm(forms.ModelForm):
-    # user = forms.Field(disabled=True)
 
     class Meta:
         model = SettingsWordNumber
