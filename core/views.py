@@ -1,3 +1,7 @@
+from django.views import View
+from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_exempt
+from django.utils.decorators import method_decorator
 from django.views.generic import ListView, TemplateView, CreateView
 from django.shortcuts import render, redirect
 from django.views.generic.edit import FormView
@@ -16,15 +20,8 @@ from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.template.loader import render_to_string
 from core.token import account_activation_token
 from django.core.mail import EmailMessage
-from .models import (
-    WordsCard,
-    WordsConfigJson,
-    IntroductionWords,
-    Word_Accumulator,
-    SettingsWordNumber,
-    WordsToRepeat,
-    RepeatNumber,
-)
+from .models import WordsCard
+
 from .forms import (
     WordCheck,
     LoginUserForm,
@@ -34,6 +31,7 @@ from .forms import (
     AddWordAccumulator,
 )
 import random
+import json
 
 
 class Home(DataMixin, ListView):
@@ -135,6 +133,30 @@ class LearnNewWords(LoginRequiredMixin, DataMixin, FormView):
             defaults=data, user=self.request.user
         )
         return redirect("result")
+
+
+# @method_decorator(csrf_exempt, name="dispatch")
+# class TaskCreateView(View):
+#     def post(self, request):
+#         try:
+#             data = json.loads(request.body)
+#             task = Word_Accumulator.objects.create(
+#                 title=data.get("title"), description=data.get("description")
+#             )
+
+#             return JsonResponse(
+#                 {
+#                     "status": "success",
+#                     "task": {
+#                         "id": task.id,
+#                         "title": task.title,
+#                         "description": task.description,
+#                         "created_at": task.created_at.strftime("%Y-%m-%d %H:%M"),
+#                     },
+#                 }
+#             )
+#         except Exception as e:
+#             return JsonResponse({"status": "error", "message": str(e)}, status=400)
 
 
 class ReadingSentences(DataMixin, LoginRequiredMixin, TemplateView):
@@ -248,10 +270,6 @@ def logout_user(request):
 
 
 class Result(DataMixin, LoginRequiredMixin, CreateView):
-    """
-    Класс обработки формы.
-    Метод user_filter получает две переменные WORD_DATA, WORD_USER
-    """
 
     form_class = AddWordAccumulator
     template_name = "core/result.html"

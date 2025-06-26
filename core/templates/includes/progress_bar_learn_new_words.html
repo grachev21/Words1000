@@ -1,34 +1,39 @@
-<div id="myProgress">
+<!-- <div id="myProgress">
   <div id="myBar"></div>
 </div>
 
 <style>
-#myProgress {
-  width: 100%;
-  background-color: var(--text-color-contrast);
-  margin-bottom: 20px;
-}
+  #myProgress {
+    width: 100%;
+    background-color: var(--text-color-contrast);
+    margin-bottom: 20px;
+  }
 
-#myBar {
-  width: </style>
+  #myBar {
+    width:
+</style>
 
 <script>
-var i = 0;
-function move() {
-  if (i == 0) {
-    i = 1;
-    var elem = document.getElementById("myBar");
-    var width = 1;
-    var id = setInterval(frame, 10);
-    function frame() {
-      if (width >= 100) {
-        clearInterval(id);
-        i = 0;
-      } else {
-        width++;
-        elem.style.width = width + "%";
+  var i = 0;
+  function move() {
+    if (i == 0) {
+      i = 1;
+      var elem = document.getElementById("myBar");
+      var width = 1;
+      var id = setInterval(frame, 10);
+      function frame() {
+        if (width >= 100) {
+          clearInterval(id);
+          i = 0;
+        } else {
+          width++;
+          elem.style.width = width + "%";
+        }
       }
     }
   }
-}
-</script>
+</script> -->
+
+<div class="progress" role="progressbar" aria-label="Success example" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
+  <div class="progress-bar text-bg-success" style="width: 25%">25%</div>
+</div>
