@@ -1,27 +1,30 @@
-{% extends 'core/base.html' %} {% load TagWords %} {% load static %} {% block content %}
+{% extends 'core/base.html' %} {% load TagWords %} {% load settings_tag %} {% load static %} {% block content %}
 
 <div class="container bg-body-tertiary mt-xl-5 border rounded-2 p-3">
   <div class="row mb-4">
     <h3>Все слова</h3>
     <div class="col">{% include 'includes/home/running_line.html' %}</div>
   </div>
-    <h3>Ваши настройки</h3>
+  <h3>Ваши настройки</h3>
   <div class="row gap-4 mb-4">
-    <div class="col">{% services name='Количество слов за день' serv_data=number.number_words index=0 %}</div>
-    <div class="col">{% services name='Осталось за день' serv_data=counter_word index=1 %}</div>
-    <div class="col">{% services name='Всего' serv_data=total_words index=2 %}</div>
-    <div class="col">{% services name='Выучено' serv_data=total index=3 %}</div>
+    <div class="col">{% services index=0 %}</div>
+    <div class="col">{% services index=1 %}</div>
+    <div class="col">{% services index=2 %}</div>
+    <div class="col">{% services index=3 %}</div>
+    <div class="col">{% services index=4 %}</div>
   </div>
 
   <h3>Ваши графики</h3>
   <div class="row g-4">
     {% if request.user.is_authenticated %}
     <div class="col-md-6">
+      {% comment %}
       <div class="m-5 border border-black rounded-2">{% chart_week user=user %}</div>
+      {% endcomment %}
     </div>
     <div class="col-md-6">
       <div class="m-5 border border-black rounded-2">
-        {% doughnut number.number_words counter_word total_words total %}
+        {% comment %} {% doughnut number.number_words counter_word total_words total %} {% endcomment %}
       </div>
     </div>
     {% endif %}

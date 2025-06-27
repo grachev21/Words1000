@@ -20,7 +20,7 @@
           {% if request.resolver_match.url_name == m.url_name%}
           <a class="nav-link border-bottom border-2 border-dark" href="{% url m.url_name%}">{{ m.name }}</a>
           {% else %}
-          <a class="nav-link" href="{% url m.url_name%}">{{ m.name }}</a>
+          <a class="nav-link" href="{% url m.url_name %}">{{ m.name }}</a>
           {% endif %}
         </li>
         {% endfor %}

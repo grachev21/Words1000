@@ -1,5 +1,2 @@
-{% autoescape off %} 
-Hi {{ user.username }}, 
-Пожалуйста, пройдите по ссылке для регистрации на сайте.
-http://{{ domain }}{% url 'activate' uidb64=uid token=token %} 
-{% endautoescape %} 
+{% autoescape off %} Hi {{ user.username }}, Пожалуйста, пройдите по ссылке для регистрации на сайте. http://{{ domain
+}}{% url 'activate' uidb64=uid token=token %} {% endautoescape %}

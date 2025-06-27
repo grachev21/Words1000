@@ -1,7 +1,6 @@
-from ..models import WordsCard
-from ..models import Word_Accumulator
-from ..models import SettingsWordNumber
-from ..models import WordsToRepeat
+from models import WordsCard
+from users.models import WordsUser
+from settings.models import WordsSettings
 
 
 class DataMixin:
@@ -17,7 +16,7 @@ class DataMixin:
             self.words = WordsCard.objects.count()
             # Количество слов из базы накопления
             self.accum = (
-                Word_Accumulator.objects.select_related("user")
+                WordsUser.objects.select_related("user")
                 .filter(user=context["user"])
                 .count()
             )

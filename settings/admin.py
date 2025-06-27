@@ -1,3 +1,11 @@
 from django.contrib import admin
+from settings.models import WordsSettings
 
-# Register your models here.
+
+@admin.register(WordsSettings)
+class WordsSettingsAdmin(admin.ModelAdmin):
+    list_display = (
+        "number_words",
+        "number_repetitions",
+        "user"
+    )  

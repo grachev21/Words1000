@@ -7,9 +7,9 @@ register = template.Library()
 def header(context):
     menu = [
         {"name": "Главная", "url_name": "home"},
-        {"name": "Ознакомится со списком", "url_name": "introduction_words"},
-        {"name": "Учить новые слова", "url_name": "learn_new_words"},
-        {"name": "Настройки", "url_name": "settings"},
+        # {"name": "Ознакомится со списком", "url_name": "introduction_words"},
+        # {"name": "Учить новые слова", "url_name": "learn_new_words"},
+        # {"name": "Настройки", "url_name": "settings"},
     ]
 
     user_menu = [

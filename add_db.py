@@ -1,11 +1,9 @@
 import json
 from core.models import WordsCard
-from core.models import RepeatNumber
 
 
 def record():
 
-    list_repeat = ['one', 'two', 'tree']
 
     with open('.parser/sw_templates.json', 'r', encoding="utf-8") as file:
         data = json.load(file)
@@ -20,6 +18,3 @@ def record():
         )
         mod.save()
 
-    for repeat in list_repeat:
-        rep = RepeatNumber(number=repeat)
-        rep.save()

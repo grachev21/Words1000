@@ -2,7 +2,9 @@
   <div class="marquee-wrapper bg-body p-3 overflow-hidden rounded border" style="max-height: 18rem">
     <div class="marquee-content">
       {% for word in all_words %}
-      <span class="marquee-item bg-body-secondary text-body-emphasis m-1 p-2 rounded d-inline-flex align-items-center"> {{ word }} </span>
+      <span class="marquee-item bg-body-secondary text-body-emphasis m-1 p-2 rounded d-inline-flex align-items-center">
+        {{ word }}
+      </span>
       {% endfor %}
       <!-- Дублирование контента для бесшовной анимации -->
       {% for word in all_words %}

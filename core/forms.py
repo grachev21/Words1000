@@ -3,9 +3,8 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.forms import User
 from django.contrib.auth.views import AuthenticationForm
 from django import forms
-from .models import SettingsWordNumber
-from .models import Word_Accumulator
-from .models import WordsConfigJson
+from settings.models import WordsSettings
+from users.models import WordsUser
 
 list_status = ["Удалить весь прогресс", "hello"]
 
@@ -47,7 +46,7 @@ class AddWordAccumulator(forms.ModelForm):
     )
 
     class Meta:
-        model = Word_Accumulator
+        model = WordsUser
         fields = ("word_en", "word_ru", "user", "status")
 
     def clean_word_en(self):
@@ -71,7 +70,7 @@ class AddWordAccumulator(forms.ModelForm):
 class WordCountForm(forms.ModelForm):
 
     class Meta:
-        model = SettingsWordNumber
+        model = WordsSettings()
         fields = ("number_words",)
         widgets = {"number_words": forms.TextInput(attrs={"class": "number-words"})}
 

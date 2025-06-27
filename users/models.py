@@ -1,31 +1,22 @@
 from django.db import models
-from django.core.validators import MaxValueValidator, MinValueValidator
 from django.contrib.auth.models import User
 from core.models import WordsCard
-from django.utils import timezone
-
-
-class WordsSettings(models.Model):
-    number_words = models.IntegerField(
-        default=20,
-        validators=[MaxValueValidator(100), MinValueValidator(5)],
-        verbose_name="Количество слов за день",
-    )
-    number_repetitions = models.IntegerField(verbose_name="Количество повторов")
-    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
-
-    class Meta:
-        verbose_name = "Количество слов за день"
-        verbose_name_plural = "Количество за день"
 
 
 class WordsUser(models.Model):
-    date = models.DateTimeField(default=timezone.now)
+    STATUS_CHOICE = [
+        ("1", "Изучаю"),
+        ("2", "Повторяю"),
+        ("3", "Изучил"),
+        ("4", "Скрыто"),
+    ]
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name="Дата создания")
     number_repetitions = models.IntegerField(
-        default=3, verbose_name="Количество повторов"
+        default=0, verbose_name="Количество сделанных повторов"
     )
-    status = models.BooleanField(default=False, verbose_name="Запомнил")
-    show = models.BooleanField(default=True, verbose_name="Показать")
+    status = models.CharField(
+        choices=STATUS_CHOICE, max_length=1, default=1, verbose_name="Этап запоминания"
+    )
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     core_words = models.ForeignKey(WordsCard, on_delete=models.CASCADE)
 

@@ -1,25 +1,10 @@
 import datetime as dc
 from datetime import datetime
 from django import template
-from ..models import SettingsWordNumber, WordsToRepeat, Word_Accumulator
+from users.models import WordsUser
+from settings.models import WordsSettings
 
 register = template.Library()
-
-
-@register.inclusion_tag("includes/home/services.html")
-def services(name, serv_data, index=0):
-    description = [
-        "Общее количество слов выученные за текущий день",
-        "Эти слова вы должны выучить сегодня",
-        "Это все слова которые присутствуют в словаре",
-        "Это общее количество слов которое вы выучили за все время",
-    ]
-
-    return {
-        "name": name,
-        "serv_data": serv_data,
-        "description": description[index],
-    }
 
 
 @register.inclusion_tag("includes/tag_footer.html")
@@ -36,9 +21,7 @@ def chart_week(user):
         calendarList = []
         calendarFinish = []
 
-        for calendar in Word_Accumulator.objects.select_related("user").filter(
-            user=user
-        ):
+        for calendar in WordsUser.objects.select_related("user").filter(user=user):
             calStr = str(calendar.date.date())
             count.add(calStr)
             calendarList.append(calStr)
@@ -80,18 +63,16 @@ def doughnut(*args):
 
 @register.inclusion_tag("includes/progress_bar_learn_new_words.html")
 def progress_bar_learn_new_words(**kwargs):
-    settin_words = (
-        SettingsWordNumber.objects.select_related("user")
+    setting_words = (
+        WordsSettings.objects.select_related("user")
         .get(user=kwargs["user"])
         .number_words
     )
     count_words = (
-        settin_words
-        - WordsToRepeat.objects.select_related("user")
-        .filter(user=kwargs["user"])
-        .count()
+        setting_words
+        - WordsUser.objects.select_related("user").filter(user=kwargs["user"]).count()
     )
-    out = settin_words / 100
+    out = setting_words / 100
     result = count_words / out
     data = {"count_words": int(result)}
     return data

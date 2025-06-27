@@ -1,4 +1,4 @@
-import random
+iget(pk=1)mport random
 from ..models import *
 
 class Settings:
