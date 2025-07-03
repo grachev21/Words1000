@@ -1,4 +1,5 @@
 from django.urls import path
+from .views import LoginView
 from core.views import (
     Home,
     # IntroductionWordsList,
@@ -7,9 +8,6 @@ from core.views import (
     # SettingsPage,
     # ResettingDictionaries,
     # ReadingSentences,
-    RegisterUser,
-    LoginUser,
-    logout_user,
     # activate,
 )
 from django.urls import path, re_path
@@ -31,8 +29,5 @@ urlpatterns = [
     #     ResettingDictionaries.as_view(),
     #     name="resetting_dictionaries",
     # ),
-    path("register/", RegisterUser, name="register"),
-    path("login/", LoginUser.as_view(), name="login"),
-    path("logout/", logout_user, name="logout"),
     # path('activate/<uidb64>/<token>/', activate, name='activate'),
 ]

@@ -34,6 +34,8 @@ INSTALLED_APPS = [
     "header",
     "settings",
     "users",
+    "game",
+    "words"
 ]
 
 MIDDLEWARE = [
@@ -44,8 +46,9 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'livereload.middleware.LiveReloadScript',
-    'debug_toolbar.middleware.DebugToolbarMiddleware',
+    'livereload.middleware.LiveReloadScript', # new
+    'debug_toolbar.middleware.DebugToolbarMiddleware', # new
+    'users.middleware.CurrentUserMiddleware', # new
 ]
 
 INTERNAL_IPS = ['127.0.0.1']

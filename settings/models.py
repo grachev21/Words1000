@@ -25,12 +25,12 @@ class WordsSettings(models.Model):
         max_length=1,
         choices=NUMBER_REPETITIONS_CHOICES,
         default=3,
-        verbose_name="Количество повторов при изучении",
+        verbose_name="Как хорошо вы хотите запомнить слово",
     )
     translation_list = models.BooleanField(
         choices=TRANSLATION_CHOICES,
         default=True,
-        verbose_name="Спрятать перевод в списке слов",
+        verbose_name="Спрятать/Показать перевод в списке слов",
     )
     user = models.ForeignKey(User, on_delete=models.CASCADE)
 
