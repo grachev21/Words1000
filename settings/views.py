@@ -40,7 +40,6 @@ class ResettingDictionaries(LoginRequiredMixin, FormView):
     form_class = ResettingDictionariesForm
     login_url = reverse_lazy("register")
 
-
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(*args, **kwargs)
         context["title"] = "Сброс словаря"
@@ -48,18 +47,26 @@ class ResettingDictionaries(LoginRequiredMixin, FormView):
 
     def post(self, request):
         form = ResettingDictionariesForm(request.POST)
+        number_words = WordsSettings.objects.filter(user=self.request.user).last().number_words
         if request.method == "POST":
             if form.is_valid():
                 status = form.cleaned_data["status"]
                 yes = form.cleaned_data["yes"]
                 if status and yes == "yes":
                     # We delete all words
-                    WordsUser.objects.select_related("user").filter(user=self.request.user).delete()
+                    WordsUser.objects.filter(user=self.request.user).delete()
 
                     # We create new words
                     random_elements = random.sample(list(WordsCard.objects.all()), 1000)
                     for element in random_elements:
                         print("record ...")
                         WordsUser.objects.create(user=request.user, core_words=element)
+
+                    # Install status
+                    out_words = random.sample(list(WordsUser.objects.filter(user=request.user).all()), number_words)
+                    for obj in out_words:
+                        obj.status = "2"
+                        obj.save()
+
                     return HttpResponseRedirect(reverse("home"))  
 

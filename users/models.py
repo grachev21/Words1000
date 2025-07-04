@@ -5,11 +5,10 @@ from core.models import WordsCard
 
 class WordsUser(models.Model):
     STATUS_CHOICE = [
-        ("1", "Скрыто"),
+        ("1", "Неизвестно"),
         ("2", "Изучаю"),
         ("3", "Повторяю"),
         ("4", "Изучил"),
-        ("5", "Скрыто"),
     ]
     created_at = models.DateTimeField(auto_now_add=True, verbose_name="Дата создания")
     number_repetitions = models.IntegerField(

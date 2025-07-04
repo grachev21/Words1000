@@ -1,70 +1,73 @@
 {% extends 'core/base.html' %} {% load game_tag %} {% block content %}
-<div class="container bg-body-tertiary mt-xl-5 border rounded-2 p-3 text-center">
+
+<!-- Game -->
+<div class="game_container container bg-body-tertiary mt-xl-5 border rounded-2 p-3 text-center">
   <div class="row">
+    <div class="col">
+      <h4 class="correct_word">{{correct_word.core_words.word_ru}}</h4>
+    </div>
   </div>
 
-  <div class="row">
-    {% if not check_finish %} {% if user_check == 'on' %}
-    <h5>Ознакомьтесь с словами и переходите в раздел</h5>
-    <li><a href="#">Учить новые слова</a></li>
-    {% else %}
-    <div class="row">
-      <div class="col text-center">
-        <h3 class="my-5">Выберите правильное слово из четырех представленных</h3>
-
-      </div>
-    </div>
-    <div class="row text-center">
-      <div class="col text-center border rounded p-3">
-        <h6>{{words.translate_ru}}</h6>
-      </div>
-    </div>
-    {% endif %}
-    <div class="row">
-      <div class="col text-center my-5">
-        <div class="nav nav-pills d-flex justify-content-center">
-          <a class="btn btn-outline-warning" aria-current="page" href="{% url 'game' %}">Продолжить</a>
-        </div>
-      </div>
-    </div>
-    {% else %}
-    <div class="finish_text">Ура вы выучили все слова!!!</div>
-    {% endif %}
-
-    <div class="row">
-      <form method="post">
-        {% csrf_token %} {% if not check_finish %}
-        <div class="container_value_words">
-          {% for w in words.random_list %}
-          <button type="submit" value="{{w}}" class="btn btn-outline-info">{{w}}</button>
-          {% endfor %}
-        </div>
-        {% else %}
-        <div class="finish_text">
-          Наконец вы прошли этот долгий и тернистый путь, длинною в 1000 слов!!! Мы желаем вам успеха и удачи в
-          творчестве!
-        </div>
-        {% endif %}
-      </form>
+  <div class="word row">
+    <div class="game_word col my-5">
+      {% for word in three_random_words %}
+      <button type="button" class="btn btn-outline-success m-2">{{ word.word_en }}</button>
+      {% endfor %}
+      <button type="button" class="correct_btn btn btn-outline-success m-2">
+        {{ correct_word.core_words.word_en}}
+      </button>
     </div>
   </div>
 </div>
-
+{% include 'includes/answering.html' %} {% include 'includes/accordion.html' %}
+<!-- Script -->
 <script>
-  const jsonData = JSON.parse("{{words_json|escapejs}}");
+  document.addEventListener("DOMContentLoaded", function () {
+    const container = document.querySelector(".game_word");
+    const elements = Array.from(container.children);
+    const border = document.querySelector(".game_container");
+    const correct_btn = document.querySelector(".correct_btn");
+    const correctAnswer = "{{correct_word.core_words.word_en}}";
 
-  // Algorithm Fisher-Yets
-  function getRandomItems(arr, count) {
-    const shuffled = [...arr];
-    for (let i = shuffled.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]]; // Обмен значениями
+    // Функция перемешивания элементов
+    function shuffleArray(array) {
+      for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+      }
+      return array;
     }
-    return shuffled.slice(0, count);
-  }
 
-  const randomItems = getRandomItems(jsonData, 4)
-  console.log(randomItems)
+    // Перемешиваем кнопки
+    shuffleArray(elements);
+    container.innerHTML = "";
+    elements.forEach((el) => container.appendChild(el));
 
+    // Обработчик клика для кнопок
+    elements.forEach((element) => {
+      element.addEventListener("click", function () {
+        if (element.textContent.trim() === correctAnswer) {
+          // Правильный ответ - модальное окно уже открывается через data-bs-toggle
+          element.classList.add("btn-success");
+        } else {
+          // Неправильный ответ
+          element.classList.add("btn-danger");
+          border.classList.add("border-danger");
+
+          setTimeout(() => {
+            location.reload();
+          }, 1000);
+        }
+      });
+    });
+
+    // Обработчик для кнопки "Продолжить"
+    correct_btn.addEventListener("click", function () {
+      document.querySelector(".read_container").classList.remove("d-none");
+      document.querySelector(".answering").classList.remove("d-none");
+      document.querySelector(".game_container").classList.add("d-none");
+    });
+  });
 </script>
+
 {% endblock %}

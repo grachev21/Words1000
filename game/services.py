@@ -1,36 +1,72 @@
+from typing import Dict, List, Any
+from django.db.models import QuerySet
 from settings.models import WordsSettings
 from users.models import WordsUser
+from core.models import WordsCard
 import random
 
 
 class GameInitMixin:
-
-    def init_list(self, request, *args, **kwargs):
-
-        settings = WordsSettings.objects.filter(user=request.user).latest("id")
-        elements = WordsUser.objects.filter(user=request.user).all()
-        random_elements = random.sample(list(elements), int(settings.number_words))
-        list_check = [e.status for e in elements]
-
-        value_to_check = {"2", "3", "4", "5"}
-        if not set(list_check) & value_to_check:
-            print("yes")
-        # print(list_check)
-        # match list_check:
-        #     case ["2", "3", "4", "5"]:
-        #         print("yes")
-        # if "2" not in or "3" or "4" or "5" not in [e.status for e in elements]:
-        #     print("yes")
-        # else:
-        #     print("no")
-            # for obj in random_elements:
-            #     obj.status = "2"
-                # obj.save()
-
-        # counter = 0 
-        # for e in elements:
-        #     if e.status == "2":
-        #         print(e.status)
-        #         counter += 1
+    """Mixin for initializing game data with words and phrases."""
+    
+    @staticmethod
+    def get_user_words_settings(user) -> WordsSettings:
+        """Get words settings for the given user."""
+        return WordsSettings.objects.filter(user=user).last()
+    
+    @staticmethod
+    def get_random_user_word(user) -> WordsUser:
+        """Get a random word from user's learned words (status=2)."""
+        learned_words = WordsUser.objects.filter(user=user, status="2")
+        return random.choice(learned_words) if learned_words else None
+    
+    @staticmethod
+    def prepare_phrases(word_user: WordsUser) -> List[Dict[str, str]]:
+        """Prepare list of phrases with translations."""
+        if not word_user or not hasattr(word_user.core_words, 'phrases_en'):
+            return []
+            
+        return [
+            {"en": en_phrase, "ru": ru_phrase}
+            for en_phrase, ru_phrase in zip(
+                word_user.core_words.phrases_en,
+                word_user.core_words.phrases_ru
+            )
+        ]
+    
+    @staticmethod
+    def get_random_words(exclude_word_id: int, count: int = 3) -> QuerySet[WordsCard]:
+        """Get random words excluding the specified one."""
+        available_words = WordsCard.objects.exclude(id=exclude_word_id)
+        return random.sample(list(available_words), min(count, len(available_words)))
+    
+    def init_data(self, user, context: Dict[str, Any]) -> Dict[str, Any]:
+        """
+        Initialize game data and update context.
         
-        # print(counter)
+        Args:
+            user: Authenticated user
+            context: Template context to update
+            
+        Returns:
+            Updated context dictionary
+        """
+        if not user or not context:
+            return context
+            
+        # Get required data
+        words_settings = self.get_user_words_settings(user)
+        word_user = self.get_random_user_word(user)
+        
+        if not word_user:
+            return context
+            
+        # Prepare context data
+        context.update({
+            "settings": words_settings,
+            "three_random_words": self.get_random_words(word_user.core_words.id),
+            "correct_word": word_user,
+            "phrases": self.prepare_phrases(word_user)
+        })
+        
+        return context
