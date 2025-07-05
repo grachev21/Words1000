@@ -22,20 +22,26 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
+
+    # Tools
     'livereload',
+
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
+    # Tools
     'debug_toolbar',
     'bootstrap5',
-    "core",
-    "header",
-    "settings",
-    "users",
-    "game",
-    "words"
+
+    # Apps
+    "core.apps.CoreConfig",
+    "header.apps.HeaderConfig",
+    "settings.apps.SettingsConfig",
+    "users.apps.UsersConfig",
+    "game.apps.GameConfig",
+    "words.apps.WordsConfig"
 ]
 
 MIDDLEWARE = [
