@@ -9,6 +9,7 @@ from django.contrib.auth import get_user_model
 
 User = get_user_model()
 
+
 @receiver(post_save, sender=WordsUser)
 def words_user_save(sender, instance, created, **kwargs):
     """
@@ -21,14 +22,18 @@ def words_user_save(sender, instance, created, **kwargs):
     user_settings = WordsSettings.objects.get(user=instance.user)
     if created:
         pass
-        
+
     else:
         try:
-            
+
             if instance.number_repetitions >= user_settings.number_repetitions:
-                print(f"Слово {instance.core_words} достигло нужного количества повторений")
+                print(
+                    f"Слово {instance.core_words} достигло нужного количества повторений"
+                )
                 # Можно изменить статус слова на "изучено"
-                instance.status = '2'  # Предполагая, что '2' - статус изученного
+                instance.status = (
+                    "2"  # Предполагая, что '2' - статус изученного
+                )
                 instance.save()
         except WordsSettings.DoesNotExist:
             print(f"Для пользователя {instance.user} не найдены настройки")
