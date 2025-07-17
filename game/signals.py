@@ -5,8 +5,6 @@ from users.models import WordsUser
 from settings.models import WordsSettings
 import random
 from django.contrib.auth import get_user_model
-
-
 User = get_user_model()
 
 
@@ -14,6 +12,7 @@ User = get_user_model()
 def words_user_save(sender, instance, created, **kwargs):
     """
     Обрабатывает сохранение WordsUser
+
     """
 
     # Если истина то это при создании, если ложь то это при обновлении

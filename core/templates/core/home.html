@@ -1,4 +1,4 @@
-{% extends 'core/base.html' %} {% load TagWords %} {% load settings_tag %} {% load static %} {% block content %}
+{% extends 'base.html' %} {% load TagWords %} {% load settings_tag %} {% load static %} {% block content %}
 
 <div class="container bg-body-tertiary mt-xl-5 border rounded-2 p-3">
   <div class="row mb-4">
@@ -15,7 +15,7 @@
   </div>
 
   <h3>Ваши графики</h3>
-  <div class="row g-4">
+  <div class="row g-4 text-col">
     {% if request.user.is_authenticated %}
     <div class="col-md-6">
       {% comment %}

@@ -1,0 +1,26 @@
+{% load static %} {% load TagWords %} {% load header_tag %}
+
+<!doctype html>
+<html lang="ru" data-bs-theme="light">
+  <head>
+    <meta charset="utf-8" />
+    <title>{{ title }}</title>
+    {% include 'includes/fonts_styles.html' %}
+  </head>
+
+  <body class="d-flex flex-column min-vh-100">
+    {% header %}
+    <div class="flex-grow-1 d-flex flex-column justify-content-center">
+      {% block content %} {% endblock %}
+    </div>
+    {% footer %}
+    <script src="{% static 'words/js/menu.js' %}"></script>
+    <script src="{% static 'js/theme-switcher.js' %}"></script>
+  </body>
+</html>
+
+<style>
+  body {
+    padding-top: 8rem;
+  }
+</style>
