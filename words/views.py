@@ -3,9 +3,10 @@ from django.views.generic import TemplateView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
 from users.models import WordsUser
+from words.services import WordsMixin
 
 
-class WordsPage(LoginRequiredMixin, TemplateView):
+class WordsPage(WordsMixin, LoginRequiredMixin, TemplateView):
     template_name = "words/words.html"
     login_url = reverse_lazy("register")
     paginate_by = 10
@@ -14,11 +15,11 @@ class WordsPage(LoginRequiredMixin, TemplateView):
         context = super().get_context_data(**kwargs)
 
         # Получаем параметр фильтра из GET-запроса
-        status_filter = self.request.GET.get('status')
+        status_filter = self.request.GET.get("status")
 
         # Фильтруем слова для текущего пользователя
         words_user = WordsUser.objects.filter(user=self.request.user)
-        
+
         if status_filter:
             words_user = words_user.filter(status=status_filter)
 
@@ -35,8 +36,10 @@ class WordsPage(LoginRequiredMixin, TemplateView):
             page_obj = paginator.page(paginator.num_pages)
 
         context["page_obj"] = page_obj
-        context['words_user'] = words_user
+        context["words_user"] = words_user
         # Получаем STATUS_CHOICES из модели WordsUser, а не из QuerySet
-        context['status_choices'] = WordsUser.STATUS_CHOICE
-        context['current_status'] = status_filter
-        return context
+        context["status_choices"] = WordsUser.STATUS_CHOICE
+        context["current_status"] = status_filter
+        return self.init_data(user=self.request.user, context=context)
+
+        # return context

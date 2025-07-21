@@ -23,9 +23,6 @@ INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
 
-    # Tools
-    'livereload',
-
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
@@ -50,8 +47,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'livereload.middleware.LiveReloadScript',  # new
-    'users.middleware.CurrentUserMiddleware',  # new
+    'users.middleware.CurrentUserMiddleware'
 ]
 
 INTERNAL_IPS = ['127.0.0.1']

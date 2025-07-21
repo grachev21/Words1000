@@ -1,15 +1,24 @@
 # Import necessary Django modules and classes
 from django.shortcuts import render
-from django.contrib.auth.mixins import LoginRequiredMixin  # Mixin to require user authentication
-from django.views.generic import CreateView, FormView  # Generic class-based view for creating objects
+from django.contrib.auth.mixins import (
+    LoginRequiredMixin,
+)  # Mixin to require user authentication
+from django.views.generic import (
+    CreateView,
+    FormView,
+)  # Generic class-based view for creating objects
 from django.urls import reverse_lazy  # For lazy URL reversal
-from settings.forms import WordCountForm, ResettingDictionariesForm  # Custom form for word count settings
+from settings.forms import (
+    WordCountForm,
+    ResettingDictionariesForm,
+)  # Custom form for word count settings
 from settings.models import WordsSettings  # Model for storing word settings
 from users.models import WordsUser
 from django.http import HttpResponse, HttpResponseRedirect
 from django.urls import reverse_lazy, reverse
 from core.models import WordsCard
 import random
+
 
 class SettingsPage(LoginRequiredMixin, CreateView):
     template_name = "settings/settings.html"
@@ -19,7 +28,7 @@ class SettingsPage(LoginRequiredMixin, CreateView):
 
     def get_form_kwargs(self):
         kwargs = super().get_form_kwargs()
-        kwargs['user'] = self.request.user
+        kwargs["user"] = self.request.user
         return kwargs
 
     def get_context_data(self, **kwargs):
@@ -47,7 +56,11 @@ class ResettingDictionaries(LoginRequiredMixin, FormView):
 
     def post(self, request):
         form = ResettingDictionariesForm(request.POST)
-        number_words = WordsSettings.objects.filter(user=self.request.user).last().number_words
+        number_words = (
+            WordsSettings.objects.filter(user=self.request.user)
+            .last()
+            .number_words
+        )
         if request.method == "POST":
             if form.is_valid():
                 status = form.cleaned_data["status"]
@@ -57,16 +70,21 @@ class ResettingDictionaries(LoginRequiredMixin, FormView):
                     WordsUser.objects.filter(user=self.request.user).delete()
 
                     # We create new words
-                    random_elements = random.sample(list(WordsCard.objects.all()), 1000)
+                    random_elements = random.sample(
+                        list(WordsCard.objects.all()), 1000
+                    )
                     for element in random_elements:
-                        print("record ...")
-                        WordsUser.objects.create(user=request.user, core_words=element)
+                        WordsUser.objects.create(
+                            user=request.user, core_words=element
+                        )
 
                     # Install status
-                    out_words = random.sample(list(WordsUser.objects.filter(user=request.user).all()), number_words)
+                    out_words = random.sample(
+                        list(WordsUser.objects.filter(user=request.user).all()),
+                        number_words,
+                    )
                     for obj in out_words:
                         obj.status = "2"
                         obj.save()
 
-                    return HttpResponseRedirect(reverse("home"))  
-
+                    return HttpResponseRedirect(reverse("home"))

@@ -1,0 +1,9 @@
+##[pylyzer] failed c:\users\grach\desktop\words1000\words\services.py 1752837781 705
+.___v_desugar_1 = pyimport "models"
+.models = pyimport "models"
+.WordsUser: {users.models.WordsUser}
+.WordsMixin: ClassType
+.WordsMixin.__call__: () -> words.services.WordsMixin
+.WordsMixin.info_bar: (user: Obj) -> global::List!(global::Dict!({{"title"}: {"Неизвестно"}, {"data"}: Never}) or global::Dict!({{"title"}: {"Все"}, {"data"}: Never}) or global::Dict!({{"title"}: {"Изучил"}, {"data"}: Never}) or global::Dict!({{"title"}: {"Повторяю"}, {"data"}: Never}) or global::Dict!({{"title"}: {"Изучаю"}, {"data"}: Never}), 5)
+.WordsMixin.init_data: |Type_175244 <: RefMut(?Type_175244), Type_175244 <: RefMut(?Type_175244), Type_175244 <: global::Immutizable|(self: words.services.WordsMixin, user: Obj, context: Type_175244) -> Type_175244
+

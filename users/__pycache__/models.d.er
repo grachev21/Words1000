@@ -1,0 +1,20 @@
+##[pylyzer] failed c:\users\grach\desktop\words1000\users\models.py 1752748903 980
+.models = pyimport "models"
+
+.___v_desugar_1 = pyimport "models"
+
+.User: {models.User}
+.___v_desugar_2 = pyimport "models"
+
+.WordsCard: {core.models.WordsCard}
+.WordsUser: ClassType
+.WordsUser <: Never
+.WordsUser.STATUS_CHOICE: Never
+.WordsUser.created_at: Never
+.WordsUser.number_repetitions: Never
+.WordsUser.status: Never
+.WordsUser.user: Never
+.WordsUser.core_words: Never
+
+dsUser.core_words: Never
+

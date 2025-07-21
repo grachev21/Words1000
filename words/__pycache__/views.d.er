@@ -1,0 +1,32 @@
+##[pylyzer] failed c:\users\grach\desktop\words1000\words\views.py 1752912288 1858
+.___v_desugar_1 = pyimport "services"
+.services = pyimport "services"
+.WordsMixin: {services.WordsMixin}
+.___v_desugar_2 = pyimport "paginator"
+.paginator = pyimport "paginator"
+.Paginator: {paginator.Paginator}
+.EmptyPage: {paginator.EmptyPage}
+.PageNotAnInteger: {paginator.PageNotAnInteger}
+.___v_desugar_3 = pyimport "generic"
+.generic = pyimport "generic"
+.TemplateView: Never
+.___v_desugar_4 = pyimport "mixins"
+.mixins = pyimport "mixins"
+.LoginRequiredMixin: {mixins.LoginRequiredMixin}
+.___v_desugar_5 = pyimport "urls"
+.urls = pyimport "urls"
+.reverse_lazy: (*args: Obj, **_ := Obj) -> Never
+.___v_desugar_6 = pyimport "models"
+.models = pyimport "models"
+.WordsUser: {users.models.WordsUser}
+.___v_desugar_7 = pyimport "services"
+
+.WordsMixin: {words.services.WordsMixin}
+.WordsPage: ClassType
+words = pyimport "words"
+.WordsPage <: words.services.WordsMixin
+.WordsPage.template_name: {"words.words.html"}
+.WordsPage.login_url: Never
+.WordsPage.paginate_by: {10}
+.WordsPage.get_context_data: (self: views.WordsPage, **kwargs := Obj) -> RefMut(Never)
+
