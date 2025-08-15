@@ -13,7 +13,7 @@ class Home(ServicesMixin, ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         # Вызываем метод init_data из миксина
-        return self.init_data(user=self.request.user, context=context)
+        return self.init_data(user=self.request.user, check_user=self.request.user.is_active, context=context)
 
 
 class ReadingSentences(LoginRequiredMixin, TemplateView):

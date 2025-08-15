@@ -19,18 +19,12 @@ class ServicesMixin:
         if WordsSettings.objects.filter(user=user).exists():
             settings = WordsSettings.objects.filter(user=user).latest("id")
 
-        today_words = WordsUser.objects.filter(
-            user=user, status="4", created_at=date.today()
-        ).count()
+        today_words = WordsUser.objects.filter(user=user, status="4", created_at=date.today()).count()
 
-        remainder_words = WordsUser.objects.filter(
-            user=user, status="2"
-        ).count()
+        remainder_words = WordsUser.objects.filter(user=user, status="2").count()
 
         all_words = WordsUser.objects.filter(user=user, status="1").count()
-        all_words_studied = WordsUser.objects.filter(
-            user=user, status="4"
-        ).count()
+        all_words_studied = WordsUser.objects.filter(user=user, status="4").count()
 
         return [
             {
@@ -60,8 +54,9 @@ class ServicesMixin:
             },
         ]
 
-    def init_data(self, user, context):
-        if not user or not context:
+    def init_data(self, user, check_user, context):
+        print(check_user)
+        if not user or not context or not check_user:
             return context
 
         services_data = self.data_incision(user)

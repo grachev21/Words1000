@@ -1,26 +1,30 @@
 {% load static %} {% load TagWords %} {% load header_tag %}
 
-<!doctype html>
+<!DOCTYPE html>
 <html lang="ru" data-bs-theme="light">
   <head>
     <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <link rel="stylesheet" href="{% static 'css/base.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/base/reset.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/base/variables.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/base/utilities.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/components/buttons.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/components/card.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/components/link.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/components/logo.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/components/navbar.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/layouts/footer.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/layouts/header.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/layouts/grid.css' %}" />
     <title>{{ title }}</title>
-    {% include 'includes/fonts_styles.html' %}
   </head>
 
   <body class="d-flex flex-column min-vh-100">
     {% header %}
-    <div class="flex-grow-1 d-flex flex-column justify-content-center">
-      {% block content %} {% endblock %}
-    </div>
+    <div class="flex-grow-1 d-flex flex-column justify-content-center">{% block content %} {% endblock %}</div>
     {% footer %}
     <script src="{% static 'words/js/menu.js' %}"></script>
     <script src="{% static 'js/theme-switcher.js' %}"></script>
   </body>
 </html>
-
-<style>
-  body {
-    padding-top: 8rem;
-  }
-</style>

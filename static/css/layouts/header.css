@@ -1,0 +1,250 @@
+header {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 5rem;
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  justify-content: space-between;
+  background-color: var(--my-blur-color);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  z-index: 50;
+  border-bottom: 1px solid var(--my-border-color);
+  transition: height 0.3s ease;
+}
+
+header.scrolled {
+  height: 50px;
+}
+
+header .header-container {
+  width: 100%;
+  margin: 0 2rem;
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+header .menu,
+header .user-menu {
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+}
+
+header .user-menu {
+  position: relative;
+}
+
+header .user-menu .menu-list {
+  display: none;
+  flex-direction: column;
+  background-color: var(--my-blur-color);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  position: absolute;
+  top: 2rem;
+  border-radius: 6px;
+  border: 1px solid var(--my-border-color);
+  padding: 0.6rem;
+}
+
+header .user-menu .menu-list.active-menu-user {
+  display: flex;
+}
+
+.theme-toggle {
+  background-color: var(--my-success-color);
+  border-radius: 4px;
+  padding: 4px;
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  margin-left: 4rem;
+}
+
+.theme-toggle .icons-theme img {
+  z-index: 50;
+  width: 22px;
+  height: auto;
+  margin: 4px;
+}
+
+.theme-switch {
+  position: relative;
+  display: inline-block;
+  width: 50px;
+  height: 24px;
+}
+
+/* Скрываем стандартный checkbox */
+.theme-switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+/* Стили для ползунка */
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: var(--my-primary-color);
+  transition: 0.4s;
+  border-radius: 34px;
+}
+
+/* Стили для круглого бегунка */
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 16px;
+  width: 16px;
+  left: 4px;
+  bottom: 4px;
+  background-color: var(--my-accent-color);
+  transition: 0.4s;
+  border-radius: 50%;
+}
+
+/* Стили когда checkbox отмечен */
+input:checked + .slider {
+  background-color: var(--my-warning-color);
+}
+
+input:focus + .slider {
+  box-shadow: 0 0 1px var(--my-warning-color);
+}
+
+/* Перемещение бегунка когда отмечено */
+input:checked + .slider:before {
+  transform: translateX(26px);
+}
+
+/* Стили для круглого переключателя */
+.slider.round {
+  border-radius: 34px;
+}
+
+.slider.round:before {
+  border-radius: 50%;
+}
+
+@media (max-width: 910px) {
+  .link-user {
+    display: none;
+  }
+  .user-menu > .icon-user {
+    margin-left: 2rem;
+  }
+}
+
+@media (max-width: 800px) {
+  header .menu {
+    display: none;
+  }
+}
+
+.mobile-menu {
+  position: fixed;
+  left: 0px;
+  right: 0px;
+  background-color: var(--my-secondary-color);
+  z-index: 100;
+  height: 100%;
+  width: 300px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.mobile-menu .link-mobile {
+  color: var(--my-text-color);
+  font-weight: 500;
+  padding-bottom: 1rem;
+  padding-top: 1rem;
+  letter-spacing: 2px;
+  font-size: large;
+}
+
+.sandwich {
+  /* Здесь должны быть стили из миксина icons, который не был предоставлен */
+  display: none;
+}
+
+@media (max-width: 800px) {
+  .sandwich {
+    display: block;
+  }
+}
+
+/* Theme Toggle */
+.theme-toggle {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  background-color: var(--my-success-color);
+  border-radius: 4px;
+  padding: 4px;
+  margin-left: 4rem;
+}
+
+.theme-toggle .icons-theme img {
+  z-index: 50;
+  /* Здесь должны быть стили из миксина icons, который не был предоставлен */
+}
+
+/* Theme Switch */
+.theme-switch {
+  position: relative;
+  display: inline-block;
+  width: 50px;
+  height: 24px;
+}
+
+.theme-switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.theme-switch .slider {
+  position: absolute;
+  cursor: pointer;
+  inset: 0;
+  background-color: var(--my-primary-color);
+  transition: 0.4s;
+  border-radius: 34px;
+}
+
+.theme-switch .slider:before {
+  content: "";
+  position: absolute;
+  height: 16px;
+  width: 16px;
+  left: 4px;
+  bottom: calc((24px - 16px) / 2);
+  background-color: var(--my-accent-color);
+  transition: 0.4s;
+  border-radius: 50%;
+}
+
+.theme-switch input:checked + .slider {
+  background-color: var(--my-warning-color);
+}
+
+.theme-switch input:checked + .slider:before {
+  transform: translateX(26px);
+}
+
+.theme-switch input:focus + .slider {
+  box-shadow: 0 0 1px var(--my-warning-color);
+}

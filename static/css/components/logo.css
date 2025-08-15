@@ -1,0 +1,17 @@
+.logo {
+  display: flex;
+  font-weight: 600;
+  color: var(--my-text-color);
+  font-size: xx-large;
+  transition: all 0.3s;
+  .logo-1 {
+    color: var(--my-text-color);
+  }
+  .logo-2 {
+    color: var(--my-warning-color);
+  }
+}
+
+.logo:hover {
+  opacity: 70%;
+}

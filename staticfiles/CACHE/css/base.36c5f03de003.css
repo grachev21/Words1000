@@ -1,0 +1,531 @@
+@charset "UTF-8";
+/* Reset margins and paddings for common elements */
+/* line 2, static/scss/_reset.scss */
+html,
+body,
+div,
+span,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+blockquote,
+pre,
+a,
+abbr,
+acronym,
+address,
+big,
+cite,
+code,
+del,
+dfn,
+em,
+img,
+ins,
+kbd,
+q,
+s,
+samp,
+small,
+strike,
+strong,
+sub,
+sup,
+tt,
+var,
+b,
+u,
+i,
+center,
+dl,
+dt,
+dd,
+ol,
+ul,
+li,
+fieldset,
+form,
+label,
+legend,
+table,
+caption,
+tbody,
+tfoot,
+thead,
+tr,
+th,
+td,
+article,
+aside,
+canvas,
+details,
+embed,
+figure,
+figcaption,
+footer,
+header,
+hgroup,
+menu,
+nav,
+output,
+ruby,
+section,
+summary,
+time,
+mark,
+audio,
+video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline; }
+
+/* HTML5 display-role reset for older browsers */
+/* line 89, static/scss/_reset.scss */
+article,
+aside,
+details,
+figcaption,
+figure,
+footer,
+header,
+hgroup,
+menu,
+nav,
+section {
+  display: block; }
+
+/* Remove list styles (bullets/numbers) */
+/* line 104, static/scss/_reset.scss */
+ol,
+ul {
+  list-style: none; }
+
+/* Remove default hyperlink styling */
+/* line 110, static/scss/_reset.scss */
+a {
+  text-decoration: none;
+  color: inherit; }
+
+/* Reset form elements */
+/* line 116, static/scss/_reset.scss */
+button,
+input,
+optgroup,
+select,
+textarea {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font: inherit;
+  color: inherit;
+  background: none;
+  line-height: normal; }
+
+/* Correct box model */
+/* line 131, static/scss/_reset.scss */
+*,
+*::before,
+*::after {
+  box-sizing: border-box; }
+
+/* Remove default button styling */
+/* line 138, static/scss/_reset.scss */
+button {
+  cursor: pointer;
+  background: none;
+  border: none;
+  padding: 0; }
+
+/* Remove outline for accessibility but allow focus styles */
+/* line 146, static/scss/_reset.scss */
+:focus:not(:focus-visible) {
+  outline: none; }
+
+/* Responsive media elements */
+/* line 151, static/scss/_reset.scss */
+img,
+picture,
+video,
+canvas,
+svg {
+  display: block;
+  max-width: 100%;
+  height: auto; }
+
+/* Remove default table spacing */
+/* line 162, static/scss/_reset.scss */
+table {
+  border-collapse: collapse;
+  border-spacing: 0; }
+
+/* Prevent text overflow */
+/* line 168, static/scss/_reset.scss */
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  overflow-wrap: break-word; }
+
+/* Reset quotes */
+/* line 179, static/scss/_reset.scss */
+blockquote,
+q {
+  quotes: none; }
+
+/* line 184, static/scss/_reset.scss */
+blockquote:before,
+blockquote:after,
+q:before,
+q:after {
+  content: "";
+  content: none; }
+
+/* buttons */
+/* links */
+/* headlines */
+/* line 6, static/scss/components/_links.scss */
+.list-link, .show-link, .nav-link-active, .nav-link {
+  color: var(--my-text-color);
+  transition: all 0.3s;
+  font-weight: 500; }
+
+/* line 13, static/scss/components/_links.scss */
+.nav-link {
+  margin: 1rem; }
+  /* line 17, static/scss/components/_links.scss */
+  .nav-link:hover {
+    opacity: 0.7;
+    border-bottom: 1px solid var(--my-text-color); }
+
+/* line 24, static/scss/components/_links.scss */
+.nav-link-active {
+  margin: 1rem;
+  border-bottom: 1px solid var(--my-text-color); }
+
+/* line 31, static/scss/components/_links.scss */
+.show-link {
+  margin: 1rem;
+  font-weight: 700; }
+  /* line 36, static/scss/components/_links.scss */
+  .show-link:hover {
+    opacity: 0.7; }
+
+/* line 42, static/scss/components/_links.scss */
+.list-link {
+  padding: 4px;
+  border-bottom: 2px solid transparent;
+  opacity: 0.8;
+  margin: 0.2rem 0.5rem; }
+  /* line 49, static/scss/components/_links.scss */
+  .list-link:hover {
+    border-bottom-color: var(--my-border-color);
+    opacity: 1; }
+
+@media (min-width: 1400px) {
+  /* line 57, static/scss/components/_links.scss */
+  .nav-link,
+  .nav-link-active,
+  .show-link {
+    font-size: large;
+    margin: 2rem; } }
+
+@media (max-width: 992px) {
+  /* line 66, static/scss/components/_links.scss */
+  .nav-link,
+  .nav-link-active {
+    margin: 0.4rem; } }
+
+/* line 10, static/scss/components/header/_toggle_theme.scss */
+.theme-toggle {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  background-color: var(--my-success-color);
+  border-radius: 4px;
+  padding: 4px;
+  margin-left: 4rem; }
+  /* line 17, static/scss/components/header/_toggle_theme.scss */
+  .theme-toggle .icons-theme img {
+    z-index: 50;
+    cursor: pointer;
+    width: 1.6rem;
+    height: auto;
+    transition: all 0.3s; }
+    /* line 6, static/scss/components/_mixins.scss */
+    .theme-toggle .icons-theme img:hover {
+      opacity: 60%; }
+
+/* line 24, static/scss/components/header/_toggle_theme.scss */
+.theme-switch {
+  position: relative;
+  display: inline-block;
+  width: 50px;
+  height: 24px; }
+  /* line 33, static/scss/components/header/_toggle_theme.scss */
+  .theme-switch input {
+    opacity: 0;
+    width: 0;
+    height: 0; }
+  /* line 39, static/scss/components/header/_toggle_theme.scss */
+  .theme-switch .slider {
+    position: absolute;
+    cursor: pointer;
+    inset: 0;
+    background-color: var(--my-primary-color);
+    transition: 0.4s;
+    border-radius: 34px; }
+    /* line 47, static/scss/components/header/_toggle_theme.scss */
+    .theme-switch .slider:before {
+      content: "";
+      position: absolute;
+      height: 16px;
+      width: 16px;
+      left: 4px;
+      bottom: calc(($track-height - $thumb-size) / 2);
+      background-color: var(--my-accent-color);
+      transition: 0.4s;
+      border-radius: 50%; }
+  /* line 60, static/scss/components/header/_toggle_theme.scss */
+  .theme-switch input:checked + .slider {
+    background-color: var(--my-warning-color); }
+    /* line 63, static/scss/components/header/_toggle_theme.scss */
+    .theme-switch input:checked + .slider:before {
+      transform: translateX(26px); }
+  /* line 68, static/scss/components/header/_toggle_theme.scss */
+  .theme-switch input:focus + .slider {
+    box-shadow: 0 0 1px var(--my-warning-color); }
+
+/* line 1, static/scss/components/header/_mobile_menu.scss */
+.mobile-menu {
+  position: fixed;
+  left: 0px;
+  right: 0px;
+  background-color: --my-secondary-color;
+  z-index: 100;
+  height: 100%;
+  width: 300px;
+  display: flex;
+  align-items: flex-start;
+  flex-direction: column; }
+  /* line 11, static/scss/components/header/_mobile_menu.scss */
+  .mobile-menu .link-mobile {
+    color: var(--my-text-color);
+    font-weight: 500;
+    padding-bottom: 1rem;
+    padding-top: 1rem;
+    letter-spacing: 2px;
+    font-size: large; }
+
+/* line 21, static/scss/components/header/_mobile_menu.scss */
+.sandwich {
+  cursor: pointer;
+  width: 1.6rem;
+  height: auto;
+  transition: all 0.3s;
+  display: none; }
+  /* line 6, static/scss/components/_mixins.scss */
+  .sandwich:hover {
+    opacity: 60%; }
+
+@media (max-width: 768px) {
+  /* line 27, static/scss/components/header/_mobile_menu.scss */
+  .sandwich {
+    display: block; } }
+
+/* line 1, static/scss/components/header/_logo.scss */
+.logo {
+  display: flex;
+  font-weight: 600;
+  color: var(--my-text-color);
+  font-size: xx-large;
+  transition: all 0.3s; }
+  /* line 7, static/scss/components/header/_logo.scss */
+  .logo .logo-1 {
+    color: var(--my-text-color); }
+  /* line 10, static/scss/components/header/_logo.scss */
+  .logo .logo-2 {
+    color: var(--my-warning-color); }
+
+/* line 15, static/scss/components/header/_logo.scss */
+.logo:hover {
+  opacity: 70%; }
+
+/* line 26, static/scss/components/header/_header.scss */
+header {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 5rem;
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  justify-content: space-between;
+  background-color: var(--my-blur-color);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  z-index: 50;
+  border-bottom: 1px solid var(--my-border-color);
+  transition: height 0.3s ease; }
+  /* line 39, static/scss/components/header/_header.scss */
+  header.scrolled {
+    height: 50px; }
+  /* line 43, static/scss/components/header/_header.scss */
+  header .header-container {
+    width: 100%;
+    margin: 0 2rem;
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    justify-content: space-between; }
+  /* line 50, static/scss/components/header/_header.scss */
+  header .menu,
+  header .user-menu {
+    display: flex;
+    align-items: center;
+    flex-direction: row; }
+  /* line 55, static/scss/components/header/_header.scss */
+  header .user-menu {
+    position: relative; }
+    /* line 58, static/scss/components/header/_header.scss */
+    header .user-menu .menu-list {
+      display: none;
+      flex-direction: column;
+      background-color: var(--my-blur-color);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      position: absolute;
+      top: 2rem;
+      border-radius: 6px;
+      border: 1px solid var(--my-border-color);
+      padding: 0.6rem; }
+      /* line 68, static/scss/components/header/_header.scss */
+      header .user-menu .menu-list.active-menu-user {
+        display: flex; }
+
+/* line 75, static/scss/components/header/_header.scss */
+.icon-user {
+  cursor: pointer;
+  width: 1.6rem;
+  height: auto;
+  transition: all 0.3s; }
+  /* line 6, static/scss/components/_mixins.scss */
+  .icon-user:hover {
+    opacity: 60%; }
+
+@media (max-width: 992px) {
+  /* line 80, static/scss/components/header/_header.scss */
+  .link-user {
+    display: none; }
+  /* line 83, static/scss/components/header/_header.scss */
+  .user-menu > .icon-user {
+    margin-left: 2rem; } }
+
+@media (max-width: 768px) {
+  /* line 89, static/scss/components/header/_header.scss */
+  header .menu {
+    display: none; } }
+
+/* line 94, static/scss/components/header/_header.scss */
+.theme-toggle {
+  background-color: var(--my-success-color);
+  border-radius: 4px;
+  padding: 4px;
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  margin-left: 4rem; }
+  /* line 103, static/scss/components/header/_header.scss */
+  .theme-toggle .icons-theme img {
+    z-index: 50;
+    width: 22px;
+    height: auto;
+    margin: 4px; }
+
+/* line 111, static/scss/components/header/_header.scss */
+.theme-switch {
+  position: relative;
+  display: inline-block;
+  width: 50px;
+  height: 24px; }
+
+/* Скрываем стандартный checkbox */
+/* line 119, static/scss/components/header/_header.scss */
+.theme-switch input {
+  opacity: 0;
+  width: 0;
+  height: 0; }
+
+/* Стили для ползунка */
+/* line 126, static/scss/components/header/_header.scss */
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: var(--my-primary-color);
+  transition: 0.4s;
+  border-radius: 34px; }
+
+/* Стили для круглого бегунка */
+/* line 139, static/scss/components/header/_header.scss */
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 16px;
+  width: 16px;
+  left: 4px;
+  bottom: 4px;
+  background-color: var(--my-accent-color);
+  transition: 0.4s;
+  border-radius: 50%; }
+
+/* Стили когда checkbox отмечен */
+/* line 152, static/scss/components/header/_header.scss */
+input:checked + .slider {
+  background-color: var(--my-warning-color); }
+
+/* line 156, static/scss/components/header/_header.scss */
+input:focus + .slider {
+  box-shadow: 0 0 1px var(--my-warning-color); }
+
+/* Перемещение бегунка когда отмечено */
+/* line 161, static/scss/components/header/_header.scss */
+input:checked + .slider:before {
+  transform: translateX(26px); }
+
+/* Стили для круглого переключателя (уже заданы через border-radius) */
+/* line 166, static/scss/components/header/_header.scss */
+.slider.round {
+  border-radius: 34px; }
+
+/* line 170, static/scss/components/header/_header.scss */
+.slider.round:before {
+  border-radius: 50%; }
+
+/* line 16, static/scss/base.scss */
+.container {
+  margin-left: 4rem;
+  margin-right: 4rem; }
+
+@font-face {
+  font-family: "Roboto";
+  src: url("/static/fonts/Roboto_SemiCondensed-Regular.ttf") format("ttf"); }
+
+/* line 26, static/scss/base.scss */
+body {
+  font-family: "Roboto", sans-serif;
+  background-color: #f8f9fa; }
