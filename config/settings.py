@@ -26,7 +26,9 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    # libs
     "livereload",
+    'compressor',  # Добавляем django-compressor
     # Apps
     "core.apps.CoreConfig",
     "header.apps.HeaderConfig",
@@ -123,14 +125,26 @@ STATICFILES_DIRS = [
     BASE_DIR / "static",  # Путь к общей статике
 ]
 
-STATIC_ROOT = BASE_DIR / "staticfiles"  # Куда collectstatic соберёт файлы
-STATIC_URL = "/static/"  # URL для статики
+# Static files (CSS, JavaScript, Images)
+STATIC_URL = '/static/'
+STATIC_ROOT = BASE_DIR / 'staticfiles'
+STATICFILES_DIRS = [BASE_DIR / 'static']
 
-MEDIA_URL = "/media/"
-MEDIA_ROOT = os.path.join(BASE_DIR, "media/")
+MEDIA_URL = '/media/'
+MEDIA_ROOT = BASE_DIR / 'media'
 
+# Static files finders
+STATICFILES_FINDERS = [
+    'django.contrib.staticfiles.finders.FileSystemFinder',
+    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+    'compressor.finders.CompressorFinder',
+]
 
-# Default primary key field type
-# https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
+# Compressor settings
+COMPRESS_PRECOMPILERS = (
+    ('text/x-scss', 'django_libsass.SassCompiler'),
+)
+COMPRESS_ROOT = STATIC_ROOT
 
-DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+# COMPRESS_ENABLED = True
+# COMPRESS_OFFLINE = False  # True in production

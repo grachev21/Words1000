@@ -1,0 +1,25 @@
+@mixin flex-center-between {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-direction: row;
+}
+
+@mixin fixed-top-left {
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: 50;
+  width: 100%;
+}
+
+@mixin blur-block {
+  background-color: $my-blur-color;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+@mixin bottom-shadow-border {
+  border-bottom: 1px solid $my-border-color;
+  box-shadow: 0 2px 4px rgba(185, 185, 185, 0.1), 0 4px 8px rgba(229, 219, 219, 0.1);
+}

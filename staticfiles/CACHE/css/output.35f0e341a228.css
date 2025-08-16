@@ -1,0 +1,1 @@
+@import "./base/reset";@import "./base/variables";@import "./base/utilities";.container{margin-left:4rem;margin-right:4rem}@font-face{font-family:"Roboto";src:url("/static/fonts/Roboto_SemiCondensed-Regular.ttf") format("ttf")}body{font-family:"Roboto",sans-serif}

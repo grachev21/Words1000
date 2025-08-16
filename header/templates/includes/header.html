@@ -1,6 +1,6 @@
 {% load static %}
 <header>
-  <div class="header">
+  <div class="header-container">
     <a class="logo" href="{% url 'home' %}">
       <p class="logo-1">Words</p>
       <p class="logo-2">1000</p>
@@ -8,16 +8,12 @@
     <button class="">
       <span class=""></span>
     </button>
-    <div class="">
-      <div class="menu">
-        {% for m in menu %}
-          {% if request.resolver_match.url_name == m.url_name%}
-          <a class="nav-link" href="{% url m.url_name%}">{{ m.name }}</a>
-          {% else %}
-          <a class="nav-link-active" href="{% url m.url_name %}">{{ m.name }}</a>
-          {% endif %}
-        {% endfor %}
-      </div>
+    <div class="menu">
+        {% for m in menu %} {% if request.resolver_match.url_name == m.url_name%}
+        <a class="nav-link-active" href="{% url m.url_name%}">{{ m.name }}</a>
+        {% else %}
+        <a class="nav-link" href="{% url m.url_name %}">{{ m.name }}</a>
+        {% endif %} {% endfor %}
 
       <div class="user-menu">
         <a class="show-link" href="#">Пользователь</a>
@@ -31,11 +27,17 @@
         </div>
       </div>
 
-      <!-- themeToggle -->
-      <button class="">
-        <h5>Темная тема</h5>
-      </button>
-
     </div>
   </div>
 </header>
+
+<script>
+  window.addEventListener("scroll", () => {
+    const header = document.querySelector("header");
+    if (window.scrollY > 50) {
+      header.classList.add("scrolled");
+    } else {
+      header.classList.remove("scrolled");
+    }
+  });
+</script>

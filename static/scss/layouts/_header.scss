@@ -1,23 +1,10 @@
 header {
-  position: fixed;
-  left: 0;
-  top: 0;
-  width: 100%;
+  @include flex-center-between;
+  @include fixed-top-left;
+  @include blur-block;
+  @include bottom-shadow-border;
   height: 5rem;
-  display: flex;
-  align-items: center;
-  flex-direction: row;
-  justify-content: space-between;
-  background-color: var(--my-blur-color);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  z-index: 50;
-  border-bottom: 1px solid var(--my-border-color);
   transition: height 0.3s ease;
-}
-
-header.scrolled {
-  height: 50px;
 }
 
 header .header-container {
@@ -28,12 +15,30 @@ header .header-container {
   flex-direction: row;
   justify-content: space-between;
 }
+header.scrolled {
+  height: 50px;
+}
+
+.logo {
+  @include flex-center-between;
+  font-weight: 600;
+  font-size: xx-large;
+  transition: all 0.3s;
+  .logo-1 {
+    color: $my-success-color;
+  }
+  .logo-2 {
+    color: $my-text-inverse;
+  }
+}
+
+.logo:hover {
+  opacity: 70%;
+}
 
 header .menu,
 header .user-menu {
-  display: flex;
-  align-items: center;
-  flex-direction: row;
+  @include flex-center-between;
 }
 
 header .user-menu {
