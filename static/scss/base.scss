@@ -3,8 +3,9 @@
 @import "./base/utilities";
 @import "./components/mixins";
 @import "./components/link";
+@import "./components/icons";
 
-@import "./layouts/header";
+@import "./layouts/header/header";
 
 .container {
   margin-left: 4rem;

@@ -1,0 +1,26 @@
+.slider {
+  @include blur-block;
+  @include flex-col-center(space-start);
+  border-right: 1px solid $my-border-color;
+  position: absolute;
+  top: 0;
+  left: -420px;
+  height: 100vh;
+  width: 420px;
+  z-index: 150;
+  transition: left 0.3s ease;
+  .link-mobile {
+    @include flex-row-center(space-start);
+    width: 100%;
+    flex-direction: row;
+    font-size: large;
+    color: $my-text-color;
+    border-bottom: 1px solid $my-border-color;
+    padding: 0.6rem;
+    img {
+      width: 1.4rem;
+      height: auto;
+      margin-right: 1rem;
+    }
+  }
+}

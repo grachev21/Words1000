@@ -1,0 +1,77 @@
+@import "./responsible";
+@import "./slider";
+
+header {
+  @include flex-row-center;
+  @include fixed-top-left;
+  @include blur-block;
+  @include bottom-shadow-border;
+  height: 5rem;
+  transition: height 0.3s ease;
+
+  &.scrolled {
+    height: 50px;
+  }
+}
+
+.header-container {
+  width: 100%;
+  margin: 0 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.logo {
+  @include flex-row-center;
+  font-weight: 600;
+  font-size: xx-large;
+  transition: font-size 0.3s ease;
+  &:hover {
+    opacity: 70%;
+  }
+  p {
+    transition: all 0.3s;
+  }
+  &-1 {
+    color: $my-success-color;
+  }
+
+  &-2 {
+    color: $my-text-inverse;
+  }
+}
+
+.menu {
+  @include flex-row-center;
+}
+
+.user-menu {
+  @include flex-row-center;
+  position: relative;
+
+  .menu-list {
+    position: absolute;
+    @include flex-col-center(flex-between);
+    @include blur-block;
+    top: 3rem;
+    left: 0;
+    border-radius: 6px;
+    border: 1px solid $my-border-color;
+    padding: 0.6rem;
+    display: none;
+    z-index: 100;
+
+    &.active-menu-user {
+      display: flex;
+    }
+  }
+}
+
+.icons-menu {
+  width: 1.2rem;
+  height: auto;
+  filter: invert(100%);
+  cursor: pointer;
+  display: none;
+}

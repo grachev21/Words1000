@@ -1,0 +1,50 @@
+// Large devices (≤ lg breakpoint)
+@media (max-width: $my-breakpoint-lg) {
+  .logo p {
+    font-size: x-large;
+    transition: font-size 0.3s ease;
+  }
+
+  .nav-link,
+  .nav-link-active {
+    margin: 0.4rem;
+  }
+}
+
+// Medium devices (≤ md breakpoint)
+@media (max-width: $my-breakpoint-md) {
+  .nav-link {
+    font-size: small;
+  }
+
+  .show-link p {
+    display: none;
+  }
+}
+
+// Small devices (≤ sm breakpoint)
+@media (max-width: $my-breakpoint-sm) {
+  .menu a,
+  .show-link {
+    display: none;
+  }
+
+  .icons-menu {
+    display: block !important;
+  }
+}
+@media (min-width: $my-breakpoint-sm) {
+  .slider {
+    display: none !important;
+  }
+}
+
+// Extra large devices (≥ xxl breakpoint)
+@media (min-width: $my-breakpoint-xxl) {
+  .nav-link,
+  .nav-link-active,
+  .show-link {
+    font-size: large;
+    margin: 2rem;
+  }
+}

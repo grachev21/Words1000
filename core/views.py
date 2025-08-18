@@ -1,6 +1,6 @@
+from core.services import ServicesMixin
 from django.views.generic import ListView, TemplateView
 from django.urls import reverse_lazy
-from core.services import ServicesMixin
 from django.contrib.auth.mixins import LoginRequiredMixin
 
 

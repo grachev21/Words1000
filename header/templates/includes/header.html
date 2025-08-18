@@ -5,39 +5,56 @@
       <p class="logo-1">Words</p>
       <p class="logo-2">1000</p>
     </a>
-    <button class="">
-      <span class=""></span>
-    </button>
+
     <div class="menu">
-        {% for m in menu %} {% if request.resolver_match.url_name == m.url_name%}
-        <a class="nav-link-active" href="{% url m.url_name%}">{{ m.name }}</a>
-        {% else %}
-        <a class="nav-link" href="{% url m.url_name %}">{{ m.name }}</a>
-        {% endif %} {% endfor %}
+      {% for m in menu %}
+      <a
+        class="nav-link{% if request.resolver_match.url_name == m.url_name %} nav-link-active{% endif %}"
+        href="{% url m.url_name %}"
+      >
+        <img class="icons" src="{% static m.img_path %}" alt="" />
+        {{ m.name }}
+      </a>
+      {% endfor %}
 
       <div class="user-menu">
-        <a class="show-link" href="#">Пользователь</a>
+        <button class="show-link">
+          <p>Пользователь</p>
+          <img class="icons" src="{% static 'icons/user.png' %}" alt="User menu icon" />
+        </button>
+
         <div class="menu-list">
           {% if request.user.is_authenticated %}
           <a class="list-link" href="{% url user_menu.0.url_name %}">{{ user_menu.0.name }}</a>
           {% else %}
-          <a class="list-link" href="{% url user_menu.1.url_name %}">{{ user_menu.1.name}}</a>
+          <a class="list-link" href="{% url user_menu.1.url_name %}">{{ user_menu.1.name }}</a>
           <a class="list-link" href="{% url user_menu.2.url_name %}">{{ user_menu.2.name }}</a>
           {% endif %}
         </div>
       </div>
-
     </div>
+    <img class="icons-menu" src="{% static 'icons/menu.png' %}" alt="" />
   </div>
 </header>
+{% include 'includes/slider.html' %}
 
 <script>
+  const header = document.querySelector("header");
+  const userMenu = document.querySelector(".menu-list");
+  const userMenuBtn = document.querySelector(".show-link");
+
   window.addEventListener("scroll", () => {
-    const header = document.querySelector("header");
-    if (window.scrollY > 50) {
-      header.classList.add("scrolled");
-    } else {
-      header.classList.remove("scrolled");
+    header.classList.toggle("scrolled", window.scrollY > 50);
+  });
+
+  userMenuBtn.addEventListener("click", (e) => {
+    e.preventDefault();
+    userMenu.classList.toggle("active-menu-user");
+  });
+
+  document.addEventListener("click", (e) => {
+    if (!e.target.closest(".user-menu")) {
+      userMenu.classList.remove("active-menu-user");
     }
   });
 </script>

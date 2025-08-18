@@ -1,0 +1,35 @@
+{% load static %}
+<div class="slider">
+  {% load static %} {% for m in menu %} {% if request.resolver_match.url_name == m.url_name %}
+
+  <a class="link-mobile" href="{% url m.url_name %}">
+    <img class="icons" src="{% static m.img_path %}" alt="" />
+    <p>{{ m.name }}</p></a
+  >
+  {% else %}
+
+  <a class="link-mobile" href="{% url m.url_name %}">
+    <img class="icons" src="{% static m.img_path %}" alt="" />
+    <p>{{m.name}}</p>
+  </a>
+  {% endif %} {% endfor %} {% if request.user.is_authenticated %}
+  <a class="link-mobile" href="{% url user_menu.0.url_name %}"
+    ><img src="{% static m.img_path %}" alt="" />
+    <p>{{ user_menu.0.name }}</p></a
+  >
+  {% else %}
+  <a class="link-mobile" href="{% url user_menu.1.url_name %}">{{ user_menu.1.name}}</a>
+  <a class="link-mobile" href="{% url user_menu.2.url_name %}">{{ user_menu.2.name }}</a>
+  {% endif %}
+</div>
+
+<script>
+  const mobileMenu = document.querySelector(".slider");
+  document.querySelector(".icons-menu").addEventListener("click", (e) => {
+    if (mobileMenu.style.left === "0px") {
+      mobileMenu.setAttribute("style", "left: -420px;");
+    } else {
+      mobileMenu.setAttribute("style", "left: 0px;");
+    }
+  });
+</script>

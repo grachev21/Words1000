@@ -9,6 +9,7 @@
 
 /* Стили для навигационных ссылок */
 .nav-link {
+  @include flex-row-center;
   color: $my-text-color;
   margin: 1rem;
   &:hover {
@@ -26,9 +27,13 @@
 
 /* Стили для ссылок шоу */
 .show-link {
+  display: flex;
+  align-items: center;
   color: $my-text-color;
   margin: 1rem;
   font-weight: 700;
+  font-size: large;
+  cursor: pointer;
   &:hover {
     opacity: 0.7;
   }
@@ -37,33 +42,12 @@
 /* Стили для ссылок в списках */
 .list-link {
   color: $my-text-color;
-  padding: 4px;
   border-bottom: 2px solid transparent;
   opacity: 0.8;
-  margin{
-    top: 1rem;
-    bottom: 1rem;
-  }
+  margin: 0.4rem;
   &:hover {
     border-bottom-color: var(--my-border-color);
     opacity: 1;
   }
 }
 
-@media (min-width: 1400px) {
-  /* If more */
-  .nav-link,
-  .nav-link-active,
-  .show-link {
-    font-size: large;
-    margin: 2rem;
-  }
-}
-
-@media (max-width: 910px) {
-  /* If less */
-  .nav-link,
-  .nav-link-active {
-    margin: 0.4rem;
-  }
-}

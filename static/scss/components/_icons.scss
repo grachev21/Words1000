@@ -1,0 +1,9 @@
+// Icon styles
+.icons {
+  @include beating;
+  filter: invert(100%);
+  width: 1rem;
+  height: 1rem;
+  margin: 4px;
+  cursor: pointer;
+}
