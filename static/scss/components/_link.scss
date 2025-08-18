@@ -17,7 +17,6 @@
   }
 }
 
-
 /* Стили для активной навигационной ссылки */
 .nav-link-active {
   color: $my-text-color;
@@ -27,25 +26,28 @@
 
 /* Стили для ссылок шоу */
 .show-link {
+  color: $my-text-color;
   margin: 1rem;
   font-weight: 700;
-}
-
-.show-link:hover {
-  opacity: 0.7;
+  &:hover {
+    opacity: 0.7;
+  }
 }
 
 /* Стили для ссылок в списках */
 .list-link {
+  color: $my-text-color;
   padding: 4px;
   border-bottom: 2px solid transparent;
   opacity: 0.8;
-  margin: 0.2rem 0.5rem;
-}
-
-.list-link:hover {
-  border-bottom-color: var(--my-border-color);
-  opacity: 1;
+  margin{
+    top: 1rem;
+    bottom: 1rem;
+  }
+  &:hover {
+    border-bottom-color: var(--my-border-color);
+    opacity: 1;
+  }
 }
 
 @media (min-width: 1400px) {

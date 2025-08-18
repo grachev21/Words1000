@@ -1,5 +1,5 @@
 header {
-  @include flex-center-between;
+  @include flex-row-center-between;
   @include fixed-top-left;
   @include blur-block;
   @include bottom-shadow-border;
@@ -20,7 +20,7 @@ header.scrolled {
 }
 
 .logo {
-  @include flex-center-between;
+  @include flex-row-center-between;
   font-weight: 600;
   font-size: xx-large;
   transition: all 0.3s;
@@ -38,7 +38,7 @@ header.scrolled {
 
 header .menu,
 header .user-menu {
-  @include flex-center-between;
+  @include flex-row-center-between;
 }
 
 header .user-menu {
@@ -46,16 +46,15 @@ header .user-menu {
 }
 
 header .user-menu .menu-list {
-  display: none;
+  // display: none;
+  @include blur-block;
   flex-direction: column;
-  background-color: var(--my-blur-color);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
   position: absolute;
   top: 2rem;
   border-radius: 6px;
   border: 1px solid var(--my-border-color);
   padding: 0.6rem;
+  z-index: 80;
 }
 
 header .user-menu .menu-list.active-menu-user {

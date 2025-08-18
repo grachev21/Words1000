@@ -1,8 +1,15 @@
-@mixin flex-center-between {
+@mixin flex-row-center-between {
   display: flex;
   justify-content: space-between;
   align-items: center;
   flex-direction: row;
+}
+
+@mixin flex-col-center-between {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-direction: column;
 }
 
 @mixin fixed-top-left {
