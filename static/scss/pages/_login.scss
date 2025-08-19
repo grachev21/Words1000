@@ -1,0 +1,57 @@
+.login-form {
+  @include center;
+  width: 100%;
+  height: 100vh;
+  form {
+    @include shadow;
+    @include center;
+    border-radius: 12px;
+    background-color: $my-accent-color;
+    width: 400px;
+    height: 400px;
+    .form-group {
+      width: 100%;
+      padding-left: 2rem;
+      padding-right: 2rem;
+      display: flex;
+      flex-direction: column;
+      margin-bottom: 1rem;
+
+      .form-style {
+        color: $my-text-color;
+        margin-bottom: 1rem;
+        font-weight: 600;
+        letter-spacing: 1px;
+      }
+      .input-style {
+        position: relative;
+        img {
+            position: absolute;
+            left: 0.4rem;
+            top: 50%;
+            transform: translate(50%, -50%);
+        }
+      }
+      .form-control {
+        padding-left: 55px;
+        height: 48px;
+        width: 100%;
+        font-weight: 500;
+        border-radius: 4px;
+        letter-spacing: 1px;
+        font-size: 14px;
+        outline: none;
+        color: $my-text-color;
+        background-color: $my-background-color;
+        border: none;
+        transition: all 200ms linear;
+      }
+      .form-control:focus,
+      .form-control:active {
+        border: none;
+        outline: none;
+        box-shadow: 0 4px 8px 0 rgba(21, 21, 21, 0.2);
+      }
+    }
+  }
+}

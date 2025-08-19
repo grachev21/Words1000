@@ -28,14 +28,11 @@
   .show-link {
     display: none;
   }
-
   .icons-menu {
     display: block !important;
   }
-}
-@media (min-width: $my-breakpoint-sm) {
   .slider {
-    display: none !important;
+    display: flex !important;
   }
 }
 

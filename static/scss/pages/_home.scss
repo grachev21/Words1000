@@ -1,0 +1,38 @@
+
+  /* Стили для обертки бегущей строки */
+  .marquee-wrapper {
+    position: relative; /* Нужно для позиционирования дочерних элементов */
+    width: 100%; /* Занимает всю доступную ширину */
+    background-color: blue;
+  }
+
+  /* Стили для контейнера с элементами */
+  .marquee-content {
+    display: inline-block; /* Элементы в строку */
+    white-space: nowrap; /* Запрет переноса строк */
+    animation: scroll 1880s linear infinite; /* Анимация движения */
+    padding-left: 100%; /* Начальное смещение за пределы экрана */
+  }
+
+  /* Стили для отдельных элементов */
+  .marquee-item {
+    display: inline-flex; /* Flex-элементы в строку */
+    font-size: 1.1rem; /* Размер текста */
+    font-weight: 500; /* Полужирный текст */
+    min-width: max-content; /* Ширина по содержимому */
+  }
+
+  /* Анимация движения */
+  @keyframes scroll {
+    0% {
+      transform: translateX(0); /* Начальная позиция */
+    }
+    100% {
+      transform: translateX(-100%); /* Конечная позиция (влево) */
+    }
+  }
+
+  /* Пауза при наведении */
+  .marquee-wrapper:hover .marquee-content {
+    animation-play-state: paused;
+  }

@@ -3,14 +3,14 @@
 @import "./base/utilities";
 @import "./components/mixins";
 @import "./components/link";
+@import "./components/buttons";
 @import "./components/icons";
+@import "./pages/login";
+@import "./pages/home";
+@import "./components/typography";
 
 @import "./layouts/header/header";
 
-.container {
-  margin-left: 4rem;
-  margin-right: 4rem;
-}
 
 @font-face {
   font-family: "Roboto";
@@ -22,9 +22,13 @@ body {
   background-color: $my-background-color;
 }
 
+.container {
+  margin-left: 4rem;
+  margin-right: 4rem;
+  border-radius: 16px;
+}
 .content {
-  padding {
-    top: 8rem;
-    background-color: blue;
-  }
+  background-color: $my-secondary-color;
+  margin-top: 8rem;
+  min-height: 100vh;
 }

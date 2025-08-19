@@ -1,12 +1,22 @@
-@mixin flex-row-center($jc: space-between){
+@mixin center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+@mixin shadow {
+  box-shadow: 0 8px 24px 0 rgba(73, 73, 73, 0.2);
+}
+
+@mixin flex-row-center($jc: space-between) {
   display: flex;
   justify-content: $jc;
   align-items: center;
   flex-direction: row;
 }
 
-@mixin flex-col-center($jc:space-between){
-  display: flex;
+@mixin flex-col-center($jc: space-between, $dy: flex) {
+  display: $dy;
   justify-content: $jc;
   align-items: flex-start;
   flex-direction: column;

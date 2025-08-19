@@ -1,10 +1,7 @@
 {% load static %}
 <header>
   <div class="header-container">
-    <a class="logo" href="{% url 'home' %}">
-      <p class="logo-1">Words</p>
-      <p class="logo-2">1000</p>
-    </a>
+    {% include 'includes/logo.html' %}
 
     <div class="menu">
       {% for m in menu %}

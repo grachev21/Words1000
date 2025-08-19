@@ -51,3 +51,22 @@
   }
 }
 
+.link-mobile {
+  @include flex-row-center(space-start);
+  width: 100%;
+  flex-direction: row;
+  font-size: large;
+  color: $my-text-color;
+  border-bottom: 1px solid $my-border-color;
+  padding: 0.6rem;
+}
+
+.active-link-mobile {
+  @include flex-row-center(space-start);
+  width: 100%;
+  flex-direction: row;
+  font-size: large;
+  color: $my-text-inverse;
+  border-bottom: 1px solid $my-border-color;
+  padding: 0.6rem;
+}

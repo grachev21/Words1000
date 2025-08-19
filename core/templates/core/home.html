@@ -1,8 +1,8 @@
 {% extends 'base.html' %} {% load TagWords %} {% load static %} {% block content %}
 
-<div class="content">
-  <div class="">
-    <h3>Все слова</h3>
+<div class="content container">
+  <div class="running-line-container">
+    <div class="title-xxl">Все слова</div>
     <div class="">{% include 'includes/running_line.html' %}</div>
   </div>
   <h3>Ваши настройки</h3>
@@ -24,13 +24,10 @@
   <div class="">
     {% if request.user.is_authenticated %}
     <div class="">{% chart_week user=user %}</div>
-    </div>
-    <div class="">
-      <div class="">
-        {% doughnut number.number_words counter_word total_words total %}
-      </div>
-    </div>
-    {% endif %}
   </div>
+  <div class="">
+    <div class="">{% doughnut number.number_words counter_word total_words total %}</div>
+  </div>
+  {% endif %}
 </div>
 {% include 'includes/home/about.html' %} {% endblock %}

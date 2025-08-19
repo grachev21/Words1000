@@ -6,12 +6,16 @@ from django.contrib.auth.models import User
 
 class LoginUserForm(AuthenticationForm):
     username = forms.CharField(
-        widget=forms.TextInput(attrs={"class": "form-control"}),
         label="Имя пользователя",
+        widget=forms.TextInput(attrs={"class": "form-control", "placeholder": "Введите имя пользователя"}),
     )
     password = forms.CharField(
-        widget=forms.PasswordInput(attrs={"class": "form-control"}), label="Пароль"
+        widget=forms.PasswordInput(attrs={"class": "form-control", "placeholder": "Введите пароль"}), label="Пароль"
     )
+    error_messages = {
+        "invalid_login": "Пожалуйста, введите правильные имя пользователя и пароль.",
+        "inactive": "Этот аккаунт неактивен.",
+    }
 
 
 class RegisterUserForm(UserCreationForm):
