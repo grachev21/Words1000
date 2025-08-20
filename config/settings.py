@@ -26,9 +26,10 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    # libs
-    "livereload",
-    'compressor',  # Добавляем django-compressor
+    # Libs
+    "bootstrap5",
+    "tailwind",
+    "theme",
     # Apps
     "core.apps.CoreConfig",
     "header.apps.HeaderConfig",
@@ -37,6 +38,18 @@ INSTALLED_APPS = [
     "game.apps.GameConfig",
     "words.apps.WordsConfig",
 ]
+# Settings for tailwind
+TAILWIND_APP_NAME = "theme"
+INTERNAL_IPS = [
+    "127.0.0.1",
+]
+NPM_BIN_PATH = r"C:\Program Files\nodejs\npm.cmd"
+# End settings tailwind **********************************************************
+
+if DEBUG:
+    # Add django_browser_reload only in DEBUG mode
+    INSTALLED_APPS += ['django_browser_reload']
+
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
@@ -47,8 +60,15 @@ MIDDLEWARE = [
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
     "users.middleware.CurrentUserMiddleware",
-    "livereload.middleware.LiveReloadScript",
+    "django_browser_reload.middleware.BrowserReloadMiddleware",
 ]
+
+
+if DEBUG:
+    # Add django_browser_reload middleware only in DEBUG mode
+    MIDDLEWARE += [
+        "django_browser_reload.middleware.BrowserReloadMiddleware",
+    ]
 
 INTERNAL_IPS = ["127.0.0.1"]
 
@@ -125,26 +145,14 @@ STATICFILES_DIRS = [
     BASE_DIR / "static",  # Путь к общей статике
 ]
 
-# Static files (CSS, JavaScript, Images)
-STATIC_URL = '/static/'
-STATIC_ROOT = BASE_DIR / 'staticfiles'
-STATICFILES_DIRS = [BASE_DIR / 'static']
+STATIC_ROOT = BASE_DIR / "staticfiles"  # Куда collectstatic соберёт файлы
+STATIC_URL = "/static/"  # URL для статики
 
-MEDIA_URL = '/media/'
-MEDIA_ROOT = BASE_DIR / 'media'
+MEDIA_URL = "/media/"
+MEDIA_ROOT = os.path.join(BASE_DIR, "media/")
 
-# Static files finders
-STATICFILES_FINDERS = [
-    'django.contrib.staticfiles.finders.FileSystemFinder',
-    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
-    'compressor.finders.CompressorFinder',
-]
 
-# Compressor settings
-COMPRESS_PRECOMPILERS = (
-    ('text/x-scss', 'django_libsass.SassCompiler'),
-)
-COMPRESS_ROOT = STATIC_ROOT
+# Default primary key field type
+# https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
-# COMPRESS_ENABLED = True
-# COMPRESS_OFFLINE = False  # True in production
+DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"

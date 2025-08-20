@@ -1,57 +1,63 @@
 {% load static %}
-<header>
-  <div class="header-container">
-    {% include 'includes/logo.html' %}
-
-    <div class="menu">
-      {% for m in menu %}
-      <a
-        class="nav-link{% if request.resolver_match.url_name == m.url_name %} nav-link-active{% endif %}"
-        href="{% url m.url_name %}"
-      >
-        <img class="icons" src="{% static m.img_path %}" alt="" />
-        {{ m.name }}
-      </a>
-      {% endfor %}
-
-      <div class="user-menu">
-        <button class="show-link">
-          <p>Пользователь</p>
-          <img class="icons" src="{% static 'icons/user.png' %}" alt="User menu icon" />
-        </button>
-
-        <div class="menu-list">
-          {% if request.user.is_authenticated %}
-          <a class="list-link" href="{% url user_menu.0.url_name %}">{{ user_menu.0.name }}</a>
+<nav class="navbar navbar-expand-sm navbar-light fixed-top border-bottom shadow bg-body">
+  <div class="container">
+    <button class="btn">click my</button>
+    <a class="navbar-brand text-body-emphasis fw-bold" href="{% url 'home' %}">Words1000</a>
+    <button
+      class="navbar-toggler d-lg-none"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#collapsibleNavId"
+      aria-controls="collapsibleNavId"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="collapsibleNavId">
+      <ul class="navbar-nav me-auto mt-2 mt-lg-0">
+        {% for m in menu %}
+        <li class="nav-item">
+          {% if request.resolver_match.url_name == m.url_name%}
+          <a class="nav-link border-bottom border-2 border-dark" href="{% url m.url_name%}">{{ m.name }}</a>
           {% else %}
-          <a class="list-link" href="{% url user_menu.1.url_name %}">{{ user_menu.1.name }}</a>
-          <a class="list-link" href="{% url user_menu.2.url_name %}">{{ user_menu.2.name }}</a>
+          <a class="nav-link" href="{% url m.url_name %}">{{ m.name }}</a>
           {% endif %}
+        </li>
+        {% endfor %}
+
+        <li class="nav-item dropdown ms-3">
+          <a
+            class="nav-link dropdown-toggle fw-bold"
+            href="#"
+            id="dropdownId"
+            data-bs-toggle="dropdown"
+            aria-haspopup="true"
+            aria-expanded="false"
+            >Пользователь</a
+          >
+          <div class="dropdown-menu" aria-labelledby="dropdownId">
+            {% if request.user.is_authenticated %}
+            <a class="dropdown-item" href="{% url user_menu.0.url_name %}">{{ user_menu.0.name }}</a>
+            {% else %}
+            <a class="dropdown-item" href="{% url user_menu.1.url_name %}">{{ user_menu.1.name}}</a>
+            <a class="dropdown-item" href="{% url user_menu.2.url_name %}">{{ user_menu.2.name }}</a>
+            {% endif %}
+          </div>
+        </li>
+
+        <!-- themeToggle -->
+        <div class="form-check form-switch d-flex flex-column justify-content-center cursor-pointer">
+          <img src="" alt="" />
+          <img src="" alt="" />
+          <input class="form-check-input" type="checkbox" role="switch" id="themeToggle" />
         </div>
-      </div>
+      </ul>
+
+      <form class="d-flex my-2 my-lg-0">
+        <input class="form-control me-sm-2" type="text" placeholder="Search" />
+        <button class="btn btn-outline-success my-2 my-sm-0 m-1" type="submit">Search</button>
+      </form>
     </div>
-    <img class="icons-menu" src="{% static 'icons/menu.png' %}" alt="" />
   </div>
-</header>
-{% include 'includes/slider.html' %}
-
-<script>
-  const header = document.querySelector("header");
-  const userMenu = document.querySelector(".menu-list");
-  const userMenuBtn = document.querySelector(".show-link");
-
-  window.addEventListener("scroll", () => {
-    header.classList.toggle("scrolled", window.scrollY > 50);
-  });
-
-  userMenuBtn.addEventListener("click", (e) => {
-    e.preventDefault();
-    userMenu.classList.toggle("active-menu-user");
-  });
-
-  document.addEventListener("click", (e) => {
-    if (!e.target.closest(".user-menu")) {
-      userMenu.classList.remove("active-menu-user");
-    }
-  });
-</script>
+</nav>

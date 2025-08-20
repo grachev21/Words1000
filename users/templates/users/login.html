@@ -1,25 +1,21 @@
-{% extends 'base.html' %} {% block content %} {% load static %}
-<div class="content container">
-  <div class="login-form">
-    <form action="POST">
-      <div class="title-xxl">Вход</div>
-      {% csrf_token %} {% if form.errors %}
-      <div class="alert">
-        {% for field.errors in form.errors.items %} {% for error in errors %}
-        <p>{{ error }}</p>
-        {% endfor %} {% endfor %}
+{% extends 'base.html' %} {% block content %} {% load bootstrap5 %}
+
+<div class="container bg-body-tertiary my-5 border rounded-2 p-3">
+  <div class="row justify-content-center">
+    <div class="col-md-6 col-lg-4">
+      <div class="card shadow">
+        <div class="card-body p-4">
+          <h2 class="text-center mb-4">Вход в систему</h2>
+          <form method="post">
+            {% csrf_token %} {% bootstrap_form form %}
+            <div class="d-grid gap-2">
+              <button type="submit" class="btn btn-secondary btn-lg mt-3">Войти</button>
+            </div>
+          </form>
+        </div>
       </div>
-      {% endif %}
-      <div class="form-group">
-        <label class="form-style" for="{{form.username.id_for_label}}">{{ form.username.label }}</label>
-        <div class="input-style"><img src="{% static 'icons/user.png' %}" alt="" />{{ form.username }}</div>
-      </div>
-      <div class="form-group">
-        <label class="form-style" for="{{ form.password.id_for_label}}">{{ form.password.label }}</label>
-        <div class="input-style"><img src="{% static 'icons/password.png' %}" alt="">{{ form.password}}</div>
-      </div>
-      <button class="button-1" type="submit">Войти</button>
-    </form>
+    </div>
   </div>
 </div>
-{% endblock content %}
+
+{% endblock %}
