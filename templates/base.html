@@ -1,23 +1,23 @@
-{% load static %}
-{% load static tailwind_tags %} 
-{% load TagWords %} 
-{% load header_tag %}
+{% load static %} {% load TagWords %} {% load header_tag %}
 
 <!DOCTYPE html>
-<html lang="ru" data-bs-theme="light">
-  <head>
-    <meta charset="utf-8" />
-    <title>{{ title }}</title>
-    {% tailwind_css %}
-  </head>
+<html lang="ru" data-theme="dark">
 
-  <body class="d-flex flex-column min-vh-100 bg-blue-600">
-    {% header %}
-    <div class="flex-grow-1 d-flex flex-column justify-content-center">{% block content %} {% endblock %}</div>
-    {% footer %}
-    <script src="{% static 'words/js/menu.js' %}"></script>
-    <script src="{% static 'js/theme-switcher.js' %}"></script>
-  </body>
+<head>
+  <link href="{% static 'dist/styles.css' %}" rel="stylesheet" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="shortcut icon" href="{% static 'icons/favicon.png' %}" type="image/x-icon">
+  <meta charset="utf-8" />
+  <title>{{ title }}</title>
+</head>
+
+<body class="bg-color_background font-Rubik w-full">
+  {% header %}
+  <div class="">{% block content %} {% endblock %}</div>
+  {% footer %}
+  <script src="{% static 'js/theme-switcher.js' %}"></script>
+</body>
+
 </html>
 
 <style>

@@ -26,10 +26,8 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    # Libs
-    "bootstrap5",
-    "tailwind",
-    "theme",
+    # Lib
+    "django_browser_reload",
     # Apps
     "core.apps.CoreConfig",
     "header.apps.HeaderConfig",
@@ -38,17 +36,7 @@ INSTALLED_APPS = [
     "game.apps.GameConfig",
     "words.apps.WordsConfig",
 ]
-# Settings for tailwind
-TAILWIND_APP_NAME = "theme"
-INTERNAL_IPS = [
-    "127.0.0.1",
-]
-NPM_BIN_PATH = r"C:\Program Files\nodejs\npm.cmd"
-# End settings tailwind **********************************************************
 
-if DEBUG:
-    # Add django_browser_reload only in DEBUG mode
-    INSTALLED_APPS += ['django_browser_reload']
 
 
 MIDDLEWARE = [
@@ -60,17 +48,13 @@ MIDDLEWARE = [
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
     "users.middleware.CurrentUserMiddleware",
+    # New
     "django_browser_reload.middleware.BrowserReloadMiddleware",
 ]
 
 
-if DEBUG:
-    # Add django_browser_reload middleware only in DEBUG mode
-    MIDDLEWARE += [
-        "django_browser_reload.middleware.BrowserReloadMiddleware",
-    ]
 
-INTERNAL_IPS = ["127.0.0.1"]
+# INTERNAL_IPS = ["127.0.0.1"]
 
 ROOT_URLCONF = "config.urls"
 
