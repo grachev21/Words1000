@@ -1,13 +1,12 @@
 {% load static %}
 <header class="bg-color_panel fixed flex items-center top-0 left-0 w-full font-roboto z-50 h-16">
-  <main class="w-full mx-4 md:mx-12 flex flex-row justify-between">
+  <main class="w-full mx-4 md:mx-12 flex flex-row justify-between items-center">
     <div class="flex flex-row justify-between items-center">
       {% include 'includes/logo.html' %}
       <nav class="flex flex-row">{% include "includes/menu.html" %} {% include "includes/dropdown_menu.html" %}</nav>
       {% include "includes/theme_toggle.html" %}
     </div>
-
-    <img src="{% static 'icons/menu.png' %}" alt="" />
+    <img class="sm:hidden w-6 h-6" id="burger" src="{% static 'icons/menu.png' %}" alt="" />
   </main>
 </header>
 {% include 'includes/mobile_menu.html' %}

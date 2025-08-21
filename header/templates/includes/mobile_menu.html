@@ -2,7 +2,7 @@
 
 <div
   id="mobile-menu"
-  class="transition-all fixed w-80 z-50 top-0 left-0 bg-color_btn_inp_bor h-dvh box-border flex flex-col overflow-hidden"
+  class="sm:hidden transition-all fixed w-80 z-50 top-0 -left-80 bg-color_btn_inp_bor h-dvh box-border flex flex-col overflow-hidden"
 >
   <div class="p-4 pb-6 flex flex-row items-center justify-between">
     {% include 'includes/logo.html' %}
@@ -43,6 +43,11 @@
 
 <script>
   document.getElementById("close-mobile-menu").addEventListener("click", () => {
+    document.getElementById("mobile-menu").classList.toggle("-left-80");
+    document.getElementById("mobile-menu").classList.toggle("left-0");
+  });
+
+  document.getElementById("burger").addEventListener("click", () => {
     document.getElementById("mobile-menu").classList.toggle("-left-80");
     document.getElementById("mobile-menu").classList.toggle("left-0");
   });
