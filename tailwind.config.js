@@ -15,7 +15,6 @@ module.exports = {
         color_text: "#deffff",
         color_text_inverse: "#7595a9",
         color_text_att_tit: "#af333e",
-        color_border: "#C8C8C8FF",
       },
     },
   },
