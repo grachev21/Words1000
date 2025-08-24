@@ -1,10 +1,11 @@
 from django.shortcuts import render
-from django.contrib.auth.views import LoginView 
+from django.contrib.auth.views import LoginView
 from django.shortcuts import render, redirect
 from django.contrib.auth import logout
 from users.forms import LoginUserForm, RegisterUserForm
-from django.urls import reverse_lazy 
+from django.urls import reverse_lazy
 from django.contrib import messages
+
 
 class LoginUser(LoginView):
     form_class = LoginUserForm

@@ -13,15 +13,9 @@
 
 <body class="bg-color_background font-Rubik w-full">
   {% header %}
-  <div class="">{% block content %} {% endblock %}</div>
+  <div class="ml-16 mr-16 h-screen">{% block content %} {% endblock %}</div>
   {% footer %}
   <script src="{% static 'js/theme-switcher.js' %}"></script>
 </body>
 
 </html>
-
-<style>
-  body {
-    padding-top: 8rem;
-  }
-</style>
