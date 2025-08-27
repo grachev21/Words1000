@@ -1,21 +1,31 @@
-<div class="text-color_text bg-amber-600">
-  <div class="" style="max-height: 18rem">
-    <div class="">
+<div class="w-full mx-auto space-y-8">
+  <div class="bg-col_bas_ave text-col_suc_ave p-4 rounded-lg overflow-hidden" aria-label="Бегущая строка со словами" role="marquee">
+    <div class="animate-marquee whitespace-nowrap flex">
       {% for word in all_words %}
-      <span class="">
-        {{ word }}
-      </span>
+        <span class="text-xl rounded-lg p-2 mx-2 font-semibold border border-col_nit_con">{{ word }}</span>
       {% endfor %}
-      <!-- Дублирование контента для бесшовной анимации -->
       {% for word in all_words %}
-      <span class=""> {{ word }} </span>
+        <span class="text-xl rounded-lg p-2 mx-2 font-semibold border border-col_nit_con">{{ word }}</span>
       {% endfor %}
     </div>
   </div>
 </div>
 
-<!-- Дополнительная информация (опционально) -->
-<div class="">
-  <small class="">Всего слов: {{ all_words|length }}</small>
-</div>
-
+<style>
+  @keyframes marquee {
+    0% {
+      transform: translateX(0);
+    }
+    100% {
+      transform: translateX(-50%);
+    }
+  }
+  
+  .animate-marquee {
+    animation: marquee 20s linear infinite;
+  }
+  
+  .animate-marquee:hover {
+    animation-play-state: paused;
+  }
+</style>

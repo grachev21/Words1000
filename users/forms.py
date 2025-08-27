@@ -6,30 +6,31 @@ from django.contrib.auth.models import User
 
 class LoginUserForm(AuthenticationForm):
     username = forms.CharField(
-        widget=forms.TextInput(attrs={"class": "form-control"}),
         label="Имя пользователя",
+        widget=forms.TextInput(attrs={"class": "input-form"}),
     )
     password = forms.CharField(
-        widget=forms.PasswordInput(attrs={"class": "form-control"}), label="Пароль"
+        label="Пароль",
+        widget=forms.PasswordInput(attrs={"class": "input-form"}),
     )
 
 
 class RegisterUserForm(UserCreationForm):
     username = forms.CharField(
         label="Имя",
-        widget=forms.TextInput(attrs={"class": "form-control"}),
+        widget=forms.TextInput(attrs={"class": "input-form"}),
     )
     email = forms.EmailField(
         label="Email",
-        widget=forms.EmailInput(attrs={"class": "form-control"}),
+        widget=forms.EmailInput(attrs={"class": "input-form"}),
     )
     password1 = forms.CharField(
         label="Пароль",
-        widget=forms.PasswordInput(attrs={"class": "form-control"}),
+        widget=forms.PasswordInput(attrs={"class": "input-form"}),
     )
     password2 = forms.CharField(
         label="Пароль",
-        widget=forms.PasswordInput(attrs={"class": "form-control"}),
+        widget=forms.PasswordInput(attrs={"class": "input-form"}),
     )
 
     class Meta:

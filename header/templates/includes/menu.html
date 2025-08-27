@@ -1,13 +1,10 @@
 {% load static %}
 <div class="hidden flex-row items-center mr-8 sm:flex lg:ml-12 xl:ml-22">
   {% for m in menu %} {% if request.resolver_match.url_name == m.url_name%}
-  <a
-    class="text-color_link border-b border-color_link mx-2 md:mx-4 hover:text-color_link_hover"
-    href="{% url m.url_name%}"
-    >{{m.name }}</a
-  >
+  <a class="text-col_suc border-b border-col_suc mx-2 md:mx-4 hover:text-col_suc_ave"
+    href="{% url m.url_name%}">{{m.name }}</a>
   {% else %}
-  <a class="text-color_link mx-2 md:mx-4 hover:text-color_link_hover" href="{% url m.url_name %}">{{ m.name }}</a>
+  <a class="text-col_suc mx-2 md:mx-4 hover:text-col_suc_ave" href="{% url m.url_name %}">{{ m.name }}</a>
   {% endif %} {% endfor %}
 
 </div>

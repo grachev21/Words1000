@@ -1,19 +1,23 @@
 {% load static %} {% load TagWords %} {% load header_tag %}
 
 <!DOCTYPE html>
-<html lang="ru" data-theme="dark">
+<html lang="ru">
 
 <head>
   <link href="{% static 'dist/styles.css' %}" rel="stylesheet" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="shortcut icon" href="{% static 'icons/favicon.png' %}" type="image/x-icon">
   <meta charset="utf-8" />
   <title>{{ title }}</title>
 </head>
 
-<body class="bg-color_background font-Rubik w-full">
+<body class="bg-col_bas_mai font-Rubik min-w-full overflow-x-hidden">
   {% header %}
-  <div class="ml-16 mr-16 h-screen">{% block content %} {% endblock %}</div>
+  <div class="mx-auto w-full max-w-full px-4 sm:px-6 lg:px-8 py-6 overflow-x-hidden">
+    <div class="w-full overflow-x-auto">
+      {% block content %} {% endblock %}
+    </div>
+  </div>
   {% footer %}
   <script src="{% static 'js/theme-switcher.js' %}"></script>
 </body>

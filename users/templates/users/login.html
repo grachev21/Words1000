@@ -1,38 +1,56 @@
-{% extends 'base.html' %} {% block content %}
-
+{% extends 'base.html' %}
+{% block content %}
 
 <div class="h-full flex flex-col items-center justify-center">
+  <form method="post" action="">
+    {% csrf_token %}
+    <div class="relative w-80 dark-card rounded-lg p-5 text-center shadow-xl bg-col_bas_ave">
 
-  {% for l in form %}
+      <h2 class="text-col_con mb-5 text-2xl font-semibold">ВХОД</h2>
 
-  {{l}}
+      {# Общие ошибки формы, например "Неверный логин или пароль" #}
+      {% if form.non_field_errors %}
+      <div class="mb-4">
+        {% for error in form.non_field_errors %}
+        <div class="text-col_attn  p-2 rounded">{{ error }}</div>
+        {% endfor %}
+      </div>
+      {% endif %}
 
-  {% endfor %}
-  <div class="relative w-80 dark-card rounded-xl p-5 text-center shadow-xl bg-color_panel">
-    <h2 class="text-color_text mb-5 text-2xl font-semibold">ВХОД</h2>
+      {# Поля формы и их ошибки #}
+      {% for field in form %}
+      <div class="mb-4 text-left">
+        <label class="block text-sm text-col_con_inv mb-1" for="{{ field.id_for_label }}">
+          {{ field.label }}
+        </label>
 
-    <div class="mb-4 text-left">
-      <label class="block text-sm text-color_text_inverse mb-1">ИМЯ ПОЛЬЗОВАТЕЛЯ</label>
-      <input type="text" placeholder="Введите имя"
-        class="bg-color_btn_inp_bor w-full p-2.5 border-0 dark-input rounded-lg text-color_text text-sm focus:outline-none focus:ring-2 focus:ring-color_btn_act_mes" />
+        {{ field }}
+
+        {% if field.errors %}
+        <ul class="mt-1">
+          {% for error in field.errors %}
+          <li class="text-col_attn bg-col_att_base p-1 rounded">{{ error }}</li>
+          {% endfor %}
+        </ul>
+        {% endif %}
+
+        {% if field.help_text %}
+        <small class="form-text text-muted">{{ field.help_text }}</small>
+        {% endif %}
+      </div>
+      {% endfor %}
+
+      <button
+        class="w-full p-2.5 bg-col_nit_con text-col_con rounded-full font-bold mt-2.5 cursor-pointer hover:bg-col_nit transition-colors duration-200">
+        ВОЙТИ
+      </button>
+
+      <div class="mt-2.5 text-sm flex justify-between items-center">
+        <a href="#" class="text-col_suc hover:text-col_suc_ave transition-colors">ЗАРЕГИСТРИРОВАТЬ</a>
+        <a href="#" class="text-col_suc hover:text-col_suc_ave transition-colors">ЗАБЫЛИ ПАРОЛЬ</a>
+      </div>
     </div>
-
-    <div class="mb-4 text-left">
-      <label class="block text-sm text-color_text_inverse mb-1">ПАРОЛЬ</label>
-      <input type="password" placeholder="Введите пароль"
-        class="bg-color_btn_inp_bor w-full p-2.5 border-0 dark-input rounded-lg text-color_text text-sm focus:outline-none focus:ring-2 focus:ring-color_btn_act_mes" />
-    </div>
-
-    <button
-      class="w-full p-2.5 bg-color_btn_inp_bor text-color_text rounded-full font-bold mt-2.5 cursor-pointer hover:bg-color_btn_hover transition-colors duration-200">
-      ВОЙТИ
-    </button>
-
-    <div class="mt-2.5 text-sm flex justify-between items-center">
-      <a href="#" class="text-color_link hover:text-color_link_hover transition-colors">ЗАРЕГИСТРИРОВАТЬ</a>
-      <a href="#" class="text-color_link hover:text-color_link_hover transition-colors">ЗАБЫЛИ ПАРОЛЬ</a>
-    </div>
-  </div>
+  </form>
 </div>
 
 {% endblock %}

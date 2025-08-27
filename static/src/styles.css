@@ -4,6 +4,12 @@
 @import url("https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300..900;1,300..900&display=swap");
 
 @theme {
+  /* fonts */
   --font-Rubik: "Rubik", sans-serif;
 }
 
+@layer components {
+  .input-form {
+    @apply bg-col_bas_mai w-full p-2.5 border-0 rounded-lg text-col_con text-sm focus:outline-none focus:ring-2 focus:ring-col_suc_mai;
+  }
+}
