@@ -1,8 +1,8 @@
 {% for bar in info_bar_data %}
-<div class="d-flex flex-row mx-2 h-100 p-2">
-  <li class="d-flex">
-    <div class="fw-bold">{{bar.title}}</div>
-    <span class="badge bg-success rounded-pill m-1">{{bar.data}}</span>
-  </li>
-</div>
+  <div class="flex flex-row mx-2 h-full p-2">
+    <li class="flex items-center">
+      <div class="font-bold mr-2 text-col_con">{{ bar.title }}</div>
+      <span class="bg-col_suc_mai text-col_con rounded-full px-3 py-1 text-sm font-medium">{{ bar.data }}</span>
+    </li>
+  </div>
 {% endfor %}

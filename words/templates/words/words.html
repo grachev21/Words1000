@@ -1,112 +1,66 @@
 {% extends 'base.html' %}
 {% load TagWords %}
 {% block content %}
-
-<div class="container bg-body-tertiary mt-xl-5 border rounded-2 p-3">
-
-  <div class="d-flex flex-row ">
-    <form method="get" class="mb-4">
-      <div class="row g-2 align-items-center">
-        <div class="col-auto">
-          <select name="status" class="form-select">
-            <option value="">Все статусы</option>
-            {% for value, label in status_choices %}  <!-- Исправлено: status_choice → status_choices -->
-            <option value="{{ value }}" {% if current_status == value %}selected{% endif %}>
-              {{ label }}
-            </option>
-            {% endfor %}
-          </select>
-        </div>
-        <div class="col-auto">
-          <button type="submit" class="btn btn-primary">Фильтровать</button>
-          {% if current_status %}
-            <a href="?" class="btn btn-secondary">Сбросить</a>
-          {% endif %}
-        </div>
-      </div>
-    </form>
-  {% include 'includes/info_bar.html' %}
-</div>
-
-  <!-- List of words -->
-  <div class="list-group">
-    {% for word in page_obj %}
-    <a href="#" class="list-group-item list-group-item-action">
-      <div class="d-flex w-100 justify-content-between">
-        <h5 class="mb-1">{{ word.core_words.word_en }}</h5>
-        <small class="text-muted">{{ word.created_at|date:"d.m.Y H:i" }}</small>  <!-- Добавлен фильтр даты -->
-      </div>
-      <p class="mb-1">{{ word.core_words.word_ru }}</p>
-      <small class="text-muted">{{ word.core_words.transcription }}</small>
-      <div class="w-100 my-2 d-flex align-items-center">
-        <span class="mb-1 mx-2">Статус:</span>
-        <span class="badge rounded-pill 
-          {% if word.status == 'new' %}bg-secondary
-          {% elif word.status == 'learning' %}bg-warning text-dark
-          {% elif word.status == 'learned' %}bg-success
-          {% else %}bg-primary{% endif %}">
-          {{ word.get_status_display }}
-        </span>
-        <span class="mb-1 mx-2">Повторов:</span>
-        <span class="badge rounded-pill bg-info">{{ word.number_repetitions }}</span>
-      </div>
-    </a>
-    {% empty %}
-    <div class="list-group-item">
-      <p class="mb-0 text-center">Слова не найдены</p>
+  <div class="w-full bg-col_bas_ave rounded-lg p-6">
+    <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
+      {% include 'includes/filter.html' %}
+      {% include 'includes/info_bar.html' %}
     </div>
-    {% endfor %}
+
+    <!-- List of words -->
+    <div class="space-y-3">
+      {% for word in page_obj %}
+        <div class="bg-col_nit_con border border-col_suc_mai rounded-lg p-4 hover:shadow-md transition-shadow">
+          <div class="flex flex-col sm:flex-row sm:justify-between sm:items-start gap-2 mb-2">
+            <h5 class="text-lg font-semibold text-col_con">{{ word.core_words.word_en }}</h5>
+            <span class="text-sm text-col_con_inv">{{ word.created_at|date:'d.m.Y H:i' }}</span>
+          </div>
+          <p class="text-gray-700 mb-2">{{ word.core_words.word_ru }}</p>
+          <p class="text-sm text-gray-500 mb-3">{{ word.core_words.transcription }}</p>
+          <div class="flex flex-wrap items-center gap-2">
+            <span class="text-sm text-gray-600">Статус:</span>
+            <span class="px-3 py-1 rounded-full text-xs font-medium
+          {% if word.status == 'new' %}
+                
+                
+                bg-gray-200 text-gray-800
+
+
+
+              {% elif word.status == 'learning' %}
+                
+                
+                bg-yellow-200 text-yellow-800
+
+
+
+              {% elif word.status == 'learned' %}
+                
+                
+                bg-green-200 text-green-800
+
+
+
+              {% else %}
+                
+                
+                bg-blue-200 text-blue-800
+
+
+              {% endif %}">
+              {{ word.get_status_display }}
+            </span>
+            <span class="text-sm text-gray-600">Повторов:</span>
+            <span class="px-3 py-1 rounded-full bg-blue-100 text-blue-800 text-xs font-medium">{{ word.number_repetitions }}</span>
+          </div>
+        </div>
+      {% empty %}
+        <div class="bg-white border border-gray-200 rounded-lg p-6 text-center">
+          <p class="text-gray-500">Слова не найдены</p>
+        </div>
+      {% endfor %}
+    </div>
+
+    {% include 'includes/pagination.html' %}
   </div>
-
-  <!-- Pagination -->
-  <nav aria-label="Page navigation">
-    <ul class="pagination justify-content-center mt-4">
-      {% if page_obj.has_previous %}
-      <li class="page-item">
-        <a class="page-link" href="?page=1{% if current_status %}&status={{ current_status }}{% endif %}" aria-label="First">
-          <span aria-hidden="true">&laquo;&laquo;</span>
-        </a>
-      </li>
-      <li class="page-item">
-        <a class="page-link" href="?page={{ page_obj.previous_page_number }}{% if current_status %}&status={{ current_status }}{% endif %}" aria-label="Previous">
-          <span aria-hidden="true">&laquo;</span>
-        </a>
-      </li>
-      {% else %}
-      <li class="page-item disabled">
-        <span class="page-link">&laquo;&laquo;</span>
-      </li>
-      <li class="page-item disabled">
-        <span class="page-link">&laquo;</span>
-      </li>
-      {% endif %}
-
-      <li class="page-item active">
-        <span class="page-link">
-          Страница {{ page_obj.number }} из {{ page_obj.paginator.num_pages }}
-        </span>
-      </li>
-
-      {% if page_obj.has_next %}
-      <li class="page-item">
-        <a class="page-link" href="?page={{ page_obj.next_page_number }}{% if current_status %}&status={{ current_status }}{% endif %}" aria-label="Next">
-          <span aria-hidden="true">&raquo;</span>
-        </a>
-      </li>
-      <li class="page-item">
-        <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}{% if current_status %}&status={{ current_status }}{% endif %}" aria-label="Last">
-          <span aria-hidden="true">&raquo;&raquo;</span>
-        </a>
-      </li>
-      {% else %}
-      <li class="page-item disabled">
-        <span class="page-link">&raquo;</span>
-      </li>
-      <li class="page-item disabled">
-        <span class="page-link">&raquo;&raquo;</span>
-      </li>
-      {% endif %}
-    </ul>
-  </nav>
-</div>
 {% endblock %}

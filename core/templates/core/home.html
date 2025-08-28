@@ -3,9 +3,7 @@
 {% load static %}
 
 {% block content %}
-  <div class="mt-40">
-    <div class="">
-      <div class="text-4xl font-bold text-col_con mb-8 mt-14">Все слова</div>
+      <div class="text-4xl font-bold text-col_con mb-8">Все слова</div>
       <div class="">
         {% include 'includes/running_line.html' %}
       </div>
@@ -34,7 +32,5 @@
           </div>
         </div>
       {% endif %}
-    </div>
-  </div>
-  {% include 'includes/home/about.html' %}
+{% include 'includes/home/about.html' %}
 {% endblock %}
