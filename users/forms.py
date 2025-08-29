@@ -7,30 +7,30 @@ from django.contrib.auth.models import User
 class LoginUserForm(AuthenticationForm):
     username = forms.CharField(
         label="Имя пользователя",
-        widget=forms.TextInput(attrs={"class": "input-form"}),
+        widget=forms.TextInput(attrs={"placeholder": "Имя"}),
     )
     password = forms.CharField(
-        label="Пароль",
-        widget=forms.PasswordInput(attrs={"class": "input-form"}),
+        label="Введите пароль",
+        widget=forms.PasswordInput(attrs={"placeholder": "Пароль"}),
     )
 
 
 class RegisterUserForm(UserCreationForm):
     username = forms.CharField(
-        label="Имя",
-        widget=forms.TextInput(attrs={"class": "input-form"}),
+        label="Введите имя",
+        widget=forms.TextInput(attrs={"placeholder": "Имя"}),
     )
     email = forms.EmailField(
-        label="Email",
-        widget=forms.EmailInput(attrs={"class": "input-form"}),
+        label="Введите свой Email",
+        widget=forms.EmailInput(attrs={"placeholder": "@"}),
     )
     password1 = forms.CharField(
-        label="Пароль",
-        widget=forms.PasswordInput(attrs={"class": "input-form"}),
+        label="Введите пароль",
+        widget=forms.PasswordInput(attrs={"placeholder": "Пароль"}),
     )
     password2 = forms.CharField(
-        label="Пароль",
-        widget=forms.PasswordInput(attrs={"class": "input-form"}),
+        label="Повторите пароль",
+        widget=forms.PasswordInput(attrs={"placeholder": "Пароль"}),
     )
 
     class Meta:

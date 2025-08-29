@@ -8,8 +8,18 @@
   --font-Rubik: "Rubik", sans-serif;
 }
 
+/* Стили для форм которые не возможно отредактировать в шаблоне */
 @layer components {
-  .input-form {
+  #id_username,
+  #id_password,
+  #id_number_words,
+  #id_number_repetitions,
+  #id_number_repetitions,
+  #id_translation_list,
+  #id_email,
+  #id_password1,
+  #id_password2,
+  #id_yes {
     @apply bg-col_bas_mai w-full p-2.5 border-0 rounded-lg text-col_con text-sm focus:outline-none focus:ring-2 focus:ring-col_suc_mai;
   }
 }

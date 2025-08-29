@@ -1,21 +1,55 @@
-{% extends 'core/base.html' %} {% block content %} {% load bootstrap5 %}
+{% extends 'base.html' %}
 
-<div class="container bg-body-tertiary my-5 border rounded-2 p-3">
-  <div class="row justify-content-center">
-    <div class="col-md-6 col-lg-4">
-      <div class="card shadow">
-        <div class="card-body p-4">
-          <h2 class="text-center mb-4 text-danger">Сброс словаря</h2>
-          <form method="post">
-            {% csrf_token %} {% bootstrap_form form %}
-            <div class="d-grid gap-2">
-              <button type="submit" class="btn btn-danger btn-lg mt-3">Сброс</button>
-            </div>
-          </form>
-        </div>
+{% block content %}
+<div class="h-full flex flex-col items-center justify-center">
+  <form method="post" action="">
+    {% csrf_token %}
+    <div class="relative w-80 dark-card rounded-lg p-5 text-center shadow-xl bg-col_bas_ave">
+
+      <h2 class="text-col_con mb-5 text-2xl font-semibold">ВХОД</h2>
+
+      {# Общие ошибки формы, например "Неверный логин или пароль" #}
+      {% if form.non_field_errors %}
+      <div class="mb-4">
+        {% for error in form.non_field_errors %}
+        <div class="text-col_attn  p-2 rounded">{{ error }}</div>
+        {% endfor %}
+      </div>
+      {% endif %}
+
+      {# Поля формы и их ошибки #}
+      {% for field in form %}
+      <div class="mb-4 text-left">
+        <label class="block text-sm text-col_con_inv mb-1" for="{{ field.id_for_label }}">
+          {{ field.label }}
+        </label>
+
+        {{ field }}
+
+        {% if field.errors %}
+        <ul class="mt-1">
+          {% for error in field.errors %}
+          <li class="text-col_attn bg-col_att_base p-1 rounded">{{ error }}</li>
+          {% endfor %}
+        </ul>
+        {% endif %}
+
+        {% if field.help_text %}
+        <small class="form-text text-muted">{{ field.help_text }}</small>
+        {% endif %}
+      </div>
+      {% endfor %}
+
+      <button
+        class="w-full p-2.5 bg-col_attn text-col_con rounded-full font-bold mt-2.5 cursor-pointer hover:bg-col_nit transition-colors duration-200">
+        СБРОСИТЬ
+      </button>
+
+      <div class="mt-2.5 text-sm flex justify-between items-center">
+        <a href="{% url 'settings' %}" class="text-col_suc hover:text-col_suc_ave transition-colors">НАЗАД</a>
       </div>
     </div>
-  </div>
+  </form>
 </div>
 
 {% endblock %}
