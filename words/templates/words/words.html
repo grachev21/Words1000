@@ -18,13 +18,14 @@
       <p class="text-col_con mb-2">{{ word.core_words.word_ru }}</p>
       <p class="text-sm text-col_con_inv mb-3">{{ word.core_words.transcription }}</p>
       <div class="flex flex-wrap items-center gap-2">
+
         <span class="text-sm text-col_con_inv">Статус:</span>
         <span class="px-3 py-1 rounded-full text-xs font-medium
-          {% if word.status == 'new' %}
+          {% if word.status == '1' %}
                 bg-gray-200 text-gray-800
-              {% elif word.status == 'learning' %}
+              {% elif word.status == '2' %}
                 bg-yellow-200 text-yellow-800
-              {% elif word.status == 'learned' %}
+              {% elif word.status == '3' %}
                 bg-green-200 text-green-800
               {% else %}
                 bg-blue-200 text-blue-800
@@ -32,13 +33,16 @@
           {{ word.get_status_display }}
         </span>
         <span class="text-sm text-gray-600">Повторов:</span>
-        <span class="px-3 py-1 rounded-full bg-blue-100 text-blue-800 text-xs font-medium">{{ word.number_repetitions
-          }}</span>
+        <span class="px-3 py-1 rounded-full 
+            bg-blue-100 text-blue-800 
+            text-xs font-medium">
+          {{ word.number_repetitions }}
+        </span>
       </div>
     </div>
     {% empty %}
-    <div class="bg-white border border-gray-200 rounded-lg p-6 text-center">
-      <p class="text-col_con_inv">Слова не найдены</p>
+    <div class="bg-col_bas_mai rounded-lg p-6 text-center">
+      <p class="text-col_attn">Слова не найдены</p>
     </div>
     {% endfor %}
   </div>
