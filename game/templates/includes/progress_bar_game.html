@@ -1,17 +1,9 @@
-<!-- <div id="myProgress">
-  <div id="myBar"></div>
+<div class="relative h-5 rounded-full overflow-hidden bg-gray-300 mt-20 mx-10">
+  <div
+    class="absolute top-0 bottom-0 left-0 rounded-full bg-gradient-to-r from-pink-500 to-purple-500"
+    style="width: 50%"
+  ></div>
 </div>
-
-<style>
-  #myProgress {
-    width: 100%;
-    background-color: var(--text-color-contrast);
-    margin-bottom: 20px;
-  }
-
-  #myBar {
-    width:
-</style>
 
 <script>
   var i = 0;
@@ -32,8 +24,15 @@
       }
     }
   }
-</script> -->
+</script>
 
-<div class="progress" role="progressbar" aria-label="Success example" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
+<div
+  class="progress"
+  role="progressbar"
+  aria-label="Success example"
+  aria-valuenow="25"
+  aria-valuemin="0"
+  aria-valuemax="100"
+>
   <div class="progress-bar text-bg-success" style="width: 25%">25%</div>
 </div>

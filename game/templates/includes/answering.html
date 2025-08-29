@@ -1,13 +1,17 @@
-<div class="answering d-none my-5 container bg-body-tertiary mt-xl-5 border rounded-2 p-3 text-center">
-  <div class="row">
-    <div class="col bg-body-secondary rounded m-5">
-      <h3>Вы угадали!</h3>
+<div
+  class="answering hidden my-5 max-w-4xl mx-auto bg-col_bas_ave mt-10 border rounded-lg p-6 text-center"
+>
+  <div class="mb-6">
+    <div class="bg-col_bas_ave rounded-lg p-4">
+      <h3 class="text-xl font-semibold text-green-700">Вы угадали!</h3>
     </div>
   </div>
-  <div class="row">
-    <div class="col">
-      <h4 class="text-primary">{{correct_word.core_words.word_en}}</h4>
-      <h4 class="text-warning">{{correct_word.core_words.word_ru}}</h4>
-    </div>
+  <div>
+    <h4 class="text-blue-600 text-lg font-medium">
+      {{ correct_word.core_words.word_en }}
+    </h4>
+    <h4 class="text-yellow-500 text-lg font-medium">
+      {{ correct_word.core_words.word_ru }}
+    </h4>
   </div>
 </div>

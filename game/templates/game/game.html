@@ -1,25 +1,34 @@
-{% extends 'base.html' %} {% load game_tag %} {% block content %}
+{% extends 'base.html' %}
+{% load game_tag %}
+{% block content %}
 
 <!-- Game -->
-<div class="game_container container bg-body-tertiary mt-xl-5 border rounded-2 p-3 text-center">
-  <div class="row">
-    <div class="col">
-      <h4 class="correct_word">{{correct_word.core_words.word_ru}}</h4>
-    </div>
+{% progress_bar_game %}
+
+<div class="game_container max-w-4xl mx-auto bg-col_bas_ave mt-10 rounded-lg p-6 text-center shadow">
+  <div class="mb-4">
+    <h4 class="correct_word text-2xl font-semibold text-col_con">{{ correct_word.core_words.word_ru }}</h4>
   </div>
 
-  <div class="word row">
-    <div class="game_word col my-5">
+  <div class="word">
+    <div class="game_word flex flex-wrap justify-center gap-4 my-8">
       {% for word in three_random_words %}
-      <button type="button" class="btn btn-outline-success m-2">{{ word.word_en }}</button>
+      <button type="button"
+        class="word_btn px-4 py-2 border border-col_suc text-col_suc rounded hover:bg-col_suc_mai transition cursor-pointer">
+        {{ word.word_en }}
+      </button>
       {% endfor %}
-      <button type="button" class="correct_btn btn btn-outline-success m-2">
-        {{ correct_word.core_words.word_en}}
+      <button type="button"
+        class="word_btn px-4 py-2 border border-col_suc text-col_suc rounded hover:bg-col_suc_mai transition cursor-pointer">
+        {{ correct_word.core_words.word_en }}
       </button>
     </div>
   </div>
 </div>
-{% include 'includes/answering.html' %} {% include 'includes/accordion.html' %}
+
+{% include 'includes/answering.html' %}
+{% include 'includes/accordion.html' %}
+
 <!-- Script -->
 <script>
   document.addEventListener("DOMContentLoaded", function () {
@@ -27,9 +36,9 @@
     const elements = Array.from(container.children);
     const border = document.querySelector(".game_container");
     const correct_btn = document.querySelector(".correct_btn");
-    const correctAnswer = "{{correct_word.core_words.word_en}}";
+    const correctAnswer = "{{ correct_word.core_words.word_en }}";
 
-    // Функция перемешивания элементов
+    // Shuffle function
     function shuffleArray(array) {
       for (let i = array.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
@@ -38,21 +47,19 @@
       return array;
     }
 
-    // Перемешиваем кнопки
+    // Shuffle buttons
     shuffleArray(elements);
     container.innerHTML = "";
     elements.forEach((el) => container.appendChild(el));
 
-    // Обработчик клика для кнопок
+    // Click handler
     elements.forEach((element) => {
       element.addEventListener("click", function () {
         if (element.textContent.trim() === correctAnswer) {
-          // Правильный ответ - модальное окно уже открывается через data-bs-toggle
-          element.classList.add("btn-success");
+          element.classList.add("bg-green-500", "text-white");
         } else {
-          // Неправильный ответ
-          element.classList.add("btn-danger");
-          border.classList.add("border-danger");
+          element.classList.add("bg-red-500", "text-white");
+          border.classList.add("border-red-500");
 
           setTimeout(() => {
             location.reload();
@@ -61,11 +68,11 @@
       });
     });
 
-    // Обработчик для кнопки "Продолжить"
+    // Continue button handler
     correct_btn.addEventListener("click", function () {
-      document.querySelector(".read_container").classList.remove("d-none");
-      document.querySelector(".answering").classList.remove("d-none");
-      document.querySelector(".game_container").classList.add("d-none");
+      document.querySelector(".read_container").classList.remove("hidden");
+      document.querySelector(".answering").classList.remove("hidden");
+      document.querySelector(".game_container").classList.add("hidden");
     });
   });
 </script>

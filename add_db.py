@@ -14,4 +14,5 @@ def record():
             phrases_en=value["exemple_en"],
             phrases_ru=value["exemple_ru"],
         )
+        print("Add word: ", value)
         mod.save()

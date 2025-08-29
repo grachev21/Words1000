@@ -18,7 +18,8 @@ logger = logging.getLogger(__name__)
 def create_initial_words_for_user(user, words_count=1000):
     all_words = WordsCard.objects.all()
     if all_words.exists():
-        # We determine the number of words for sample (no more than the total number of words)
+        # We determine the number of words for
+        # sample (no more than the total number of words)
         sample_size = min(words_count, all_words.count())
         random_words = random.sample(list(all_words), sample_size)
 
@@ -32,13 +33,16 @@ def create_initial_words_for_user(user, words_count=1000):
 # Creates an initial set of words when creating a new user.
 @receiver(post_save, sender=User)
 def handle_user_creation(sender, instance, created, **kwargs):
-    if created:
+    print("run signal")
+    if created and not instance.is_superuser:
+        print("create words dict")
         create_initial_words_for_user(instance)
 
 
 # If suddenly at the time the base is empty
 @receiver(user_logged_in)
 def handle_user_login(sender, request, user, **kwargs):
-    if not user.is_superuser: # If not a super user
-        if not WordsUser.objects.filter(user=user).exists(): # If the base is empty  
+    if not user.is_superuser:  # If not a super user
+        # If the base is empty
+        if not WordsUser.objects.filter(user=user).exists():
             create_initial_words_for_user(user)
