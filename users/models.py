@@ -10,7 +10,8 @@ class WordsUser(models.Model):
         ("3", "Повторяю"),
         ("4", "Изучил"),
     ]
-    created_at = models.DateTimeField(auto_now_add=True, verbose_name="Дата создания")
+    created_at = models.DateTimeField(
+        auto_now_add=True, verbose_name="Дата создания")
     number_repetitions = models.IntegerField(
         default=0, verbose_name="Количество сделанных повторов"
     )

@@ -43,13 +43,6 @@ class GameInitMixin:
     def init_data(self, user, context: Dict[str, Any]) -> Dict[str, Any]:
         """
         Initialize game data and update context.
-
-        Args:
-            user: Authenticated user
-            context: Template context to update
-
-        Returns:
-            Updated context dictionary
         """
         if not user or not context:
             return context
@@ -57,6 +50,8 @@ class GameInitMixin:
         # Get required data
         words_settings = self.get_user_words_settings(user)
         word_user = self.get_random_user_word(user)
+        three_random_words = self.get_random_words(word_user.core_words.id)
+        phrases = self.prepare_phrases(word_user)
 
         if not word_user:
             return context
@@ -64,9 +59,9 @@ class GameInitMixin:
         # Prepare context data
         context.update({
             "settings": words_settings,
-            "three_random_words": self.get_random_words(word_user.core_words.id),
+            "three_random_words": three_random_words,
             "correct_word": word_user,
-            "phrases": self.prepare_phrases(word_user)
+            "phrases": phrases,
         })
 
         return context

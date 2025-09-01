@@ -1,38 +1,14 @@
-<div class="relative h-5 rounded-full overflow-hidden bg-gray-300 mt-20 mx-10">
+<main class="">
   <div
-    class="absolute top-0 bottom-0 left-0 rounded-full bg-gradient-to-r from-pink-500 to-purple-500"
-    style="width: 50%"
-  ></div>
-</div>
+    class="relative h-4 rounded-full overflow-hidden bg-col_nit_con mt-10 mx-10"
+  >
+    <div
+      class="absolute top-0 bottom-0 left-0 rounded-full bg-gradient-to-r from-col_con_inv to-col_suc"
+      style="width: {{ progress }}%"
+    ></div>
+  </div>
 
-<script>
-  var i = 0;
-  function move() {
-    if (i == 0) {
-      i = 1;
-      var elem = document.getElementById("myBar");
-      var width = 1;
-      var id = setInterval(frame, 10);
-      function frame() {
-        if (width >= 100) {
-          clearInterval(id);
-          i = 0;
-        } else {
-          width++;
-          elem.style.width = width + "%";
-        }
-      }
-    }
-  }
-</script>
-
-<div
-  class="progress"
-  role="progressbar"
-  aria-label="Success example"
-  aria-valuenow="25"
-  aria-valuemin="0"
-  aria-valuemax="100"
->
-  <div class="progress-bar text-bg-success" style="width: 25%">25%</div>
-</div>
+  <div class="ml-10 mt-4 text-col_con_inv">
+    Осталось выучить: {{remainder}} слов {{progress}}
+  </div>
+</main>

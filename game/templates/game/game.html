@@ -1,80 +1,43 @@
 {% extends 'base.html' %}
 {% load game_tag %}
+{% load static %}
+
+
 {% block content %}
+
+{{ correct_word.core_words.word_en |json_script:"game-data" }}
 
 <!-- Game -->
 {% progress_bar_game %}
 
-<div class="game_container max-w-4xl mx-auto bg-col_bas_ave mt-10 rounded-lg p-6 text-center shadow">
+<main id="game_container"
+  class="max-w-4xl h-64 mx-auto bg-col_bas_ave mt-10 rounded-lg p-6 text-center shadow flex flex-col justify-between">
+  <!-- Title -->
   <div class="mb-4">
     <h4 class="correct_word text-2xl font-semibold text-col_con">{{ correct_word.core_words.word_ru }}</h4>
   </div>
 
+  <!-- Buttons -->
   <div class="word">
-    <div class="game_word flex flex-wrap justify-center gap-4 my-8">
+    <div id="game_word" class="flex flex-wrap justify-center gap-4 my-8">
       {% for word in three_random_words %}
       <button type="button"
         class="word_btn px-4 py-2 border border-col_suc text-col_suc rounded hover:bg-col_suc_mai transition cursor-pointer">
         {{ word.word_en }}
       </button>
       {% endfor %}
-      <button type="button"
+      <button id="correct_btn" type="button"
         class="word_btn px-4 py-2 border border-col_suc text-col_suc rounded hover:bg-col_suc_mai transition cursor-pointer">
         {{ correct_word.core_words.word_en }}
       </button>
     </div>
   </div>
-</div>
+</main>
 
 {% include 'includes/answering.html' %}
 {% include 'includes/accordion.html' %}
 
-<!-- Script -->
-<script>
-  document.addEventListener("DOMContentLoaded", function () {
-    const container = document.querySelector(".game_word");
-    const elements = Array.from(container.children);
-    const border = document.querySelector(".game_container");
-    const correct_btn = document.querySelector(".correct_btn");
-    const correctAnswer = "{{ correct_word.core_words.word_en }}";
-
-    // Shuffle function
-    function shuffleArray(array) {
-      for (let i = array.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [array[i], array[j]] = [array[j], array[i]];
-      }
-      return array;
-    }
-
-    // Shuffle buttons
-    shuffleArray(elements);
-    container.innerHTML = "";
-    elements.forEach((el) => container.appendChild(el));
-
-    // Click handler
-    elements.forEach((element) => {
-      element.addEventListener("click", function () {
-        if (element.textContent.trim() === correctAnswer) {
-          element.classList.add("bg-green-500", "text-white");
-        } else {
-          element.classList.add("bg-red-500", "text-white");
-          border.classList.add("border-red-500");
-
-          setTimeout(() => {
-            location.reload();
-          }, 1000);
-        }
-      });
-    });
-
-    // Continue button handler
-    correct_btn.addEventListener("click", function () {
-      document.querySelector(".read_container").classList.remove("hidden");
-      document.querySelector(".answering").classList.remove("hidden");
-      document.querySelector(".game_container").classList.add("hidden");
-    });
-  });
+<script src="{% static 'js/game.js' %}">
 </script>
 
 {% endblock %}
