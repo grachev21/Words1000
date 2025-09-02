@@ -30,11 +30,9 @@ INSTALLED_APPS = [
     "django_browser_reload",
     # Apps
     "core.apps.CoreConfig",
-    "header.apps.HeaderConfig",
     "settings.apps.SettingsConfig",
     "users.apps.UsersConfig",
     "game.apps.GameConfig",
-    "words.apps.WordsConfig",
 ]
 
 

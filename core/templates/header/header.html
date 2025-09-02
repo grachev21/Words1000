@@ -3,12 +3,12 @@
   class="bg-col_bas_ave fixed flex items-center border border-b-col_con/15 top-0 left-0 w-full font-roboto z-50 h-16">
   <main class="w-full mx-4 md:mx-12 flex flex-row justify-between items-center">
     <div class="flex flex-row justify-between items-center">
-      {% include 'includes/logo.html' %}
-      <nav class="flex flex-row">{% include "includes/menu.html" %} {% include "includes/dropdown_menu.html" %}</nav>
+      {% include 'includes/header/logo.html' %}
+      <nav class="flex flex-row">{% include "includes/header/menu.html" %} {% include "includes/header/dropdown_menu.html" %}</nav>
     </div>
 
-    {% include "includes/theme_toggle.html" %}
+    {% include "includes/header/theme_toggle.html" %}
     <img class="sm:hidden w-6 h-6" id="burger" src="{% static 'icons/menu.png' %}" alt="" />
   </main>
 </header>
-{% include 'includes/mobile_menu.html' %}
+{% include 'includes/header/mobile_menu.html' %}

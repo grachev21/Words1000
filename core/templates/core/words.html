@@ -3,8 +3,8 @@
 {% block content %}
 <div class="w-full bg-col_bas_ave rounded-lg p-6">
   <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
-    {% include 'includes/filter.html' %}
-    {% include 'includes/info_bar.html' %}
+    {% include 'includes/words/filter.html' %}
+    {% include 'includes/words/info_bar.html' %}
   </div>
 
   <!-- List of words -->
@@ -47,6 +47,6 @@
     {% endfor %}
   </div>
 
-  {% include 'includes/pagination.html' %}
+  {% include 'includes/words/pagination.html' %}
 </div>
 {% endblock %}

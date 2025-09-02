@@ -4,8 +4,8 @@ from django.contrib.auth.models import User
 from settings.models import WordsSettings
 
 
-# When registering the user, creates the default by default
-# In the user settings
+# This signal works when creating
+# user, he fills the default settings
 @receiver(post_save, sender=User)
 def create_default_words_settings(sender, instance, created, **kwargs):
     if created:

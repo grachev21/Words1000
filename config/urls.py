@@ -10,7 +10,6 @@ urlpatterns = [
     path('users/', include('users.urls')),
     path('settings/', include('settings.urls')),
     path("game/", include("game.urls")),
-    path("words/", include("words.urls")),
     path("__reload__/", include("django_browser_reload.urls")),
 ]
 
