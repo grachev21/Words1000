@@ -16,7 +16,8 @@ class WordsUser(models.Model):
         default=0, verbose_name="Количество сделанных повторов"
     )
     status = models.CharField(
-        choices=STATUS_CHOICE, max_length=1, default="1", verbose_name="Этап запоминания"
+        choices=STATUS_CHOICE, max_length=1, default="1",
+        kverbose_name="Этап запоминания"
     )
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     core_words = models.ForeignKey(WordsCard, on_delete=models.CASCADE)
