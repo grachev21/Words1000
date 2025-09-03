@@ -1,28 +1,16 @@
 from django.db import transaction
-# Import necessary Django modules and classes
-from django.contrib.auth.mixins import (
-    LoginRequiredMixin,
-)  # Mixin to require user authentication
-from django.views.generic import (
-    CreateView,
-    FormView,
-)  # Generic class-based view for creating objects
-from django.urls import reverse_lazy  # For lazy URL reversal
-from settings.forms import (
-    WordCountForm,
-    ResettingDictionariesForm,
-)  # Custom form for word count settings
-from settings.models import WordsSettings  # Model for storing word settings
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.views.generic import CreateView, FormView
+from django.urls import reverse_lazy
+from settings.forms import WordCountForm, ResettingDictionariesForm
+from settings.models import WordsSettings
+from settings.services import SettingsMixin
 from users.models import WordsUser
 from core.models import WordsCard
 import random
-import logging
 
 
-logger = logging.getLogger(__name__)
-
-
-class SettingsPage(LoginRequiredMixin, CreateView):
+class SettingsPage(SettingsMixin, LoginRequiredMixin, CreateView):
     template_name = "settings/settings.html"
     form_class = WordCountForm
     success_url = reverse_lazy("home")
@@ -42,21 +30,17 @@ class SettingsPage(LoginRequiredMixin, CreateView):
 
     def form_valid(self, form):
         try:
-            # We perform through transaction so that when
-            # an error is the request is not completed
             with transaction.atomic():
-                # We delete the old data
-                WordsSettings.objects.filter(user=self.request.user).delete()
-                # Record new data.
-                # commit=False does not allow me to write down right away
-                self.object = form.save(commit=False)
-                self.object.user = self.request.user
-                self.object.save()
+                # Обновляем существующую запись или создаем новую
+                WordsSettings.objects.update_or_create(
+                    user=self.request.user,
+                    defaults=form.cleaned_data
+                )
+
+            self.change_list_words(self.request.user)
             return super().form_valid(form)
         except Exception as e:
-            # Logue and return the error
-            logger.warning(f"Failed to save settings for {
-                           self.request.user}: {e}")
+            print(f"Error {self.request.user}: {e}")
             return self.form_invalid(form)
 
 
@@ -72,20 +56,14 @@ class ResettingDictionaries(LoginRequiredMixin, FormView):
         return context
 
     def form_valid(self, form):
-        # Consent status
-        status = form.cleaned_data["status"]
-        # Written consent
-        yes = form.cleaned_data["yes"]
-
         # Checking the form
-        if status and yes == "yes":
+        if form.cleaned_data["status"] and form.cleaned_data["yes"] == "yes":
             # We get the number of words from the user settings WordsSettings
             number_words = (
                 WordsSettings.objects.filter(user=self.request.user)
                 .last()
                 .number_words
             )
-
             # We delete all user words
             WordsUser.objects.filter(user=self.request.user).delete()
 
