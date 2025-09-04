@@ -76,9 +76,6 @@ class ServicesMixin:
         return context
 
 
-from users.models import WordsUser
-
-
 class WordsMixin:
 
     @staticmethod

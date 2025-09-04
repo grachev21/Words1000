@@ -8,7 +8,7 @@ class WordsSettings(models.Model):
     TODO:
         Keeps user settings
 
-    Attributes:
+    Args:
         number_words: Number of words per day
         number_repetitions: The number of repetitions during training
         translation_list: Translation display on the page words

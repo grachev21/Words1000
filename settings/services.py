@@ -1,14 +1,53 @@
-# from settings.models import WordsSettings
-# from users.models import WordsUser
+from settings.models import WordsSettings
+from users.models import WordsUser
+from core.models import WordsCard
+import random
 
 
 class SettingsMixin:
 
     @staticmethod
-    def change_list_words():
-        '''
-        Changing the statuses of the list of words when changing settings
-        '''
-        print()
+    def delite_list_words(form, user):
+        """Deleys all records in 'WordsUser'
+        Args:
+            form (object): Data from the form.
+            user (object): User.
+        """
+        # Checking the form
+        if form.cleaned_data["status"] and form.cleaned_data["yes"] == "yes":
+            # We get the number of words from the user settings WordsSettings
+            (
+                WordsSettings.objects.filter(user=user)
+                .last()
+                .number_words
+            )
+            # We delete all user words
+            WordsUser.objects.filter(user=user).delete()
 
-        pass
+    @staticmethod
+    def get_random_list(user):
+        """
+        Creates a random list with words.
+        Args:
+            user (object): User.
+        """
+        random_elements = random.sample(
+            list(WordsCard.objects.all()), 1000
+        )
+        for element in random_elements:
+            print("random elements", element)
+            WordsUser.objects.create(
+                user=user, core_words=element
+            )
+
+    @staticmethod
+    def installation_status(user):
+        """
+        Sets the status of all words by default in WordsUser.
+        Args:
+            user (object): User.
+        """
+        for obj in WordsUser.objects.filter(user=user).all():
+            print("install status...")
+            obj.status = "2"
+            obj.save()

@@ -2,6 +2,7 @@
 
 {% block content %}
 
+{% include "includes/load.html" %}
 <div class="h-full flex flex-col items-center justify-center">
   <form method="post" action="">
     {% csrf_token %}
@@ -41,7 +42,7 @@
       </div>
       {% endfor %}
 
-      <button
+      <button onclick="showLoad()"
         class="w-full p-2.5 bg-col_attn text-col_con rounded-full font-bold mt-2.5 cursor-pointer hover:bg-col_nit transition-colors duration-200">
         СБРОСИТЬ
       </button>

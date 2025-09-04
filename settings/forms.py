@@ -14,15 +14,16 @@ class WordCountForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         # Extract the user from keyword arguments, if provided
-        user = kwargs.pop('user', None)
+        # ← Сохраняем пользователя как атрибут
+        self.user = kwargs.pop('user', None)
         super().__init__(*args, **kwargs)
 
         # If no user is passed, skip initialization of field values
-        if not user:
+        if not self.user:
             return
 
         # Retrieve the user's settings from the database
-        user_settings = WordsSettings.objects.filter(user=user).first()
+        user_settings = WordsSettings.objects.filter(user=self.user).first()
         if user_settings:
             self._initialize_fields(user_settings)
 
@@ -33,6 +34,19 @@ class WordCountForm(forms.ModelForm):
         self.fields['number_words'].initial = settings.number_words
         self.fields['number_repetitions'].initial = settings.number_repetitions
         self.fields['translation_list'].initial = settings.translation_list
+
+    def save(self, commit=True):
+        """
+        Save the form with the user.
+        """
+        instance = super().save(commit=False)
+        if self.user:
+            instance.user = self.user  # ← Устанавливаем пользователя
+
+        if commit:
+            instance.save()
+
+        return instance
 
 
 class ResettingDictionariesForm(forms.Form):
