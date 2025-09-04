@@ -6,14 +6,7 @@ from core.models import WordsCard
 class WordsUser(models.Model):
     """
     Keeps a list of all words by the field of relationships - 
-    'core_words'.
-
-    Attributes: 
-        created_at: The date of creation
-        number_repetitions: The number of repetitions made 
-        status: 1=Неизвестно, 2=Изучаю, 3=Повторяю, 4=Изучил
-        user: User
-        core_words: Link to the word from 'WordsCard'.
+    core_words
     """
     STATUS_CHOICE = [
         ("1", "Неизвестно"),
@@ -26,7 +19,8 @@ class WordsUser(models.Model):
     number_repetitions = models.IntegerField(
         default=0, verbose_name="Количество сделанных повторов"
     )
-    status = models.CharField(choices=STATUS_CHOICE, max_length=1, default="1", verbose_name="Этап запоминания")
+    status = models.CharField(
+        choices=STATUS_CHOICE, max_length=1, default="1", verbose_name="Этап запоминания")
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     core_words = models.ForeignKey(WordsCard, on_delete=models.CASCADE)
 

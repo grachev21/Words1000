@@ -5,14 +5,7 @@ from django.core.validators import MaxValueValidator, MinValueValidator
 
 class WordsSettings(models.Model):
     """
-    TODO:
-        Keeps user settings
-
-    Args:
-        number_words: Number of words per day
-        number_repetitions: The number of repetitions during training
-        translation_list: Translation display on the page words
-        user: User
+    Keeps user settings
     """
     TRANSLATION_CHOICES = [
         (True, "Показывать перевод в списке слов"),

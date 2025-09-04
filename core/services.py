@@ -93,3 +93,16 @@ class WordsMixin:
         context.update({"info_bar_data": self.info_bar(user)})
 
         return context
+
+    @staticmethod
+    def filter(status, user):
+        # Получаем параметр фильтра из GET-запроса
+        status_filter = status 
+
+        # Фильтруем слова для текущего пользователя
+        words_user = WordsUser.objects.filter(user=user)
+
+        if status_filter:
+            words_user = words_user.filter(status=status_filter)
+
+        return {"status_filter": status_filter, "words_user": words_user}

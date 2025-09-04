@@ -2,33 +2,33 @@
 <form method="get" class="flex flex-col sm:flex-row gap-2 items-start sm:items-center">
   <div class="flex items-center justify-center">
     <div class="group relative cursor-pointer py-2">
+      <!-- Button -->
       <div class="flex items-center justify-between space-x-5 bg-col_nit_con px-4 rounded-lg">
         <span class="my-2 py-2 text-base font-bold text-col_con_inv lg:mx-4">
           {% if current_status %}
-            {% for value, label in status_choices %}
-              {% if value == current_status %}{{ label }}{% endif %}
-            {% endfor %}
+          {% for value, label in status_choices %}
+          {% if value == current_status %}
+          {{ label }}
+          {% endif %}
+          {% endfor %}
           {% else %}
-           Фильтры по статусам 
+          Фильтры по статусам
           {% endif %}
         </span>
         <img src="{% static 'icons/down_menu.png' %}" alt="">
       </div>
-      
-      <div class="invisible absolute z-50 flex w-full flex-col bg-col_bas_mai rounded-lg py-1 px-4  shadow-xl group-hover:visible">
-        <!-Link "All Statuses"->
-        <a
-          href="?"
-          class="my-2 block py-2 font-semibold {% if current_status == value %}text-col_attn{% else %}text-col_con_inv hover:text-col_att_base{% endif %}"
-        >
+
+      <div
+        class="invisible absolute z-50 flex w-full flex-col bg-col_bas_mai rounded-lg py-1 px-4  shadow-xl group-hover:visible">
+        <!-- Link All Statuses -->
+        <a href="?"
+          class="my-2 block py-2 font-semibold {% if current_status == value %}text-col_attn{% else %}text-col_con_inv hover:text-col_att_base{% endif %}">
           Все статусы
         </a>
-        
+
         {% for value, label in status_choices %}
-        <a
-          href="?status={{ value }}"
-          class="my-2 block py-2 font-semibold {% if current_status == value %}text-col_attn{% else %}text-col_con_inv hover:text-col_att_base{% endif %}"
-        >
+        <a href="?status={{ value }}"
+          class="my-2 block py-2 font-semibold {% if current_status == value %}text-col_attn{% else %}text-col_con_inv hover:text-col_att_base{% endif %}">
           {{ label }}
         </a>
         {% endfor %}

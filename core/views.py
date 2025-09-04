@@ -27,17 +27,10 @@ class WordsPage(WordsMixin, LoginRequiredMixin, TemplateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
 
-        # Получаем параметр фильтра из GET-запроса
-        status_filter = self.request.GET.get("status")
-
-        # Фильтруем слова для текущего пользователя
-        words_user = WordsUser.objects.filter(user=self.request.user)
-
-        if status_filter:
-            words_user = words_user.filter(status=status_filter)
+        filter_data = self.filter(status=self.request.GET.get("status"), user=self.request.user)
 
         # Создаём Paginator
-        paginator = Paginator(words_user, self.paginate_by)
+        paginator = Paginator(filter_data["words_user"], self.paginate_by)
         # Получаем номер страницы из GET-параметра
         page_number = self.request.GET.get("page", 1)
 
@@ -49,10 +42,9 @@ class WordsPage(WordsMixin, LoginRequiredMixin, TemplateView):
             page_obj = paginator.page(paginator.num_pages)
 
         context["page_obj"] = page_obj
-        context["words_user"] = words_user
+        context["words_user"] = filter_data["words_user"]
         # Получаем STATUS_CHOICES из модели WordsUser, а не из QuerySet
         context["status_choices"] = WordsUser.STATUS_CHOICE
-        context["current_status"] = status_filter
+        context["current_status"] = filter_data["status_filter"]
         return self.init_data(user=self.request.user, context=context)
 
-        # return context

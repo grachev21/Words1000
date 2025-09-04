@@ -44,10 +44,12 @@ class SettingsMixin:
     def installation_status(user):
         """
         Sets the status of all words by default in WordsUser.
-        Args:
-            user (object): User.
         """
-        for obj in WordsUser.objects.filter(user=user).all():
+        # Number of words per day
+        limiter = WordsSettings.objects.filter(user=user).latest("id").number_words
+        # We set the status only to the number of words indicated in number_words
+        for obj in WordsUser.objects.filter(user=user, status="1").all()[:int(limiter)]:
             print("install status...")
+            # Set the status - study
             obj.status = "2"
             obj.save()
