@@ -1,9 +1,3 @@
-from settings.models import WordsSettings
-from users.models import WordsUser
-from core.models import WordsCard
-import random
-
-
 class SettingsMixin:
 
     @staticmethod

@@ -17,7 +17,7 @@ class ServicesMixin:
     def data_incision(user):
 
         if WordsSettings.objects.filter(user=user).exists():
-            settings = WordsSettings.objects.filter(user=user).latest("id")
+            settings_words = WordsSettings.objects.filter(user=user).latest("id")
 
         today_words = WordsUser.objects.filter(
             user=user, status="4", created_at=date.today()
@@ -36,7 +36,7 @@ class ServicesMixin:
             {
                 "name": "Настройки",
                 "description": "Количество слов которое стоит в настройках",
-                "data": settings.number_words if user.is_authenticated else 23,
+                "data": settings_words.number_words if user.is_authenticated else 23,
             },
             {
                 "name": "Количество слов за день",
