@@ -7,7 +7,7 @@ from settings.models import WordsSettings
 from settings.services import SettingsMixin
 
 
-class SettingsPage(LoginRequiredMixin, CreateView):
+class SettingsPage(SettingsMixin, LoginRequiredMixin, CreateView):
     template_name = "settings/settings.html"
     form_class = WordCountForm
     success_url = reverse_lazy("home")
@@ -33,6 +33,7 @@ class SettingsPage(LoginRequiredMixin, CreateView):
             user=self.request.user,  # Критерий поиска
             defaults=form.cleaned_data  # Данные для обновления/создания
         )
+        self.installation_status(user=self.request.user)
 
         return super().form_valid(form)
 

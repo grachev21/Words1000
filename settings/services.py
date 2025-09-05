@@ -45,11 +45,16 @@ class SettingsMixin:
         """
         Sets the status of all words by default in WordsUser.
         """
+        # Number all the statuses of words
+        for status_zero in WordsUser.objects.filter(user=user):
+            status_zero.status = "1"
+            status_zero.save()
+
         # Number of words per day
         limiter = WordsSettings.objects.filter(user=user).latest("id").number_words
         # We set the status only to the number of words indicated in number_words
-        for obj in WordsUser.objects.filter(user=user, status="1").all()[:int(limiter)]:
+        for status_change in WordsUser.objects.filter(user=user, status="1")[:int(limiter)]:
             print("install status...")
             # Set the status - study
-            obj.status = "2"
-            obj.save()
+            status_change.status = "2"
+            status_change.save()

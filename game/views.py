@@ -23,31 +23,30 @@ class Game(GameInitMixin, LoginRequiredMixin, FormView):
         context = super().get_context_data(**kwargs)
         return self.init_data(user=self.request.user, context=context)
 
-    def post(self, request, *args, **kwargs):
+    def form_valid(self, form):
         """
-        Makes posts:
-        1. If there is Select_DATA - increases the counter -repetition counter
-        2. Always delegates the processing of the form to the parental class
+        Processes form validation:
+        1. Handles word selection if present in POST data
+        2. Always redirects to success URL
         """
+
+        print("game run", "<<<")
         # Word selection processing by user
-        if "select_data" in request.POST:
-            select_data = request.POST.get("select_data")
+        if "select_data" in self.request.POST:
+            select_data = self.request.POST.get("select_data")
+            print(select_data, "<<<")
 
             try:
-                # We increase the repetition counter for the selected word
-                word = WordsUser.objects.get(user=request.user, id=select_data)
+                # Increase the repetition counter for the selected word
+                word = WordsUser.objects.get(user=self.request.user, id=select_data)
                 word.number_repetitions += 1
                 word.save()
             except WordsUser.DoesNotExist:
                 # Ignore if the word is not found (possibly removed)
                 pass
 
-        # Standard shape processing
-        return super().post(request, *args, **kwargs)
-
-    def form_valid(self, form):
-        """
-        Redirects to the page of the game after
-        successful processing of the form.
-        """
+        # Standard redirect after successful form processing
         return HttpResponseRedirect(self.get_success_url())
+
+
+
