@@ -30,11 +30,9 @@ class Game(GameInitMixin, LoginRequiredMixin, FormView):
         2. Always redirects to success URL
         """
 
-        print("game run", "<<<")
         # Word selection processing by user
         if "select_data" in self.request.POST:
             select_data = self.request.POST.get("select_data")
-            print(select_data, "<<<")
 
             try:
                 # Increase the repetition counter for the selected word

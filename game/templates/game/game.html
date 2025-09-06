@@ -5,8 +5,8 @@
 
 {% block content %}
 
-{{ correct_word.core_words.word_en |json_script:"game-data" }}
 
+{{ mixer_words|json_script:"game-data" }}
 <!-- Game -->
 {% progress_bar_game %}
 
@@ -37,7 +37,6 @@
 {% include 'includes/answering.html' %}
 {% include 'includes/accordion.html' %}
 
-<script src="{% static 'js/game.js' %}">
-</script>
+<script src="{% static 'js/game.js' %}" />
 
 {% endblock %}
