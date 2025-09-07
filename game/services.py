@@ -1,11 +1,7 @@
-from typing import Dict, List, Any
-from django.db.models import QuerySet
 from settings.models import WordsSettings
 from users.models import WordsUser
 from core.models import WordsCard
-from django.core.serializers import serialize
 import random
-import json
 
 
 class GameInitMixin:
@@ -22,31 +18,31 @@ class GameInitMixin:
         learned_words = WordsUser.objects.filter(user=user, status="2")
         return random.choice(learned_words) if learned_words else None
 
-
     @staticmethod
     def get_random_words(exclude_word_id):
         """Get random words excluding the specified one model/WordsCard"""
         available_words = WordsCard.objects.exclude(id=exclude_word_id)
-        return random.sample(list(available_words), min(3, len(available_words)))
-    
+        return random.sample(
+            list(available_words), min(3, len(available_words))
+        )
+
     @staticmethod
     def mixer_words(list_words, word):
         # We form a mixed list with words for tests
-        for_random = [(0, l) for l in list_words] + [(1, WordsCard.objects.get(id=word.core_words.id))]
+        for_random = [(0, word) for word in list_words] + \
+            [(1, WordsCard.objects.get(id=word.core_words.id))]
 
-        for_json = random.sample(for_random, len(for_random))
+        for_result = random.sample(for_random, len(for_random))
 
-        result = json.dumps( [{
-                "option": item[0], 
-                "id": item[1].id, 
-                "en": item[1].word_en, 
-                "ru": item[1].word_ru,
-                "transcription": item[1].transcription,
-                "phrase_en": item[1].phrases_en,
-                "phrase_ru": item[1].phrases_ru, 
-            } for item in for_json], indent=2, ensure_ascii=False)
-
-        # a = json.dumps(result, indent=2)
+        result = [{
+            "option": item[0],
+            "id": item[1].id,
+            "en": item[1].word_en,
+            "ru": item[1].word_ru,
+            "transcription": item[1].transcription,
+            "phrase_en": item[1].phrases_en,
+            "phrase_ru": item[1].phrases_ru,
+        } for item in for_result]
 
         return result
 
@@ -64,8 +60,7 @@ class GameInitMixin:
             )
         ]
 
-
-    def init_data(self, user, context: Dict[str, Any]) -> Dict[str, Any]:
+    def init_data(self, user, context):
         """Initialize game data and update context"""
         if not user or not context:
             return context
@@ -74,7 +69,8 @@ class GameInitMixin:
         words_settings = self.get_user_words_settings(user)
         word_user = self.get_random_user_word(user)
         three_random_words = self.get_random_words(word_user.core_words.id)
-        mixer_words = self.mixer_words(list_words=three_random_words, word=word_user)
+        mixer_words = self.mixer_words(
+            list_words=three_random_words, word=word_user)
         print(mixer_words, "<<<")
         phrases = self.prepare_phrases(word_user)
 

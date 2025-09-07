@@ -36,7 +36,8 @@ class Game(GameInitMixin, LoginRequiredMixin, FormView):
 
             try:
                 # Increase the repetition counter for the selected word
-                word = WordsUser.objects.get(user=self.request.user, id=select_data)
+                word = WordsUser.objects.get(
+                    user=self.request.user, id=select_data)
                 word.number_repetitions += 1
                 word.save()
             except WordsUser.DoesNotExist:
@@ -45,6 +46,3 @@ class Game(GameInitMixin, LoginRequiredMixin, FormView):
 
         # Standard redirect after successful form processing
         return HttpResponseRedirect(self.get_success_url())
-
-
-
