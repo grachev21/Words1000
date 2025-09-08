@@ -1,14 +1,14 @@
-<div id="read-container" class="max-w-6xl mx-auto bg-gray-100 mt-10 border rounded-lg p-6 text-center hidden">
+<div id="read-container" class="max-w-6xl mx-auto bg-col_bas_ave mt-10 rounded-lg p-6 text-center hidden">
   <div class="flex flex-col md:flex-row gap-6">
     <!-- Left Column -->
     <div class="md:w-1/3 text-left">
-      <h1 class="text-2xl font-bold text-gray-800 mb-4">{{ correct_word.id }}</h1>
+      <h1 class="text-2xl font-bold text-col_con mb-4">{{ correct_word.id }}</h1>
 
       <form method="post" class="space-y-4">
         {% csrf_token %}
         {{ form.select_data }}
         <button type="submit" name="select_data" value="{{ correct_word.id }}"
-          class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition">
+          class="bg-col_suc_ave text-col_con px-4 py-2 rounded hover:bg-blue-700 transition">
           Прочитал
         </button>
       </form>
@@ -18,14 +18,14 @@
     <div class="md:w-2/3">
       <div id="accordionFlushExample" class="space-y-2">
         {% for phrase in phrases %}
-        <div class="border rounded">
+        <div class="rounded">
           <button type="button"
-            class="w-full text-left px-4 py-2 bg-gray-200 hover:bg-gray-300 font-medium accordion-toggle"
+            class="w-full text-left px-4 py-2 bg-col_nit_con hover:bg-col_suc_mai font-medium accordion-toggle"
             data-target="flush-collapse-{{ forloop.counter }}">
             {{ phrase.en }}
           </button>
           <div id="flush-collapse-{{ forloop.counter }}"
-            class="accordion-content hidden px-4 py-2 bg-white text-gray-700">
+            class="accordion-content hidden px-4 py-2 bg-white text-col_con">
             {{ phrase.ru }}
           </div>
         </div>
