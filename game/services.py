@@ -1,5 +1,7 @@
 from users.models import WordsUser
 from core.models import WordsCard
+from settings.models import WordsSettings
+
 import random
 
 
@@ -42,20 +44,6 @@ class GameInitMixin:
             for item in for_result
         }
 
-    @staticmethod
-    def prepare_phrases(word_user):
-        """Prepare list of phrases with translations."""
-        if not word_user or not hasattr(word_user.core_words, 'phrases_en'):
-            return []
-
-        return [
-            {"en": en_phrase, "ru": ru_phrase}
-            for en_phrase, ru_phrase in zip(
-                word_user.core_words.phrases_en,
-                word_user.core_words.phrases_ru
-            )
-        ]
-
     def init_data(self, user, context):
         """Initialize game data and update context"""
         if not user or not context:
@@ -63,9 +51,10 @@ class GameInitMixin:
 
         word_user = self.get_random_user_word(user)
         three_random_words = self.get_random_words(word_user.core_words.id)
+
         mixer_words = self.mixer_words(
-            list_words=three_random_words, word=word_user)
-        phrases = self.prepare_phrases(word_user)
+            list_words=three_random_words, word=word_user
+        )
 
         if not word_user:
             return context
@@ -73,7 +62,8 @@ class GameInitMixin:
         # Prepare context data
         context.update({
             "mixer_words": mixer_words,
-            "phrases": phrases,
+            "number_repetitions": WordsSettings.objects.filter(user=user).first().number_repetitions,
+            "words_user": WordsUser.objects.filter(user=user),
 
         })
 

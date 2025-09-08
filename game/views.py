@@ -33,16 +33,15 @@ class Game(GameInitMixin, LoginRequiredMixin, FormView):
         # Word selection processing by user
         if "select_data" in self.request.POST:
             select_data = self.request.POST.get("select_data")
+            print(select_data, "<<<")
 
-            try:
-                # Increase the repetition counter for the selected word
-                word = WordsUser.objects.get(
-                    user=self.request.user, id=select_data)
-                word.number_repetitions += 1
-                word.save()
-            except WordsUser.DoesNotExist:
-                # Ignore if the word is not found (possibly removed)
-                pass
+            # Increase the repetition counter for the selected word
+            word = WordsUser.objects.get(
+                user=self.request.user, core_words=select_data
+            )
+            word.number_repetitions += 1
+            word.save()
+            print("record ....")
 
         # Standard redirect after successful form processing
         return HttpResponseRedirect(self.get_success_url())

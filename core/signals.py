@@ -37,6 +37,7 @@ def installation_status(user):
     """
     Sets the status of all words by default in WordsUser.
     """
+    print("signal ...")
 
     # Number of words per day
     lim = int(WordsSettings.objects.filter(user=user).latest("id").number_words)

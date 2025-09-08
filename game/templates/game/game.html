@@ -7,15 +7,17 @@
 
 
 {{ mixer_words|json_script:"game-data" }}
+
 <!-- Game -->
 {% progress_bar_game %}
 
-<div id="game-container"
+<main id="game-container"
   class="max-w-4xl h-64 mx-auto bg-col_bas_ave mt-10 rounded-lg p-6 text-center shadow flex flex-col justify-between">
   <!-- Title -->
   <div class="mb-4">
 
     <h4 class="correct_word text-2xl font-semibold text-col_con">
+      {{ number_repetitions }}
       {{ mixer_words.option_true.ru }}
     </h4>
   </div>
@@ -24,7 +26,7 @@
     <div id="btn-container" class="flex flex-wrap justify-center gap-4 my-8">
     </div>
   </div>
-</div>
+</main>
 
 {% include 'includes/answering.html' %}
 {% include 'includes/accordion.html' %}
@@ -34,6 +36,6 @@
   <button type="button"
     class="word_btn px-4 py-2 border border-col_suc text-col_suc rounded hover:bg-col_suc_mai transition cursor-pointer"></button>
 </template>;
-<script src="{% static 'js/game.js' %}" />
 
+<script src="{% static 'js/game.js' %}" />
 {% endblock %}

@@ -1,3 +1,4 @@
+from django.shortcuts import redirect
 from django.db import transaction
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import CreateView, FormView
@@ -26,16 +27,23 @@ class SettingsPage(SettingsMixin, LoginRequiredMixin, CreateView):
         return context
 
     def form_valid(self, form):
-
-        if len(WordsSettings.objects.filter(user=self.request.user)) > 1:
-            WordsSettings.objects.filter(user=self.request.user).delete()
-        WordsSettings.objects.update_or_create(
-            user=self.request.user,  # Критерий поиска
-            defaults=form.cleaned_data  # Данные для обновления/создания
+        print("delete...")
+        print(form.cleaned_data)
+        
+        # Удаляем существующие настройки
+        WordsSettings.objects.filter(user=self.request.user).delete()
+        
+        # Создаем новые настройки
+        WordsSettings.objects.create(
+            user=self.request.user,
+            number_words=form.cleaned_data["number_words"],
+            number_repetitions=form.cleaned_data["number_repetitions"],
+            translation_list=form.cleaned_data["translation_list"],
         )
+        
         self.installation_status(user=self.request.user)
 
-        return super().form_valid(form)
+        return redirect(self.success_url)
 
 
 class ResettingDictionaries(SettingsMixin, LoginRequiredMixin, FormView):
