@@ -4,15 +4,18 @@
 >
   <div class="mb-6">
     <div class="bg-col_bas_ave rounded-lg p-4">
-      <h3 class="text-xl font-semibold text-green-700">Вы угадали!</h3>
+      <h3 class="text-xl font-semibold text-col_attn">Вы угадали!</h3>
     </div>
   </div>
   <div>
-    <h4 class="text-blue-600 text-lg font-medium">
-      {{ correct_word.core_words.word_en }}
+    <h4 class="text-col_suc text-xl font-medium">
+      {{ mixer_words.option_true.en }}
     </h4>
-    <h4 class="text-yellow-500 text-lg font-medium">
-      {{ correct_word.core_words.word_ru }}
+    <h4 class="text-col_con_inv text-lg font-medium">
+      {{ mixer_words.option_true.transcription}}
+    </h4>
+    <h4 class="text-col_con text-lg font-medium">
+      {{ mixer_words.option_true.ru }}
     </h4>
   </div>
 </div>

@@ -14,13 +14,12 @@
   class="max-w-4xl h-64 mx-auto bg-col_bas_ave mt-10 rounded-lg p-6 text-center shadow flex flex-col justify-between">
   <!-- Title -->
   <div class="mb-4">
+
     <h4 class="correct_word text-2xl font-semibold text-col_con">
-      {% for word in mixer_words %}
-      {% if word.option == 1 %}{{word.ru}}{% endif %}
-      {% endfor %}
+      {{ mixer_words.option_true.ru }}
     </h4>
   </div>
-  <!-- Buttons -->>
+  <!-- Buttons -->
   <div>
     <div id="btn-container" class="flex flex-wrap justify-center gap-4 my-8">
     </div>

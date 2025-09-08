@@ -1,4 +1,3 @@
-from settings.models import WordsSettings
 from users.models import WordsUser
 from core.models import WordsCard
 import random
@@ -6,11 +5,6 @@ import random
 
 class GameInitMixin:
     """Mixin for initializing game data with words and phrases."""
-
-    @staticmethod
-    def get_user_words_settings(user):
-        """Returns the user settings"""
-        return WordsSettings.objects.filter(user=user).last()
 
     @staticmethod
     def get_random_user_word(user):
@@ -28,23 +22,25 @@ class GameInitMixin:
 
     @staticmethod
     def mixer_words(list_words, word):
+
         # We form a mixed list with words for tests
-        for_random = [(0, word) for word in list_words] + \
-            [(1, WordsCard.objects.get(id=word.core_words.id))]
+        for_random = [(f"false_{word}", word) for word in list_words] + \
+            [("true", WordsCard.objects.get(id=word.core_words.id))]
 
         for_result = random.sample(for_random, len(for_random))
 
-        result = [{
-            "option": item[0],
-            "id": item[1].id,
-            "en": item[1].word_en,
-            "ru": item[1].word_ru,
-            "transcription": item[1].transcription,
-            "phrase_en": item[1].phrases_en,
-            "phrase_ru": item[1].phrases_ru,
-        } for item in for_result]
-
-        return result
+        return {
+            f"option_{item[0]}": {
+                "id": item[1].id,
+                "en": item[1].word_en,
+                "ru": item[1].word_ru,
+                "transcription": item[1].transcription,
+                "phrase": [
+                    n for n in zip(item[1].phrases_en, item[1].phrases_ru)
+                ],
+            }
+            for item in for_result
+        }
 
     @staticmethod
     def prepare_phrases(word_user):
@@ -65,13 +61,10 @@ class GameInitMixin:
         if not user or not context:
             return context
 
-        # Get required data
-        words_settings = self.get_user_words_settings(user)
         word_user = self.get_random_user_word(user)
         three_random_words = self.get_random_words(word_user.core_words.id)
         mixer_words = self.mixer_words(
             list_words=three_random_words, word=word_user)
-        print(mixer_words, "<<<")
         phrases = self.prepare_phrases(word_user)
 
         if not word_user:
@@ -79,7 +72,6 @@ class GameInitMixin:
 
         # Prepare context data
         context.update({
-            "settings": words_settings,
             "mixer_words": mixer_words,
             "phrases": phrases,
 

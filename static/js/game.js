@@ -8,21 +8,20 @@ document.addEventListener("DOMContentLoaded", function () {
 
   const gd = JSON.parse(gameData.textContent);
 
-  gd.forEach((element, index) => {
+  Object.keys(gd).forEach((key, index) => {
     const clone = btnTemplate.content.cloneNode(true).firstElementChild;
-    clone.innerText = element.en;
+    clone.innerText = gd[key].en;
     clone.dataset.index = index;
-    clone.dataset.option = element.option;
+    clone.dataset.option = gd[key].option;
     clone.addEventListener("click", () => {
-      addBorder(element);
+      addBorder(key);
     });
     btnContainer.appendChild(clone);
-    console.log(element);
+    console.log(gd[key]);
   });
 
-  function addBorder(e) {
-    console.log(e.option);
-    if (e.option == 1) {
+  function addBorder(key) {
+    if (key == "option_true") {
       readContainer.classList.remove("hidden");
       readContainer.classList.add("block");
       gameContainer.classList.add("hidden");

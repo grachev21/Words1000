@@ -28,13 +28,13 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     # Lib
     "django_browser_reload",
+    "django_extensions",
     # Apps
     "core.apps.CoreConfig",
     "settings.apps.SettingsConfig",
     "users.apps.UsersConfig",
     "game.apps.GameConfig",
 ]
-
 
 
 MIDDLEWARE = [
@@ -49,7 +49,6 @@ MIDDLEWARE = [
     # New
     "django_browser_reload.middleware.BrowserReloadMiddleware",
 ]
-
 
 
 # INTERNAL_IPS = ["127.0.0.1"]
