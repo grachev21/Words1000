@@ -6,6 +6,7 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from users.models import WordsUser
 from core.services import WordsMixin
 from .models import WordsCard
+import time
 
 
 class Home(ServicesMixin, ListView):
