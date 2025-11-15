@@ -1,34 +1,46 @@
+# Views
+
 from django.views.generic import ListView, TemplateView
 from django.urls import reverse_lazy
 from core.services import ServicesMixin
+from services.Mixins import Htm_xMixin
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from users.models import WordsUser
 from core.services import WordsMixin
 from .models import WordsCard
-import time
 
 
-class Home(ServicesMixin, ListView):
+class Home(ServicesMixin, Htm_xMixin, TemplateView):
     model = WordsCard
-    template_name = "core/home.html"
+
+    template_name = "base.html"
+    partial_template_name = "core/home.html"
+
     context_object_name = "words_counter_home"
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         # Вызываем метод init_data из миксина
-        return self.init_data(user=self.request.user, check_user=self.request.user.is_anonymous, context=context)
+        return self.init_data(
+            user=self.request.user,
+            check_user=self.request.user.is_anonymous,
+            context=context,
+        )
 
 
-class WordsPage(WordsMixin, LoginRequiredMixin, TemplateView):
-    template_name = "core/words.html"
+class WordsPage(WordsMixin, Htm_xMixin, LoginRequiredMixin, TemplateView):
+    template_name = "base.html"
+    partial_template_name = "core/words.html"
     login_url = reverse_lazy("register")
     paginate_by = 10
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
 
-        filter_data = self.filter(status=self.request.GET.get("status"), user=self.request.user)
+        filter_data = self.filter(
+            status=self.request.GET.get("status"), user=self.request.user
+        )
 
         # Создаём Paginator
         paginator = Paginator(filter_data["words_user"], self.paginate_by)
@@ -48,4 +60,3 @@ class WordsPage(WordsMixin, LoginRequiredMixin, TemplateView):
         context["status_choices"] = WordsUser.STATUS_CHOICE
         context["current_status"] = filter_data["status_filter"]
         return self.init_data(user=self.request.user, context=context)
-

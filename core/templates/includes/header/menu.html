@@ -1,10 +1,28 @@
-{% load static %}
-<div class="hidden flex-row items-center mr-8 sm:flex lg:ml-12 xl:ml-22">
-  {% for m in menu %} {% if request.resolver_match.url_name == m.url_name%}
-  <a class="text-col_suc border-b border-col_suc mx-2 md:mx-4 hover:text-col_suc_ave"
-    href="{% url m.url_name%}">{{m.name }}</a>
-  {% else %}
-  <a class="text-col_suc mx-2 md:mx-4 hover:text-col_suc_ave" href="{% url m.url_name %}">{{ m.name }}</a>
-  {% endif %} {% endfor %}
+<!-- Menu -->
 
+{% load static %}
+<div class="hidden flex-row items-center sm:flex sm:ml-4 lg:ml-12 xl:ml-22">
+
+  <div role="tablist" class="tabs tabs-lift">
+    {% for m in menu %}
+
+    {% if request.resolver_match.url_name == m.url_name%}
+
+    <a role="tab" class="tab tab-active">Tab 2</a>
+    <div class="flex flex-row items-center md:mx-4">
+      <img class="w-4 h-4" src="{% static m.img_name %}" alt="">
+      <a hx-get="{% url m.url_name %}" hx-target="#main-content" hx-push-url="true"
+        class="text-col_suc cursor-pointer border-b border-col_suc mx-2  hover:text-col_suc_ave">{{m.name }}</a>
+    </div>
+    {% else %}
+
+    <a role="tab" class="tab">Tab 2</a>
+    <div class="flex flex-row items-center md:mx-4">
+      <img class="w-4 h-4" src="{% static m.img_name %}" alt="">
+      <a hx-get="{% url m.url_name %}" hx-target="#main-content" hx-push-url="true"
+        class="text-col_suc cursor-pointer border-col_suc mx-2 hover:text-col_suc_ave duration-300">{{m.name }}</a>
+    </div>
+    {% endif %} {% endfor %}
+
+  </div>
 </div>

@@ -35,15 +35,3 @@
   </div>
 </div>
 
-<script>
-  // Simple accordion toggle logic
-  document.addEventListener("DOMContentLoaded", function () {
-    document.querySelectorAll(".accordion-toggle").forEach(button => {
-      button.addEventListener("click", () => {
-        const targetId = button.getAttribute("data-target");
-        const content = document.getElementById(targetId);
-        content.classList.toggle("hidden");
-      });
-    });
-  });
-</script>

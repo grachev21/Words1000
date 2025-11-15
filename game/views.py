@@ -5,15 +5,17 @@ from django.http import HttpResponseRedirect
 from game.forms import WordCheck
 from game.services import GameInitMixin
 from users.models import WordsUser
+from services.Mixins import Htm_xMixin
 
 
-class Game(GameInitMixin, LoginRequiredMixin, FormView):
+class Game(GameInitMixin, Htm_xMixin, LoginRequiredMixin, FormView):
     """
     View for playing words.
     And increases the repetition counter for the interval system.
     """
 
-    template_name = "game/game.html"
+    template_name = "base.html"
+    partial_template_name = "game/game.html"
     form_class = WordCheck
     login_url = reverse_lazy("register")
     success_url = reverse_lazy("game")
