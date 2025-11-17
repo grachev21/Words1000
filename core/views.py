@@ -1,35 +1,40 @@
 # Views
 
-from django.views.generic import ListView, TemplateView
-from django.urls import reverse_lazy
-from core.services import ServicesMixin
-from services.Mixins import Htm_xMixin
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
+from django.template.response import TemplateResponse
+from django.urls import reverse_lazy
+from django.views.generic import TemplateView
+
+from core.services import ServicesMixin, WordsMixin
 from users.models import WordsUser
-from core.services import WordsMixin
+
 from .models import WordsCard
 
 
-class Home(ServicesMixin, Htm_xMixin, TemplateView):
+class Home(ServicesMixin, TemplateView):
     model = WordsCard
-
+    context_object_name = "words_counter_home"
     template_name = "base.html"
     partial_template_name = "core/home.html"
 
-    context_object_name = "words_counter_home"
-
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        # Вызываем метод init_data из миксина
         return self.init_data(
             user=self.request.user,
             check_user=self.request.user.is_anonymous,
             context=context,
         )
 
+    def render_to_response(self, context, **response_kwargs):
+        if self.request.headers.get("HX-Request"):
+            template_name = self.partial_template_name or self.template_name
+            return TemplateResponse(self.request, template_name, context)
+        else:
+            return super().render_to_response(context, **response_kwargs)
 
-class WordsPage(WordsMixin, Htm_xMixin, LoginRequiredMixin, TemplateView):
+
+class WordsPage(WordsMixin, LoginRequiredMixin, TemplateView):
     template_name = "base.html"
     partial_template_name = "core/words.html"
     login_url = reverse_lazy("register")
@@ -60,3 +65,10 @@ class WordsPage(WordsMixin, Htm_xMixin, LoginRequiredMixin, TemplateView):
         context["status_choices"] = WordsUser.STATUS_CHOICE
         context["current_status"] = filter_data["status_filter"]
         return self.init_data(user=self.request.user, context=context)
+
+    def render_to_response(self, context, **response_kwargs):
+        if self.request.headers.get("HX-Request"):
+            template_name = self.partial_template_name or self.template_name
+            return TemplateResponse(self.request, template_name, context)
+        else:
+            return super().render_to_response(context, **response_kwargs)

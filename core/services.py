@@ -1,7 +1,8 @@
+from datetime import date
+
+from core.models import WordsCard
 from settings.models import WordsSettings
 from users.models import WordsUser
-from core.models import WordsCard
-from datetime import date
 
 
 class ServicesMixin:
@@ -15,7 +16,6 @@ class ServicesMixin:
 
     @staticmethod
     def data_incision(user):
-
         if WordsSettings.objects.filter(user=user).exists():
             settings_words = WordsSettings.objects.filter(user=user).latest("id")
 
@@ -23,14 +23,10 @@ class ServicesMixin:
             user=user, status="4", created_at=date.today()
         ).count()
 
-        remainder_words = WordsUser.objects.filter(
-            user=user, status="2"
-        ).count()
+        remainder_words = WordsUser.objects.filter(user=user, status="2").count()
 
         all_words = WordsUser.objects.filter(user=user, status="1").count()
-        all_words_studied = WordsUser.objects.filter(
-            user=user, status="4"
-        ).count()
+        all_words_studied = WordsUser.objects.filter(user=user, status="4").count()
 
         return [
             {
@@ -77,7 +73,6 @@ class ServicesMixin:
 
 
 class WordsMixin:
-
     @staticmethod
     def info_bar(user):
         obj = WordsUser.objects.filter(user=user)
@@ -97,7 +92,7 @@ class WordsMixin:
     @staticmethod
     def filter(status, user):
         # Получаем параметр фильтра из GET-запроса
-        status_filter = status 
+        status_filter = status
 
         # Фильтруем слова для текущего пользователя
         words_user = WordsUser.objects.filter(user=user)

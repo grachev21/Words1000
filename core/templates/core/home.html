@@ -1,40 +1,34 @@
-{% extends 'base.html' %}
-{% load TagWords %}
-{% load static %}
+{% extends 'base.html' %} 
+{% load TagWords %} 
+{% load static %} 
 
 {% block content %}
 
+  <div class="text-4xl font-bold text-col_con mb-8">Все слова</div>
 
-<div class="text-4xl font-bold text-col_con mb-8">Все слова</div>
+    {% include 'includes/running_line.html' %}
 
+  <div class="text-4xl font-bold text-col_con mb-8 mt-14">Ваши настройки</div>
 
-<div class="">
-  {% include 'includes/running_line.html' %}
-</div>
-</div>
+  <!-- Card -->
+  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-4">
+    {% for sd in services_data %}
+      {% card sd.name sd.description sd.data %}
+    {% endfor %}
+  </div>
 
-<div class="text-4xl font-bold text-col_con mb-8 mt-14">Ваши настройки</div>
+  <h3>Ваши графики</h3>
+  {% if request.user.is_authenticated %}
+    <div class="">
+      <div class="">
+        {% chart_week user=user %}
+      </div>
+    </div>
 
-<!-- Card -->
-<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-4">
-  {% for sd in services_data %}
-  {% card sd.name sd.description sd.data %}
-  {% endfor %}
-</div>
-
-<h3>Ваши графики</h3>
-<div class="">
-  <!-- {% if request.user.is_authenticated %}
-        <div class="">
-          <div class="">
-            {% chart_week user=user %}
-          </div>
-        </div>
-        <div class="">
-          <div class="">
-            {% doughnut number.number_words counter_word total_words total %}
-          </div>
-        </div>
-      {% endif %}
-{% include 'includes/home/about.html' %} -->
-  {% endblock %}
+    <div class="">
+      <div class="">
+        {% doughnut number.number_words counter_word total_words total %}
+      </div>
+    </div>
+  {% endif %} {% include 'includes/home/about.html' %}
+{% endblock %}
