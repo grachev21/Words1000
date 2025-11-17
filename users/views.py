@@ -1,3 +1,5 @@
+# Views
+
 from django.shortcuts import render
 from django.contrib.auth.views import LoginView
 from django.shortcuts import render, redirect
@@ -9,7 +11,8 @@ from django.contrib import messages
 
 class LoginUser(LoginView):
     form_class = LoginUserForm
-    template_name = "users/login.html"
+    template_name = "base.html"
+    partial_template_name = "users/login.html"
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -19,6 +22,12 @@ class LoginUser(LoginView):
     def get_success_url(self):
         return reverse_lazy("home")
 
+    def render_to_response(self, context, **response_kwargs):
+        if self.request.headers.get("HX-Request"):
+            template_name = self.partial_template_name or self.template_name
+            return TemplateResponse(self.request, template_name, context)
+        else:
+            return super().render_to_response(context, **response_kwargs)
 
 def RegisterUser(request):
     if request.method == "POST":
@@ -36,3 +45,4 @@ def RegisterUser(request):
 def logout_user(request):
     logout(request)
     return redirect("login")
+    

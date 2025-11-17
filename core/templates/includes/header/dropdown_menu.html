@@ -17,7 +17,8 @@
     <div x-show="open" @click.outside="open = false"
       class="z-50 mt-2.5 lg:mt-0 text-xl lg:text-lg flex flex-col w-full shadow-xl absolute">
       {% if request.user.is_authenticated %}
-      <a class="py-3 lg:pl-4 font-semibold lg:bg-col_nit_con w-full text-col_con hover:opacity-80">
+      <a hx-get="{% url user_menu.1.url_name %}" hx-target="#main-content" hx-push-url="true"
+        class="py-3 lg:pl-4 font-semibold lg:bg-col_nit_con w-full text-col_con hover:opacity-80">
         {{ user_menu.0.name }}
       </a>
       {% else %}
