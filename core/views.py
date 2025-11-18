@@ -9,17 +9,15 @@ from django.views.generic import TemplateView
 from core.services import ServicesMixin, WordsMixin
 from users.models import WordsUser
 
-from .models import WordsCard
-
 
 class Home(ServicesMixin, TemplateView):
-    model = WordsCard
-    context_object_name = "words_counter_home"
-    template_name = "base.html"
+    template_name = "include_block.html"
     partial_template_name = "core/home.html"
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        context["name_template"] = self.partial_template_name
+        context["active_page"] = "home"
         return self.init_data(
             user=self.request.user,
             check_user=self.request.user.is_anonymous,
@@ -28,21 +26,21 @@ class Home(ServicesMixin, TemplateView):
 
     def render_to_response(self, context, **response_kwargs):
         if self.request.headers.get("HX-Request"):
-            template_name = self.partial_template_name or self.template_name
-            return TemplateResponse(self.request, template_name, context)
+            return TemplateResponse(self.request, self.partial_template_name, context)
         else:
-            return super().render_to_response(context, **response_kwargs)
+            return TemplateResponse(self.request, self.template_name, context)
 
 
 class WordsPage(WordsMixin, LoginRequiredMixin, TemplateView):
-    template_name = "base.html"
+    template_name = "include_block.html"
     partial_template_name = "core/words.html"
     login_url = reverse_lazy("register")
     paginate_by = 10
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-
+        context["name_template"] = self.partial_template_name
+        context["active_page"] = "words"
         filter_data = self.filter(
             status=self.request.GET.get("status"), user=self.request.user
         )
@@ -68,7 +66,6 @@ class WordsPage(WordsMixin, LoginRequiredMixin, TemplateView):
 
     def render_to_response(self, context, **response_kwargs):
         if self.request.headers.get("HX-Request"):
-            template_name = self.partial_template_name or self.template_name
-            return TemplateResponse(self.request, template_name, context)
+            return TemplateResponse(self.request, self.partial_template_name, context)
         else:
-            return super().render_to_response(context, **response_kwargs)
+            return TemplateResponse(self.request, self.template_name, context)

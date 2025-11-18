@@ -1,8 +1,9 @@
 from django.urls import path
-from users.views import RegisterUser, LoginUser, logout_user
-from game.views import Game
 
+from . import views
+
+app_name = "game"
 
 urlpatterns = [
-    path("game/", Game.as_view(), name="game"),
+    path("game/", views.Game.as_view(), name="game"),
 ]

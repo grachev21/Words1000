@@ -7,7 +7,7 @@
     {% csrf_token %}
     <div class="relative w-80 dark-card rounded-lg p-5 text-center shadow-xl bg-col_bas_ave">
 
-      <h2 class="text-col_con mb-5 text-2xl font-semibold">ВХОД</h2>
+      <h2 class="text-col_con mb-5 text-2xl font-semibold">НАСТРОЙКИ</h2>
 
       {# Общие ошибки формы, например "Неверный логин или пароль" #}
       {% if form.non_field_errors %}
@@ -47,13 +47,18 @@
       </button>
 
       <div class="mt-2.5 text-sm flex justify-between items-center">
-        <a href="{% url 'resettings_dictionaries' %}"
-          class="text-col_attn hover:text-col_attn/80 font-bold mt-4 transition-colors">ПОЛНЫЙ СБРОС ПОЛЬЗОВАТЕЛЬСКОГО
-          СЛОВАРЯ</a>
+          <button hx-get="{% url 'resettings_dictionaries' %}"
+             hx-target="#main-content" hx-push-url="true"
+          class="
+                text-col_attn hover:text-col_attn/80
+                font-bold mt-4 transition-colors
+                cursor-pointer
+                ">
+              ПОЛНЫЙ СБРОС ПОЛЬЗОВАТЕЛЬСКОГОСЛОВАРЯ
+                </button>
       </div>
     </div>
   </form>
 </div>
 
-</script>
 {% endblock %}

@@ -1,33 +1,41 @@
-{% load static %} {% load TagWords %} {% load header_tag %}
+{% load static %}
+{% load TagWords %}
+{% load header_tag %}
 
-<!DOCTYPE html>
+<!doctype html>
 <html data-theme="dark" lang="ru">
+    <head>
+        <link href="{% static 'dist/styles.css' %}" rel="stylesheet" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link
+            rel="shortcut icon"
+            href="{% static 'icons/favicon.png' %}"
+            type="image/x-icon"
+        />
+        <script src="{% static 'js/htmx.min.js' %}"></script>
+        <meta charset="utf-8" />
+        <title>{{ title }}</title>
+    </head>
 
-<head>
-  <link href="{% static 'dist/styles.css' %}" rel="stylesheet" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link rel="shortcut icon" href="{% static 'icons/favicon.png' %}" type="image/x-icon" />
-  <script src="{% static 'js/htmx.min.js' %}"></script>
-  <meta charset="utf-8" />
-  <title>{{ title }}</title>
-</head>
+    <body
+        hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'
+        class="bg-col_bas_mai font-Rubik min-w-full overflow-x-hidden"
+    >
+        {% header active_page %}
+        <div
+            class="mx-auto w-full max-w-full px-4 sm:px-6 lg:px-8 py-6 overflow-x-hidden flex flex-row justify-center"
+        >
+            <main
+                id="main-content"
+                class="w-[1200px] overflow-x-auto mt-50 mb-96"
+            >
+                {% block content %} {% endblock %}
+            </main>
+        </div>
 
-<body hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}' class="bg-base-100 font-Rubik min-w-full overflow-x-hidden">
-  {% header %}
-  <div class="mx-auto w-full max-w-full px-4 sm:px-6 lg:px-8 py-6 overflow-x-hidden">
-    <main id="main-content" class="w-full overflow-x-auto mt-50 mb-96">
-      {% block content %} {% endblock %}
-    </main>
-  </div>
-
-<div x-data="{ open: false }">
-    <button @click="open = ! open">Toggle</button>
- 
-    <div x-show="open" @click.outside="open = false">Contents...</div>
-</div>
-  {% footer %}
-
-  <script src="{% static 'js/alpine.js' %}"></script>
-</body>
-
+        {% footer %}
+    </body>
+    <script src="{% static 'js/alpine.js' %}"></script>
+    <script src="{% static 'js/chart_home.js' %}"></script>
+    <script src="{% static 'js/chart.umd.js' %}"></script>
 </html>

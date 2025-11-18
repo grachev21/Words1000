@@ -1,9 +1,14 @@
 from django.urls import path
-from settings.views import SettingsPage, ResettingDictionaries
-from django.urls import path
 
+from . import views
+
+app_name = "settings"
 
 urlpatterns = [
-    path("settings/", SettingsPage.as_view(), name="settings"),
-    path("resettings_dictionaries/", ResettingDictionaries.as_view(), name="resettings_dictionaries"),
+    path("settings/", views.SettingsPage.as_view(), name="settings"),
+    path(
+        "resettings_dictionaries/",
+        views.ResettingDictionaries.as_view(),
+        name="resettings_dictionaries",
+    ),
 ]

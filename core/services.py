@@ -7,6 +7,7 @@ from users.models import WordsUser
 
 class ServicesMixin:
     """
+    Mixin for page Home.
     Sends data to the context for the
     service panel on the main panel of the user.
 
@@ -16,6 +17,12 @@ class ServicesMixin:
 
     @staticmethod
     def data_incision(user):
+        """
+        Return list of data for the service panel
+
+        Args:
+            user: The user object.
+        """
         if WordsSettings.objects.filter(user=user).exists():
             settings_words = WordsSettings.objects.filter(user=user).latest("id")
 
@@ -73,6 +80,10 @@ class ServicesMixin:
 
 
 class WordsMixin:
+    """
+    Mixin for page Words
+    """
+
     @staticmethod
     def info_bar(user):
         obj = WordsUser.objects.filter(user=user)
@@ -83,11 +94,6 @@ class WordsMixin:
             {"data": obj.filter(status="3").count(), "title": "Повторяю"},
             {"data": obj.filter(status="4").count(), "title": "Изучил"},
         ]
-
-    def init_data(self, user, context):
-        context.update({"info_bar_data": self.info_bar(user)})
-
-        return context
 
     @staticmethod
     def filter(status, user):
@@ -101,3 +107,8 @@ class WordsMixin:
             words_user = words_user.filter(status=status_filter)
 
         return {"status_filter": status_filter, "words_user": words_user}
+
+    def init_data(self, user, context):
+        context.update({"info_bar_data": self.info_bar(user)})
+
+        return context

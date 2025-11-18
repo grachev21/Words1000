@@ -1,33 +1,36 @@
 {
-  "name": "words1000",
-  "version": "1.0.0",
-  "main": "index.js",
-  "scripts": {
-    "dev": "postcss ./static/src/styles.css -o ./static/dist/styles.css --watch",
-    "build": "postcss static/src/styles.css -o static/dist/styles.css --minify"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/grachev21/Words1000.git"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/grachev21/Words1000/issues"
-  },
-  "homepage": "https://github.com/grachev21/Words1000#readme",
-  "description": "",
-  "devDependencies": {
-    "@tailwindcss/postcss": "^4.1.12",
-    "autoprefixer": "^10.4.21",
-    "postcss": "^8.5.6",
-    "postcss-cli": "^11.0.1",
-    "tailwindcss": "^4.1.12"
-  },
-  "dependencies": {
-    "@tailwindcss/cli": "^4.1.12",
-    "alpinejs": "^3.15.1",
-    "daisyui": "^5.0.50"
-  }
+    "name": "words1000",
+    "version": "1.0.0",
+    "main": "index.js",
+    "scripts": {
+        "dev": "postcss ./static/src/styles.css -o ./static/dist/styles.css --watch",
+        "build": "npm run build:css && npm run build:js",
+        "build:css": "postcss static/src/styles.css -o static/dist/styles.css --minify",
+        "build:js": "copy node_modules\\chart.js\\dist\\chart.umd.js static\\js\\"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/grachev21/Words1000.git"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/grachev21/Words1000/issues"
+    },
+    "homepage": "https://github.com/grachev21/Words1000#readme",
+    "description": "",
+    "devDependencies": {
+        "@tailwindcss/postcss": "^4.1.12",
+        "autoprefixer": "^10.4.21",
+        "postcss": "^8.5.6",
+        "postcss-cli": "^11.0.1",
+        "tailwindcss": "^4.1.12"
+    },
+    "dependencies": {
+        "@tailwindcss/cli": "^4.1.12",
+        "alpinejs": "^3.15.1",
+        "chart.js": "^4.5.1",
+        "daisyui": "^5.0.50"
+    }
 }
