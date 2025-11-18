@@ -1,41 +1,21 @@
 {% load static %}
+
 <div
-  x-data="{
-    active: window.location.pathname,
-    menu: [
-      {% for m in menu %}
-      {
-        name: '{{ m.name|escapejs }}',
-        href: '{% url m.url_name.app|add:':'|add:m.url_name.url %}',
-        img: '{% static m.img_name %}',
-        urlName: '{{ m.url_name.url }}'
-      }{% if not forloop.last %},{% endif %}
-      {% endfor %}
-    ],
-    navigate(url) {
-      this.active = url;
-      htmx.ajax('GET', url, {
-        target: '#main-content',
-        pushUrl: true
-      });
-    },
-    isActive(href) {
-      return this.active === href;
-    }
-  }"
-  class="hidden flex-row items-center sm:flex sm:ml-4 lg:ml-12 xl:ml-22"
+    x-data="{currentUrl: window.location.href}"
+    class="hidden flex-row items-center sm:flex sm:ml-4 lg:ml-12 xl:ml-22"
 >
-  <template x-for="m in menu" :key="m.urlName">
+    {% for m in menu %}
     <div class="flex flex-row items-center md:mx-4">
-      <img class="w-4 h-4" :src="m.img" :alt="m.name" />
-      <a
-        :href="m.href"
-        @click.prevent="navigate(m.href)"
-        :class="isActive(m.href)
-          ? 'text-col_suc cursor-pointer border-b border-col_suc mx-2 hover:opacity-80 duration-300'
-          : 'text-col_suc cursor-pointer border-col_suc mx-2 hover:opacity-80 duration-300'"
-        x-text="m.name"
-      ></a>
+        <img class="w-4 h-4" src="{% static m.img_name %}" alt="" />
+
+        <a
+            hx-get="{% url m.url_name.app|add:':'|add:m.url_name.url %}"
+            hx-target="#main-content"
+            hx-push-url="true"
+            :class="{ 'border-b-2': currentUrl.includes('{% url m.url_name.app|add:':'|add:m.url_name.url %}') }"
+            class="text-col_suc cursor-pointer border-col_suc mx-2 hover:opacity-80 duration-300"
+            >{{m.name}}</a
+        >
     </div>
-  </template>
+    {% endfor %}
 </div>

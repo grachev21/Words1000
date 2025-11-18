@@ -8,11 +8,12 @@ from django.urls import reverse_lazy
 from django.views.generic import CreateView
 
 from users.forms import LoginUserForm, RegisterUserForm
+from mixins.htmx_mixin import HtmxMixin
 
 
-class LoginUser(LoginView):
+class LoginUser(HtmxMixin, LoginView):
     form_class = LoginUserForm
-    template_name = "base.html"
+    template_name = "include_block.html"
     partial_template_name = "users/login.html"
 
     def get_context_data(self, **kwargs):
@@ -21,19 +22,12 @@ class LoginUser(LoginView):
         return context
 
     def get_success_url(self):
-        return reverse_lazy("home")
-
-    def render_to_response(self, context, **response_kwargs):
-        if self.request.headers.get("HX-Request"):
-            template_name = self.partial_template_name or self.template_name
-            return TemplateResponse(self.request, template_name, context)
-        else:
-            return super().render_to_response(context, **response_kwargs)
+        return reverse_lazy("core:home")
 
 
-class RegisterUser(CreateView):
+class RegisterUser(HtmxMixin, CreateView):
     form_class = RegisterUserForm
-    template_name = "base.html"
+    template_name = "include_block.html"
     partial_template_name = "users/register.html"
 
     def get_context_data(self, **kwargs):
@@ -43,12 +37,6 @@ class RegisterUser(CreateView):
 
     def get_success_url(self):
         return reverse_lazy("login")
-
-    def render_to_response(self, context, **response_kwargs):
-        if self.request.headers.get("HX-Request"):
-            template_name = self.partial_template_name or self.template_name
-            return TemplateResponse(self.request, template_name, context)
-        return super().render_to_response(context, **response_kwargs)
 
 
 def logout_user(request):

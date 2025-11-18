@@ -5,15 +5,16 @@ from django.http import HttpResponseRedirect
 from game.forms import WordCheck
 from game.services import GameInitMixin
 from users.models import WordsUser
+from mixins.htmx_mixin import HtmxMixin
 
 
-class Game(GameInitMixin, LoginRequiredMixin, FormView):
+class Game(HtmxMixin, GameInitMixin, LoginRequiredMixin, FormView):
     """
     View for playing words.
     And increases the repetition counter for the interval system.
     """
 
-    template_name = "base.html"
+    template_name = "include_block.html"
     partial_template_name = "game/game.html"
     form_class = WordCheck
     login_url = reverse_lazy("register")
@@ -42,14 +43,6 @@ class Game(GameInitMixin, LoginRequiredMixin, FormView):
             )
             word.number_repetitions += 1
             word.save()
-            print("record ....")
 
         # Standard redirect after successful form processing
         return HttpResponseRedirect(self.get_success_url())
-
-    def render_to_response(self, context, **response_kwargs):
-        if self.request.headers.get("HX-Request"):
-            template_name = self.partial_template_name or self.template_name
-            return TemplateResponse(self.request, template_name, context)
-        else:
-            return super().render_to_response(context, **response_kwargs)

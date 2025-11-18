@@ -1,10 +1,13 @@
 from django.urls import path
 
+from settings.urls import app_name
 from users.views import (
     LoginUser,
     RegisterUser,
     logout_user,
 )
+
+app_name = "users"
 
 urlpatterns = [
     path("register/", RegisterUser.as_view(), name="register"),

@@ -6,8 +6,7 @@ register = template.Library()
 
 
 @register.inclusion_tag("header/header.html", takes_context=True)
-def header(context, active_page):
-    print(context["active_page"])
+def header(context):
     menu = [
         {
             "name": "Главная",
@@ -37,4 +36,4 @@ def header(context, active_page):
         {"name": "Войти", "url_name": "login"},
     ]
 
-    return {"menu": menu, "user_menu": user_menu, "request": context["request"], "active_page": active_page}
+    return {"menu": menu, "user_menu": user_menu, "request": context["request"]}

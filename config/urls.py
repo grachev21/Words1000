@@ -8,9 +8,9 @@ from config import settings
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("", include("core.urls", namespace="core")),
-    path("users/", include("users.urls")),
-    path("settings/", include("settings.urls")),
-    path("game/", include("game.urls")),
+    path("users/", include("users.urls", namespace="users")),
+    path("settings/", include("settings.urls", namespace="settings")),
+    path("game/", include("game.urls", namespace="game")),
     path("__reload__/", include("django_browser_reload.urls")),
 ]
 

@@ -9,29 +9,23 @@ from django.views.generic import TemplateView
 from core.services import ServicesMixin, WordsMixin
 from users.models import WordsUser
 
+from mixins.htmx_mixin import HtmxMixin
 
-class Home(ServicesMixin, TemplateView):
+
+class Home(HtmxMixin, ServicesMixin, TemplateView):
     template_name = "include_block.html"
     partial_template_name = "core/home.html"
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["name_template"] = self.partial_template_name
-        context["active_page"] = "home"
         return self.init_data(
             user=self.request.user,
             check_user=self.request.user.is_anonymous,
             context=context,
         )
 
-    def render_to_response(self, context, **response_kwargs):
-        if self.request.headers.get("HX-Request"):
-            return TemplateResponse(self.request, self.partial_template_name, context)
-        else:
-            return TemplateResponse(self.request, self.template_name, context)
 
-
-class WordsPage(WordsMixin, LoginRequiredMixin, TemplateView):
+class WordsPage(HtmxMixin, WordsMixin, LoginRequiredMixin, TemplateView):
     template_name = "include_block.html"
     partial_template_name = "core/words.html"
     login_url = reverse_lazy("register")
@@ -39,8 +33,6 @@ class WordsPage(WordsMixin, LoginRequiredMixin, TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["name_template"] = self.partial_template_name
-        context["active_page"] = "words"
         filter_data = self.filter(
             status=self.request.GET.get("status"), user=self.request.user
         )
@@ -63,9 +55,3 @@ class WordsPage(WordsMixin, LoginRequiredMixin, TemplateView):
         context["status_choices"] = WordsUser.STATUS_CHOICE
         context["current_status"] = filter_data["status_filter"]
         return self.init_data(user=self.request.user, context=context)
-
-    def render_to_response(self, context, **response_kwargs):
-        if self.request.headers.get("HX-Request"):
-            return TemplateResponse(self.request, self.partial_template_name, context)
-        else:
-            return TemplateResponse(self.request, self.template_name, context)
