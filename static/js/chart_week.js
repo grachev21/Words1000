@@ -10,6 +10,7 @@ function initChart() {
         chartInstance.destroy();
     }
 
+    // Chartjs
     chartInstance = new Chart(ctx, {
         type: "line",
         data: {

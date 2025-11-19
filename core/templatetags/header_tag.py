@@ -31,9 +31,9 @@ def header(context):
     ]
 
     user_menu = [
-        {"name": "Выйти", "url_name": "logout"},
-        {"name": "Регистрация", "url_name": "register"},
-        {"name": "Войти", "url_name": "login"},
+        {"name": "Выйти", "url_name": {"app": "users", "url": "logout"}},
+        {"name": "Регистрация", "url_name": {"app": "users", "url": "register"}},
+        {"name": "Войти", "url_name": {"app": "users", "url": "login"}},
     ]
 
     return {"menu": menu, "user_menu": user_menu, "request": context["request"]}
