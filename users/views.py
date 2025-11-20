@@ -22,7 +22,7 @@ class LoginUser(HtmxMixin, LoginView):
         return context
 
     def get_success_url(self):
-        return reverse_lazy("core:home")
+        return reverse_lazy("home")
 
 
 class RegisterUser(HtmxMixin, CreateView):
@@ -36,9 +36,9 @@ class RegisterUser(HtmxMixin, CreateView):
         return context
 
     def get_success_url(self):
-        return reverse_lazy("users:login")
+        return reverse_lazy("login")
 
 
 def logout_user(request):
     logout(request)
-    return redirect("users:login")
+    return redirect("login")

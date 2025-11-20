@@ -1,5 +1,3 @@
-# Header tag
-
 from django import template
 
 register = template.Library()
@@ -10,30 +8,30 @@ def header(context):
     menu = [
         {
             "name": "Главная",
-            "url_name": {"app": "core", "url": "home"},
+            "url_name": "home",
             "img_name": "icons/home.png",
         },
         {
             "name": "Слова",
-            "url_name": {"app": "core", "url": "words"},
+            "url_name": "words",
             "img_name": "icons/list.png",
         },
         {
             "name": "Учить",
-            "url_name": {"app": "game", "url": "game"},
+            "url_name": "game",
             "img_name": "icons/learn.png",
         },
         {
             "name": "Настройки",
-            "url_name": {"app": "settings", "url": "settings"},
+            "url_name": "settings",
             "img_name": "icons/settings.png",
         },
     ]
 
     user_menu = [
-        {"name": "Выйти", "url_name": {"app": "users", "url": "logout"}},
-        {"name": "Регистрация", "url_name": {"app": "users", "url": "register"}},
-        {"name": "Войти", "url_name": {"app": "users", "url": "login"}},
+        {"name": "Выйти", "url_name": "logout"},
+        {"name": "Регистрация", "url_name": "register"},
+        {"name": "Войти", "url_name": "login"},
     ]
 
     return {"menu": menu, "user_menu": user_menu, "request": context["request"]}

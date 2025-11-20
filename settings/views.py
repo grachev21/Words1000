@@ -16,8 +16,8 @@ class SettingsPage(HtmxMixin, SettingsMixin, LoginRequiredMixin, FormView):
     template_name = "include_block.html"
     partial_template_name = "settings/settings.html"
     form_class = WordCountForm
-    success_url = reverse_lazy("core:home")
-    login_url = reverse_lazy("users:login")
+    success_url = reverse_lazy("home")
+    login_url = reverse_lazy("login")
 
     # The get_form_kwargs method transmits to the user form
     def get_form_kwargs(self):
@@ -52,8 +52,8 @@ class ResettingDictionaries(HtmxMixin, SettingsMixin, LoginRequiredMixin, FormVi
     template_name = "include_block.html"
     partial_template_name = "settings/resetting_dictionaries.html"
     form_class = ResettingDictionariesForm
-    login_url = reverse_lazy("users:register")
-    success_url = reverse_lazy("core:home")
+    login_url = reverse_lazy("register")
+    success_url = reverse_lazy("home")
 
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(*args, **kwargs)

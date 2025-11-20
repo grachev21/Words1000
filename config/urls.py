@@ -7,10 +7,10 @@ from config import settings
 
 urlpatterns = [
     path("admin/", admin.site.urls),
-    path("", include("core.urls", namespace="core")),
-    path("users/", include("users.urls", namespace="users")),
-    path("settings/", include("settings.urls", namespace="settings")),
-    path("game/", include("game.urls", namespace="game")),
+    path("", include("core.urls")),
+    path("", include("users.urls")),
+    path("", include("settings.urls")),
+    path("", include("game.urls")),
     path("__reload__/", include("django_browser_reload.urls")),
 ]
 
