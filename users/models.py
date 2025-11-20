@@ -5,9 +5,14 @@ from core.models import WordsCard
 
 
 class WordsUser(models.Model):
-    """
-    Keeps a list of all words by the field of relationships -
-    core_words
+    """Model for storing user words
+
+    Args:
+        created_at: creation date
+        number_repetitions: number of repetitions done
+        status: memorization stage
+        user: registered user
+        core_words: connection with the main model WordsCard
     """
 
     STATUS_CHOICE = [
@@ -16,7 +21,9 @@ class WordsUser(models.Model):
         ("3", "Повторяю"),
         ("4", "Изучил"),
     ]
-    created_at = models.DateTimeField(auto_now_add=True, verbose_name="Дата создания")
+    created_at = models.DateTimeField(
+        auto_now_add=True, verbose_name="Дата создания"
+    )
     number_repetitions = models.IntegerField(
         default=0, verbose_name="Количество сделанных повторов"
     )

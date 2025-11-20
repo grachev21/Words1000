@@ -2,17 +2,16 @@
 
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
-from django.template.response import TemplateResponse
 from django.urls import reverse_lazy
 from django.views.generic import TemplateView
 
-from core.services import ServicesMixin, WordsMixin
+from core.services.services import ServicesMixin, WordsMixin
+from core.services.services_chart_week import WeekMixin
+from mixins.htmx_mixin import HtmxMixin
 from users.models import WordsUser
 
-from mixins.htmx_mixin import HtmxMixin
 
-
-class Home(HtmxMixin, ServicesMixin, TemplateView):
+class Home(WeekMixin, HtmxMixin, ServicesMixin, TemplateView):
     template_name = "include_block.html"
     partial_template_name = "core/home.html"
 

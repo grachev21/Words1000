@@ -21,43 +21,45 @@
 {% if request.user.is_authenticated %}
 
 <!--Charts-->
-<div x-data="{tab: 'day'}" class="p-4">
+<div x-data="{tab: 'week'}" class="min-h-[500px] max-h-[500px]">
     <div class="flex gap-3 mb-4">
         <button
-            @click="tab = 'day'"
-            :class="tab === 'day' ? 'bg-blue-600 text-white' : 'bg-gray-300'"
-            class="bg-col_suc hover:bg-col_suc_ave
-            text-col_con font-bold py-2 px-4
-            cursor-pointer rounded">День</button>
-        <button
             @click="tab = 'week'"
-            :class="tab === 'week' ? 'bg-blue-600 text-white' : 'bg-gray-300'"
-            class="bg-col_suc hover:bg-col_suc_ave
-            text-col_con font-bold py-2 px-4
-            cursor-pointer rounded">Неделя</button>
+            :class="tab === 'week' ? 'bg-col_attn text-white' : 'bg-col_nit text-col_con'"
+            class="font-bold py-2 px-4 cursor-pointer rounded transition-colors">
+            За неделю
+        </button>
         <button
             @click="tab = 'month'"
-            :class="tab === 'month' ? 'bg-blue-600 text-white' : 'bg-gray-300'"
-            class="bg-col_suc hover:bg-col_suc_ave
-            text-col_con font-bold py-2 px-4
-            cursor-pointer rounded">Месяц</button>
+            :class="tab === 'month' ? 'bg-col_attn text-white' : 'bg-col_nit text-col_con'"
+            class="font-bold py-2 px-4 cursor-pointer rounded transition-colors">
+            За месяц
+        </button>
+        <button
+            @click="tab = 'season'"
+            :class="tab === 'season' ? 'bg-col_attn text-white' : 'bg-col_nit text-col_con'"
+            class="font-bold py-2 px-4 cursor-pointer rounded transition-colors">
+            За сезон
+        </button>
         <button
             @click="tab = 'year'"
-            :class="tab === 'year' ? 'bg-blue-600 text-white' : 'bg-gray-300'"
-            class="bg-col_suc hover:bg-col_suc_ave
-            text-col_con font-bold py-2 px-4
-            cursor-pointer rounded">Год</button>
+            :class="tab === 'year' ? 'bg-col_attn text-white' : 'bg-col_nit text-col_con'"
+            class="font-bold py-2 px-4 cursor-pointer rounded transition-colors">
+            За год
+        </button>
     </div>
 
-    <div x-show="tab === 'day'" x-transition class="bg-col_nit_con p-6 rounded-lg shadow min-h-[260px] relative">
-        <canvas  class="w-full h-[240px]"></canvas>
+    <div x-show="tab === 'week'" x-transition class="bg-col_nit_con p-6 rounded-lg shadow max-h-[440px] relative">
+        <canvas id="myChartWeek" class="w-full h-[440px]"></canvas>
     </div>
-    {% include "includes/chart_week.html" %}
-    <div x-show="tab === 'month'" x-transition class="bg-col_nit_con p-6 rounded-lg shadow min-h-[260px] relative">
-        <canvas class="w-full h-[240px]"></canvas>
+    <div x-show="tab === 'month'" x-transition class="bg-col_nit_con p-6 rounded-lg shadow max-h-[440px] relative">
+        <canvas id="myChartMonth" class="w-full h-[440px]"></canvas>
     </div>
-    <div x-show="tab === 'month'" x-transition class="bg-col_nit_con p-6 rounded-lg shadow min-h-[260px] relative">
-        <canvas class="w-full h-[240px]"></canvas>
+    <div x-show="tab === 'season'" x-transition class="bg-col_nit_con p-6 rounded-lg shadow max-h-[440px] relative">
+        <canvas id="myChartSeason" class="w-full h-[440px]"></canvas>
+    </div>
+    <div x-show="tab === 'year'" x-transition class="bg-col_nit_con p-6 rounded-lg shadow max-h-[440px] relative">
+        <canvas id="myChartYear" class="w-full h-[440px]"></canvas>
     </div>
 </div>
 <!--End Charts-->
