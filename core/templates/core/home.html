@@ -20,6 +20,8 @@
 <div class="text-6xl font-bold text-col_con mb-8 mt-28">Ваши графики</div>
 {% if request.user.is_authenticated %}
 
+{{ chart_date|json_script:"chart-data" }}
+
 <!--Charts-->
 <div x-data="{tab: 'week'}" class="min-h-[500px] max-h-[500px]">
     <div class="flex gap-3 mb-4">

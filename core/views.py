@@ -6,12 +6,12 @@ from django.urls import reverse_lazy
 from django.views.generic import TemplateView
 
 from core.services.services import ServicesMixin, WordsMixin
-from core.services.services_chart_week import WeekMixin
+from core.services.services_chart import ChartMixin
 from mixins.htmx_mixin import HtmxMixin
 from users.models import WordsUser
 
 
-class Home(WeekMixin, HtmxMixin, ServicesMixin, TemplateView):
+class Home(ChartMixin, HtmxMixin, ServicesMixin, TemplateView):
     template_name = "include_block.html"
     partial_template_name = "core/home.html"
 
