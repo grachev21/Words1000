@@ -1,5 +1,6 @@
 const week = (label_data, count_data) => {
 
+  console.log("<<<>>>");
 
   let chartInstance = null;
   // --- Основная функция создания графика ---

@@ -1,0 +1,49 @@
+<main class="w-3xl h-2xl">
+  <div class="bg-col_con font-extrabold text-2xl flex justify-center">
+    <span class="py-2 mr-2 text-col_suc_mai/85">1-е предложение с словом</span>
+    <span class="py-2 text-col_suc_mai uppercase"
+      >{{data_for_read.word_en}}</span
+    >
+  </div>
+  <div>
+    {% for i in data_for_read.phrases %}
+
+    <div
+      class="border bg-col_suc_mai border-col_con h-60 flex flex-col justify-center items-center"
+    >
+      <div
+        class="text-col_con text-2xl mb-5 border-b border-col_con pb-3 font-bold"
+      >
+        {{correct_word}}
+      </div>
+      <p class="text-col_con">{{i.0}}</p>
+    </div>
+    <div
+      class="border bg-col_suc_mai border-col_con h-60 flex flex-col justify-center items-center"
+    >
+      <div
+        class="text-col_con text-2xl mb-5 border-b border-col_con pb-3 font-bold"
+      >
+        {{correct_word}}
+      </div>
+      <p class="text-col_con">{{i.1}}</p>
+    </div>
+
+    {% endfor %}
+  </div>
+</main>
+
+{% comment %}
+<script>
+  // Simple accordion toggle logic
+  document.addEventListener("DOMContentLoaded", function () {
+    document.querySelectorAll(".accordion-toggle").forEach((button) => {
+      button.addEventListener("click", () => {
+        const targetId = button.getAttribute("data-target");
+        const content = document.getElementById(targetId);
+        content.classList.toggle("hidden");
+      });
+    });
+  });
+</script>
+{% endcomment %}

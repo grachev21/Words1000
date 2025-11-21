@@ -4,37 +4,45 @@
 
 
 {% block content %}
-
-
 {{ mixer_words|json_script:"game-data" }}
 
-<!-- Game -->
+<!-- Game bar -->
 {% progress_bar_game %}
 
 <main id="game-container"
-  class="max-w-4xl h-64 mx-auto bg-col_bas_ave mt-10 rounded-lg p-6 text-center shadow flex flex-col justify-between">
+  class="max-w-4xl h-[400px] mx-auto bg-col_bas_ave mt-10
+  rounded-lg p-6 text-center flex flex-col justify-between
+  fill-white drop-shadow-xl/25
+  ">
   <!-- Title -->
   <div class="mb-4">
 
-    <h4 class="correct_word text-2xl font-semibold text-col_con">
-      {{ number_repetitions }}
-      {{ mixer_words.option_true.ru }}
+      <!--Слово которое нужно угадать-->
+    <h4 class="correct_word text-4xl font-semibold
+        text-col_con_inv border border-col_con/20 p-4 rounded-lg">
+        
+        {{correct_word}}
+          
     </h4>
   </div>
   <!-- Buttons -->
   <div>
+      <!--Контейнер в который будут вставляться кнопки-->
     <div id="btn-container" class="flex flex-wrap justify-center gap-4 my-8">
     </div>
   </div>
 </main>
 
 {% include 'includes/answering.html' %}
-{% include 'includes/accordion.html' %}
+{% include 'includes/read_container.html' %}
 
 
 <template id="btn-template">
   <button type="button"
-    class="word_btn px-4 py-2 border border-col_suc text-col_suc rounded hover:bg-col_suc_mai transition cursor-pointer"></button>
+    class="word_btn px-4 py-2 border border-col_suc text-col_suc
+    rounded hover:bg-col_suc_mai
+    transition cursor-pointer
+    fill-col_suc drop-shadow-lg drop-shadow-col_suc/50"></button>
 </template>;
 
 {% endblock %}

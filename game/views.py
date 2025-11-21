@@ -35,7 +35,6 @@ class Game(HtmxMixin, GameInitMixin, LoginRequiredMixin, FormView):
         # Word selection processing by user
         if "select_data" in self.request.POST:
             select_data = self.request.POST.get("select_data")
-            print(select_data, "<<<")
 
             # Increase the repetition counter for the selected word
             word = WordsUser.objects.get(
