@@ -1,8 +1,6 @@
 import ChartHome from "./home.js";
 import Game from "./game/game.js";
 
-
-
 let routeInitialized = false;
 
 function checkRoute() {
@@ -18,7 +16,7 @@ function checkRoute() {
   } else if (currentPath === "/words/") {
     initHomePage();
   } else if (currentPath === "/game/") {
-    Game()
+    new Game();
   } else if (currentPath === "/settings/") {
     initSettingsPage();
   }
@@ -30,6 +28,13 @@ function checkRoute() {
 document.addEventListener("htmx:afterSwap", function () {
   routeInitialized = false;
   setTimeout(checkRoute, 10);
+});
+
+document.addEventListener("ajax:afterSwap", (e) => {
+  console.log("Контент обновлён в:", e.detail.target);
+  routeInitialized = false;
+  setTimeout(checkRoute, 10);
+  console.log("ajax request");
 });
 
 // ОДИН обработчик загрузки
