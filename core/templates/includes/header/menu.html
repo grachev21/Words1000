@@ -1,28 +1,28 @@
 {% load static %}
 
 <div
-  x-data="{
+    x-data="{
         currentUrl: window.location.href,
         updateUrl() {
             this.currentUrl = window.location.href;
         }
     }"
-  x-init="setInterval(() => updateUrl(), 100)"
-  @htmx:after-request="updateUrl()"
-  class="hidden flex-row items-center sm:flex sm:ml-4 lg:ml-12 xl:ml-22"
+    x-init="setInterval(() => updateUrl(), 100)"
+    @htmx:after-request="updateUrl()"
+    class="hidden flex-row items-center sm:flex sm:ml-4 lg:ml-12 xl:ml-22"
 >
-  {% for m in menu %}
-  <div class="flex flex-row items-center md:mx-4">
-    <img class="w-4 h-4" src="{% static m.img_name %}" alt="" />
+    {% for m in menu %}
+    <div class="flex flex-row items-center md:mx-4">
+        <img class="w-4 h-4" src="{% static m.img_name %}" alt="" />
 
-    <a
-      hx-get="{% url m.url_name %}"
-      hx-target="#main-content"
-      hx-push-url="true"
-      :class="{ 'border-b-2 border-col_suc': currentUrl.includes('{% url m.url_name %}') }"
-      class="text-col_suc cursor-pointer mx-2 hover:opacity-80 duration-300"
-      >{{ m.name }}</a
-    >
-  </div>
-  {% endfor %}
+        <a
+            hx-get="{% url m.url_name %}"
+            hx-target="#main-content"
+            hx-push-url="true"
+            :class="{ 'border-b-2 border-col_suc': currentUrl.includes('{% url m.url_name %}') }"
+            class="text-col_suc cursor-pointer mx-2 hover:opacity-80 duration-300"
+            >{{ m.name }}</a
+        >
+    </div>
+    {% endfor %}
 </div>

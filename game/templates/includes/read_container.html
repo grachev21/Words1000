@@ -1,49 +1,84 @@
-<main class="w-3xl h-2xl">
-  <div class="bg-col_con font-extrabold text-2xl flex justify-center">
-    <span class="py-2 mr-2 text-col_suc_mai/85">1-е предложение с словом</span>
-    <span class="py-2 text-col_suc_mai uppercase"
-      >{{data_for_read.word_en}}</span
-    >
-  </div>
-  <div>
-    {% for i in data_for_read.phrases %}
-
-    <div
-      class="border bg-col_suc_mai border-col_con h-60 flex flex-col justify-center items-center"
-    >
-      <div
-        class="text-col_con text-2xl mb-5 border-b border-col_con pb-3 font-bold"
-      >
-        {{correct_word}}
-      </div>
-      <p class="text-col_con">{{i.0}}</p>
+<!--carousel-->
+{% load static %}
+<main class="w-[640px] h-[340px] flex flex-col">
+    <!--title-->
+    <div class="bg-col_con font-extrabold text-2xl flex justify-center">
+        <span class="py-2 mr-2 text-col_suc_mai/85">1-е предложение с словом</span>
+        <span class="py-2 text-col_suc_mai uppercase">{{data_for_read.correct_word.word_en}}</span>
     </div>
-    <div
-      class="border bg-col_suc_mai border-col_con h-60 flex flex-col justify-center items-center"
-    >
-      <div
-        class="text-col_con text-2xl mb-5 border-b border-col_con pb-3 font-bold"
-      >
-        {{correct_word}}
-      </div>
-      <p class="text-col_con">{{i.1}}</p>
-    </div>
+    <!--window-->
+    <div class="h-full w-full relative overflow-hidden">
+        <!--line-->
+        <div id="line-carousel" class="h-full w-full absolute flex flex-row transition-all duration-300">
+            {% for i in data_for_read.phrases %}
+            <!--content-->
+            <section>
+                <div
+                    class="hidde bg-col_suc_mai border-col_con flex flex-col justify-center items-center h-full min-w-[640px]">
+                    <div class="text-col_con text-2xl mb-5 border-b border-col_con pb-3 font-bold">
+                    <p class="text-col_con">{{i.0}}</p>
+                    </div>
+                    <p id="russian-words-translate" class="text-col_con opacity-0 transition">{{i.1}}</p>
+                </div>
+            </section>
+            {% endfor %}
+        </div>
+        <div id="carousel-counter" class="top-8 right-8 bg-col_con absolute p-1 text-col_con_inv text-sm"></div>
+        <span onclick="backDone()" class="left-8 bottom-8 absolute bg-col_con w-6 h-6 rounded-full cursor-pointer
+        hover:opacity-85 transition-all flex items-center justify-center">
+            <img class="scale-x-[-1]" src="{% static 'icons/next.png' %}" alt="">
+        </span>
 
-    {% endfor %}
-  </div>
+        <span onclick="nextDone()" class="right-8 bottom-8 absolute bg-col_con w-6 h-6 rounded-full
+        cursor-pointer hover:opacity-85 transition-all flex items-center justify-center">
+            <img src="{% static 'icons/next.png' %}" alt="">
+        </span>
+        <button onclick="translatePhrases()" class="absolute bg-col_con p-1 px-4 bottom-7 
+            text-col_suc_mai left-1/2 -translate-x-1/2
+            cursor-pointer hover:opacity-85 transition-all">Перевести</button>
+    </div>
 </main>
 
-{% comment %}
 <script>
-  // Simple accordion toggle logic
-  document.addEventListener("DOMContentLoaded", function () {
-    document.querySelectorAll(".accordion-toggle").forEach((button) => {
-      button.addEventListener("click", () => {
-        const targetId = button.getAttribute("data-target");
-        const content = document.getElementById(targetId);
-        content.classList.toggle("hidden");
-      });
-    });
-  });
+    let width = 640;
+    let line = document.getElementById("line-carousel");
+    let startPosition = 0;
+    let quantityCards = document.getElementById("line-carousel").querySelectorAll("section").length
+
+    line.style.left = `${0}px`;
+
+    let count = 1
+
+    document.getElementById("carousel-counter").innerText = `${count}/${quantityCards}`
+    const nextDone = () => {
+        console.log("next");
+        if (count != quantityCards) {
+            // Перемещаем линию
+            line.style.left = `${(startPosition -= width)}px`;
+            count++
+            counter()
+        }
+    };
+
+    const backDone = () => {
+        console.log("back");
+        if (count != 1) {
+            // Перемещаем линию
+            line.style.left = `${(startPosition += width)}px`;
+            count--
+            console.log(count, "|", quantityCards);
+            counter()
+        }
+    };
+    const counter = () => {
+        document.getElementById("carousel-counter").innerText = `${count}/${quantityCards}`
+    }
+    const translatePhrases = () => {
+        let element = document.querySelectorAll("#russian-words-translate")
+        if (element[count - 1].classList.contains("opacity-0")) {
+            element[count - 1].classList.remove("opacity-0")
+        } else {
+            element[count - 1].classList.add("opacity-0")
+        }
+    }
 </script>
-{% endcomment %}
