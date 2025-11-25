@@ -35,24 +35,22 @@ class Tools {
       document.getElementById(containerId).appendChild(clone);
     });
   }
-  ajaxGet(url, targetSelector) {
-    fetch(url)
-      .then((response) => {
-        if (!response.ok) throw new Error("Ошибка сети");
-        return response.text(); // Получаем HTML как текст
-      })
-      .then((html) => {
-        // Вставляем ответ в контейнер
-        const target = document.querySelector(targetSelector);
-        if (target) {
-          target.innerHTML = html;
-        } else {
-          console.error("Целевой элемент не найден:", targetSelector);
-        }
-      })
-      .catch((err) => {
-        console.error("Ошибка при запросе:", err);
-      });
+  /**
+   * Показывает все что в idOpen п действию с idAction
+   * @param {string} action - Тип действия, click, ...
+   * @param {string} idOpen - Блок который нужно показать
+   * @param {string} idAction - Блок по которому происходит действие
+   */
+  actionOpenClose(action, idOpen, idAction) {
+    document.getElementById(idAction).addEventListener(action, () => {
+      let idOpenBlock = document.getElementById(idOpen);
+
+      if (idOpenBlock.classList.contains("hidden")) {
+        idOpenBlock.classList.remove("hidden");
+      } else {
+        idOpenBlock.classList.add("hidden");
+      }
+    });
   }
 }
 

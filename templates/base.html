@@ -1,4 +1,5 @@
-{% load static %} {% load TagWords %} {% load header_tag %}
+{% load static %} 
+{% load TagWords %} 
 
 <!doctype html>
 <html data-theme="dark" lang="ru">
@@ -19,7 +20,7 @@
         hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'
         class="bg-col_bas_mai font-Rubik min-w-full overflow-x-hidden"
     >
-        {% header %}
+    {% include 'includes/header/header.html' %}
         <div
             class="mx-auto w-full max-w-full px-4 sm:px-6 lg:px-8 py-6 overflow-x-hidden flex flex-row justify-center"
         >

@@ -14,7 +14,6 @@
     {% for m in menu %}
     <div class="flex flex-row items-center md:mx-4">
         <img class="w-4 h-4" src="{% static m.img_name %}" alt="" />
-
         <a
             hx-get="{% url m.url_name %}"
             hx-target="#main-content"

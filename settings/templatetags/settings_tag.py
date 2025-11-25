@@ -2,7 +2,7 @@ from django import template
 from settings.models import WordsSettings
 
 
-register = template.Library()
+# register = template.Library()
 #
 #
 # @register.inclusion_tag("includes/home/services.html", takes_context=True)
