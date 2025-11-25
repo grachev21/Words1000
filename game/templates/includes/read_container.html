@@ -1,6 +1,6 @@
 <!--carousel-->
 {% load static %}
-<main class="w-full flex flex-row justify-center">
+<main id="read-container" class="w-full flex flex-row justify-center hidden">
   <div class="w-[640px] h-[340px] flex flex-col">
     <!--title-->
     <div class="bg-col_con font-extrabold text-2xl flex justify-center rounded-t-lg ">
@@ -15,28 +15,42 @@
         <!--content-->
         <section>
           <div
-            class="hidde bg-col_suc_mai border-col_con flex flex-col justify-center items-center h-full min-w-[640px]">
-            <div class="text-col_con text-lg mb-5 border-b border-col_con pb-3 font-bold">
-              <p class="text-col_con">{{i.0}}</p>
+            class="hidde bg-col_suc_mai border-col_con flex flex-col
+            justify-center items-center h-full min-w-[640px]
+            drop-shadow-lg rounded-b-lg">
+            <div class="text-lg mb-5 border-b border-col_con pb-3 font-bold mx-2 max-w-[600px]">
+              <p class="text-col_con px-4 ml-2 text-center">{{i.0}}</p>
             </div>
             <p id="russian-words-translate" class="text-col_con opacity-0 transition">{{i.1}}</p>
           </div>
         </section>
         {% endfor %}
       </div>
-      <div id="carousel-counter" class="top-8 right-8 bg-col_con absolute p-1 text-col_con_inv text-sm"></div>
+      <!--Счетчик-->
+      <div id="carousel-counter" class="top-8 right-8 bg-col_con absolute p-1 text-col_con_inv text-sm rounded-lg drop-shadow-lg"></div>
+      <!--Назад-->
       <span id="back-done" class="left-8 bottom-8 absolute bg-col_con w-6 h-6 rounded-full cursor-pointer
-        hover:opacity-85 transition-all flex items-center justify-center">
+        hover:opacity-85 transition-all flex items-center justify-center drop-shadow-lg">
         <img class="scale-x-[-1]" src="{% static 'icons/next.png' %}" alt="">
       </span>
-
+      <!--Вперед-->
       <span id="next-done" class="right-8 bottom-8 absolute bg-col_con w-6 h-6 rounded-full
-        cursor-pointer hover:opacity-85 transition-all flex items-center justify-center">
+        cursor-pointer hover:opacity-85 transition-all flex items-center justify-center drop-shadow-lg">
         <img src="{% static 'icons/next.png' %}" alt="">
       </span>
-      <button id="translate-phrases" class="absolute bg-col_con p-1 px-4 bottom-7 
+      <!--Перевод-->
+      <button id="translate-phrases" class="absolute bg-col_con p-1 px-4 bottom-7
             text-col_suc_mai left-1/2 -translate-x-1/2
-            cursor-pointer hover:opacity-85 transition-all">Перевести</button>
+            cursor-pointer hover:opacity-85 transition-all rounded-lg drop-shadow-lg">Перевести</button>
+      <!--Продолжить-->
+      <button hx-post="{% url 'game' %}"
+              hx-target="#main-content"
+              hx-swap="innHTML"
+              name="select_data"
+              value="{{ data_for_read.correct_word.id }}"
+          hx-push-url="true" id="next-learn" class="absolute bg-col_attn p-1 px-4 bottom-7
+                  text-col_con font-bold right-8 cursor-pointer
+                  hover:opacity-85 transition-all rounded-lg drop-shadow-lg" type="button">Запомнил</button>
     </div>
   </div>
 </main>

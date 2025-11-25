@@ -141,34 +141,34 @@ MEDIA_ROOT = os.path.join(BASE_DIR, "media/")
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
-LOGGING = {
-    'version': 1,
-    'disable_existing_loggers': False,
-    'filters': {
-        'ignore_static': {
-            '()': 'django.utils.log.CallbackFilter',
-            'callback': lambda record: not (
-                'static' in record.getMessage() or 
-                'GET /static/' in record.getMessage() or
-                'GET /media/' in record.getMessage()
-            ),
-        },
-    },
-    'handlers': {
-        'console': {
-            'class': 'logging.StreamHandler',
-            'filters': ['ignore_static'],
-        },
-    },
-    'root': {
-        'handlers': ['console'],
-        'level': 'INFO',
-    },
-    'loggers': {
-        'django.server': {
-            'handlers': ['console'],
-            'level': 'INFO',
-            'propagate': False,
-        },
-    },
-}
+# LOGGING = {
+#     'version': 1,
+#     'disable_existing_loggers': False,
+#     'filters': {
+#         'ignore_static': {
+#             '()': 'django.utils.log.CallbackFilter',
+#             'callback': lambda record: not (
+#                 'static' in record.getMessage() or
+#                 'GET /static/' in record.getMessage() or
+#                 'GET /media/' in record.getMessage()
+#             ),
+#         },
+#     },
+#     'handlers': {
+#         'console': {
+#             'class': 'logging.StreamHandler',
+#             'filters': ['ignore_static'],
+#         },
+#     },
+#     'root': {
+#         'handlers': ['console'],
+#         'level': 'INFO',
+#     },
+#     'loggers': {
+#         'django.server': {
+#             'handlers': ['console'],
+#             'level': 'INFO',
+#             'propagate': False,
+#         },
+#     },
+# }
