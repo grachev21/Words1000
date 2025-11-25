@@ -32,6 +32,7 @@ INSTALLED_APPS = [
     # Libs
     "debug_toolbar",
     "django_browser_reload",
+    "django_components",
     # Apps
     "core.apps.CoreConfig",
     "settings.apps.SettingsConfig",
