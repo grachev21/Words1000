@@ -1,12 +1,13 @@
-from django.db import models
 from django.contrib.auth.models import User
 from django.core.validators import MaxValueValidator, MinValueValidator
+from django.db import models
 
 
 class WordsSettings(models.Model):
     """
     Keeps user settings
     """
+
     TRANSLATION_CHOICES = [
         (True, "Показывать перевод в списке слов"),
         (False, "Спрятать перевод в списке слов"),
@@ -30,11 +31,14 @@ class WordsSettings(models.Model):
         default=3,
         verbose_name="Как хорошо вы хотите запомнить слово",
     )
+    number_write = models.IntegerField(default=5)
+    max_number_read = models.IntegerField(default=10, validators=[MaxValueValidator(30)])
     translation_list = models.BooleanField(
         choices=TRANSLATION_CHOICES,
         default=True,
         verbose_name="Спрятать/Показать перевод в списке слов",
     )
+
     user = models.ForeignKey(User, on_delete=models.CASCADE)
 
     class Meta:

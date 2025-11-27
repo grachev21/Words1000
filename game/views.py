@@ -5,7 +5,8 @@ from django.http import HttpResponseRedirect
 from game.forms import WordCheck
 from game.services import GameInitMixin
 from users.models import WordsUser
-from mixins.htmx_mixin import HtmxMixin
+from mixins.htmx_mixin import HtmxMixin 
+
 
 
 class Game(HtmxMixin, GameInitMixin, LoginRequiredMixin, FormView):

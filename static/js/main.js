@@ -11,6 +11,7 @@ function checkRoute() {
     // Защита от повторного вызова для того же маршрута
     if (routeInitialized) return;
 
+    console.log("load header")
     new Header();
     if (currentPath === "/home/") {
         ChartHome();

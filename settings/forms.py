@@ -1,4 +1,5 @@
 from django import forms
+
 from settings.models import WordsSettings
 
 
@@ -10,12 +11,18 @@ class WordCountForm(forms.ModelForm):
 
     class Meta:
         model = WordsSettings
-        fields = ("number_words", "number_repetitions", "translation_list")
+        fields = (
+            "number_words",
+            "number_repetitions",
+            "number_write",
+            "max_number_read",
+            "translation_list",
+        )
 
     def __init__(self, *args, **kwargs):
         # Extract the user from keyword arguments, if provided
         # ← Сохраняем пользователя как атрибут
-        self.user = kwargs.pop('user', None)
+        self.user = kwargs.pop("user", None)
         super().__init__(*args, **kwargs)
 
         # If no user is passed, skip initialization of field values
@@ -31,9 +38,9 @@ class WordCountForm(forms.ModelForm):
         """
         Set initial values for form fields based on user's saved settings.
         """
-        self.fields['number_words'].initial = settings.number_words
-        self.fields['number_repetitions'].initial = settings.number_repetitions
-        self.fields['translation_list'].initial = settings.translation_list
+        self.fields["number_words"].initial = settings.number_words
+        self.fields["number_repetitions"].initial = settings.number_repetitions
+        self.fields["translation_list"].initial = settings.translation_list
 
     def save(self, commit=True):
         """
@@ -57,8 +64,6 @@ class ResettingDictionariesForm(forms.Form):
 
     yes = forms.CharField(
         label='Введите "yes" чтобы сбросить все данные словаря',
-        widget=forms.TextInput(attrs={"placeholder": "####"})
+        widget=forms.TextInput(attrs={"placeholder": "####"}),
     )
-    status = forms.BooleanField(
-        label="Подтвердить сброс прогресса"
-    )
+    status = forms.BooleanField(label="Подтвердить сброс прогресса")
