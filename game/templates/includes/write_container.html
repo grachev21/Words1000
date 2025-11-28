@@ -1,5 +1,4 @@
-
-<!--{{ mixer_words|json_script:"game-data" }}-->
+{{ user_settings|json_script:"user-settings" }}
 <main
     class="max-w-4xl h-[400px] mx-auto bg-col_bas_ave rounded-lg p-6 text-center flex flex-col justify-between fill-white drop-shadow-xl/25"
 >
@@ -8,7 +7,7 @@
             <p class="text-col_con text-2xl">Введите слово</p>
             <div class="flex flex-row text-col_con_inv">
                 <p class="px-2">Осталось</p>
-                <p class="px-2">8</p>
+                <p id="counter-write" class="px-2">8</p>
             </div>
         </div>
         <span class="flex flex-col justify-center h-full">
@@ -22,6 +21,26 @@
                 type="text"
             />
             <!-- word-ru -->
+            {% with correct_word.word_ru.split.0|cut:"," as first_word %}
+            <input
+                id="input-text-ru"
+                placeholder="{{first_word}}"
+                class="hidden text-3xl text-col_suc_ave focus:outline-none"
+                autofocus
+                data-word="{{first_word}}"
+                type="text"
+            />
+            {% endwith %}
         </span>
     </div>
 </main>
+
+<div
+    id="screen-blackout"
+    class="invisible fixed left-0 top-0
+    bg-col_nit_con/25 w-full h-full z-50
+    flex justify-center items-center
+    "
+>
+    <div class="text-col_suc text-9xl rounded-lg backdrop-blur-lg p-34 bg-col_bas_mai border border-col_con_inv/15 shadow-lg"></div>
+</div>
