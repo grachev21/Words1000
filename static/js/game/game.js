@@ -1,10 +1,13 @@
 import Carousel from "./read_container.js";
 import Tools from "../Tools.js";
+import WriteContainer from "./write_container.js";
 
 class Game {
     constructor() {
+        new WriteContainer();
+        new Carousel();
+
         this.tools = new Tools();
-        this.carousel = new Carousel();
 
         this.readContainer = document.getElementById("read-container");
         this.answering = document.getElementById("answering");
@@ -35,7 +38,11 @@ class Game {
                 htmx.ajax("GET", "/game/", { target: "#main-content" });
             }, 1000);
         } else {
-            this.gameContainer.classList.add("border", "border-col_suc", "transition-all");
+            this.gameContainer.classList.add(
+                "border",
+                "border-col_suc",
+                "transition-all",
+            );
             setTimeout(() => {
                 this.gameContainer.classList.add("hidden");
                 this.readContainer.classList.remove("hidden");
@@ -44,21 +51,6 @@ class Game {
     }
 
     showReadContainer() {}
-
-    // addBorder(key) {
-    //   if (key == "true") {
-    //     this.readContainer.classList.add("block");
-    //     this.gameContainer.classList.add("hidden");
-    //     this.answering.classList.remove("hidden");
-    //     this.answering.classList.add("block");
-    //   } else {
-    //     this.gameContainer.classList.add("border", "border-col_attn");
-    //     setTimeout(() => {
-    //       this.gameContainer.classList.remove("border", "border-col_attn");
-    //       window.location.reload();
-    //     }, 1000);
-    //   }
-    // }
 }
 
 export default Game;

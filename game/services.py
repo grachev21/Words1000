@@ -1,45 +1,60 @@
-from users.models import WordsUser
-from core.models import WordsCard
-from settings.models import WordsSettings
-
 import random
 
+from core.models import WordsCard
+from settings.models import WordsSettings
+from users.models import WordsUser
 
-class GameInitMixin:
-    """Mixin for initializing game data with words and phrases."""
 
-    @staticmethod
-    def get_random_user_word(user):
-        """
-        Get all the words from the user database WordsUser and get one
-        random word.
-        """
-        learned_words = WordsUser.objects.filter(user=user, status="2")
-        return random.choice(learned_words) if learned_words else None
+class SettingsMixin:
+    def setup_settings(self, user):
+        self.user = user
+        self.user_settings = WordsSettings.objects.filter(user=user).latest("id")
+        self.get_user_settings()
 
-    @staticmethod
-    def get_random_words(exclude_word_id):
-        """
-        Get random words excluding the specified one model/WordsCard
-        """
-        available_words = WordsCard.objects.exclude(id=exclude_word_id)
-        return random.sample(
+    def get_user_settings(self):
+        settings = self.user_settings
+        return {
+            "number_words": settings.number_words,
+            "number_repetitions": settings.number_repetitions,
+            "max_number_read": settings.max_number_read,
+            "number_write": settings.number_write,
+        }
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context.update({"user_settings": self.get_user_settings()})
+
+        return context
+
+
+class GameMixin:
+    def setup_game(self, user):
+        self.user = user
+        self.user_settings = WordsSettings.objects.filter(user=user).first()
+        self.words_card = WordsCard.objects.all()
+
+        self.get_random_one_word()
+        self.get_three_wrong_words()
+
+    def get_random_one_word(self):
+        learned_words = WordsUser.objects.filter(user=self.user, status="2")
+        self.correct_one_word = random.choice(learned_words) if learned_words else None
+
+    def get_three_wrong_words(self):
+        available_words = WordsCard.objects.exclude(
+            id=self.correct_one_word.core_words.id
+        )
+        self.three_wrong_words = random.sample(
             list(available_words), min(3, len(available_words))
         )
 
-    @staticmethod
-    def mixer_words(list_words, word):
-        """Mixes correct and incorrect words.
-        Args:
-        list_words : Wrong words
-        word : Correct word
-        """
-
-        # Create a list with one correct word
-        for_random = [("true", WordsCard.objects.get(id=word.core_words.id))]
+    def mixer_words(self):
+        for_random = [
+            ("true", self.words_card.get(id=self.correct_one_word.core_words.id))
+        ]
 
         # Add incorrect words to it
-        for w in list_words:
+        for w in self.three_wrong_words:
             for_random.append((f"false", w))
 
         # Mix all the words
@@ -48,14 +63,6 @@ class GameInitMixin:
         # List for final result
         result = []
         for item in for_result:
-
-            # Collecting phrases in English and Russian into one card of cards
-            # Example ((en, ru), (en, ru)...)
-            phrases_list = []
-            for en_phrase, ru_phrase in zip(
-                item[1].phrases_en, item[1].phrases_ru
-            ):
-                phrases_list.append((en_phrase, ru_phrase))
             result.append(
                 {
                     "option": item[0],
@@ -68,43 +75,24 @@ class GameInitMixin:
 
         return result
 
-    def init_data(self, user, context):
-        """Initialize game data and update context"""
-        if not user or not context:
-            return context
+    def get_phrases(self):
+        phrases = []
+        en =self.correct_one_word.core_words.phrases_en
+        ru =self.correct_one_word.core_words.phrases_ru
+        for en_ru in zip(en, ru):
+            if len(phrases) != self.user_settings.max_number_read:
+                phrases.append(en_ru)
+        return phrases
 
-        word_user = self.get_random_user_word(user)
-        three_random_words = self.get_random_words(word_user.core_words.id)
 
-        mixer_words = self.mixer_words(
-            list_words=three_random_words, word=word_user
-        )
-
-        if not word_user:
-            return context
-
-        # Prepare context data
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
         context.update(
             {
-                "correct_word": ", ".join(
-                    word_user.core_words.word_ru.split(",")[0:3]
-                ),
-                "data_for_read": {
-                    "correct_word": word_user.core_words,
-                    "phrases": [
-                        n
-                        for n in zip(
-                            word_user.core_words.phrases_en,
-                            word_user.core_words.phrases_ru,
-                        )
-                    ],
-                },
-                "mixer_words": mixer_words,  # Слова
-                "number_repetitions": WordsSettings.objects.filter(user=user)
-                .first()
-                .number_repetitions,
-                "words_user": WordsUser.objects.filter(user=user),
+                "correct_word_ru": ", ".join(self.correct_one_word.core_words.word_ru.split(",")[0:3]),
+                "correct_word": self.correct_one_word.core_words,
+                "phrases": self.get_phrases(),
+                "mixer_words": self.mixer_words(),  # Слова
             }
         )
-
         return context

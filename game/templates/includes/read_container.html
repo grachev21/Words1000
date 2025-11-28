@@ -1,17 +1,17 @@
 <!--carousel-->
 {% load static %}
-<main id="read-container" class="w-full flex flex-row justify-center hidden">
+<main id="read-container" class="w-full flex flex-row justify-center">
   <div class="w-[640px] h-[340px] flex flex-col">
     <!--title-->
     <div class="bg-col_con font-extrabold text-2xl flex justify-center rounded-t-lg ">
       <span class="py-2 mr-2 text-col_suc_mai/85">Предложение с словом</span>
-      <span class="py-2 text-col_suc_mai uppercase">{{data_for_read.correct_word.word_en}}</span>
+      <span class="py-2 text-col_suc_mai uppercase">{{correct_word.word_en}}</span>
     </div>
     <!--window-->
     <div class="h-full w-full relative overflow-hidden">
       <!--line-->
       <div id="line-carousel" class="h-full w-full absolute flex flex-row transition-all duration-300">
-        {% for i in data_for_read.phrases %}
+        {% for i in phrases %}
         <!--content-->
         <section>
           <div
@@ -47,8 +47,8 @@
               hx-target="#main-content"
               hx-swap="innHTML"
               name="select_data"
-              value="{{ data_for_read.correct_word.id }}"
-          hx-push-url="true" id="next-learn" class="absolute bg-col_attn p-1 px-4 bottom-7
+              value="{{ correct_word.id }}"
+          hx-push-url="true" id="next-learn" class="invisible absolute bg-col_attn p-1 px-4 bottom-7
                   text-col_con font-bold right-8 cursor-pointer
                   hover:opacity-85 transition-all rounded-lg drop-shadow-lg" type="button">Запомнил</button>
     </div>

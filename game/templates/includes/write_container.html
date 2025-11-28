@@ -1,3 +1,5 @@
+
+<!--{{ mixer_words|json_script:"game-data" }}-->
 <main
     class="max-w-4xl h-[400px] mx-auto bg-col_bas_ave rounded-lg p-6 text-center flex flex-col justify-between fill-white drop-shadow-xl/25"
 >
@@ -13,45 +15,13 @@
             <!-- word-en -->
             <input
                 id="input-text-en"
-                placeholder="{{data_for_read.correct_word.word_en}}"
+                placeholder="{{correct_word.word_en}}"
                 class="text-3xl text-col_suc_ave focus:outline-none"
                 autofocus
-                data-word="{{data_for_read.correct_word.word_en}}"
+                data-word="{{correct_word.word_en}}"
                 type="text"
             />
             <!-- word-ru -->
         </span>
     </div>
 </main>
-
-<script>
-    class WriteContainer {
-        constructor() {
-            this.input = document.getElementById("input-text-en")
-            this.init()
-        }
-        changeColorError() {
-            this.input.addEventListener("input", (e) => {
-                this.strInput = e.target.value
-
-                if (this.strInput !==  this.input.dataset.word.slice(0, this.strInput.length)) {
-                    this.input.classList.replace("text-col_suc_ave", "text-col_attn")
-                    this.input.classList.replace("text-col_con", "text-col_attn")
-                } else if (this.strInput.length == 0) {
-                    this.input.classList.replace("text-col_attn", "text-col_suc_ave")
-                    this.input.classList.replace("text-col_con", "text-col_suc_ave")
-                } else {
-                    this.input.classList.replace("text-col_attn", "text-col_con")
-                    this.input.classList.replace("text-col_suc_ave", "text-col_con")
-                }
-
-            });
-        }
-
-        init() {
-            this.changeColorError()
-        }
-    }
-
-    new WriteContainer()
-</script>

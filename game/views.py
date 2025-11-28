@@ -1,15 +1,15 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.views.generic.edit import FormView
-from django.urls import reverse_lazy
 from django.http import HttpResponseRedirect
+from django.urls import reverse_lazy
+from django.views.generic.edit import FormView
+
 from game.forms import WordCheck
-from game.services import GameInitMixin
+from game.services import GameMixin,  SettingsMixin
+from mixins.htmx_mixin import HtmxMixin
 from users.models import WordsUser
-from mixins.htmx_mixin import HtmxMixin 
 
 
-
-class Game(HtmxMixin, GameInitMixin, LoginRequiredMixin, FormView):
+class Game(HtmxMixin, GameMixin, SettingsMixin, LoginRequiredMixin, FormView):
     """
     View for playing words.
     And increases the repetition counter for the interval system.
@@ -21,10 +21,11 @@ class Game(HtmxMixin, GameInitMixin, LoginRequiredMixin, FormView):
     login_url = reverse_lazy("register")
     success_url = reverse_lazy("game")
 
-    def get_context_data(self, **kwargs):
-        """Adds data to initialize the game to context."""
-        context = super().get_context_data(**kwargs)
-        return self.init_data(user=self.request.user, context=context)
+    def setup(self, request, *args, **kwargs):
+        super().setup(request, *args, **kwargs)
+
+        self.setup_settings(request.user)
+        self.setup_game(request.user)
 
     def form_valid(self, form):
         """
@@ -38,9 +39,7 @@ class Game(HtmxMixin, GameInitMixin, LoginRequiredMixin, FormView):
             select_data = self.request.POST.get("select_data")
 
             # Increase the repetition counter for the selected word
-            word = WordsUser.objects.get(
-                user=self.request.user, core_words=select_data
-            )
+            word = WordsUser.objects.get(user=self.request.user, core_words=select_data)
             word.number_repetitions += 1
             word.save()
 
