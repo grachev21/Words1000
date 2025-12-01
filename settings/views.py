@@ -7,10 +7,10 @@ from django.views.generic import CreateView, FormView, UpdateView
 from mixins.htmx_mixin import HtmxMixin
 from settings.forms import ResettingDictionariesForm, SettingsForm
 from settings.models import WordsSettings
-from settings.services import SettingsMixin
+from settings.services import SettingsReset, SettingsStatus
 
 
-class SettingsView(HtmxMixin, LoginRequiredMixin, FormView):
+class SettingsView(HtmxMixin, SettingsStatus, LoginRequiredMixin, FormView):
     # Можно не указывать модель, так как указан form_class
     model = WordsSettings
     form_class = SettingsForm
@@ -18,6 +18,10 @@ class SettingsView(HtmxMixin, LoginRequiredMixin, FormView):
     partial_template_name = "settings/settings.html"
     success_url = reverse_lazy("home")
     login_url = reverse_lazy("login")
+
+    def setup(self, request, *args, **kwargs):
+        super().setup(request, *args, **kwargs)
+        self.setup_settings_status(request.user)
 
     def get_initial(self):
         # Passes the user's current settings to the form when displayed
@@ -59,7 +63,7 @@ class SettingsView(HtmxMixin, LoginRequiredMixin, FormView):
 
 
 class ResettingDictionaries(
-    HtmxMixin, SettingsMixin, LoginRequiredMixin, FormView
+    HtmxMixin, SettingsReset, SettingsStatus, LoginRequiredMixin, FormView
 ):
     template_name = "include_block.html"
     partial_template_name = "settings/resetting_dictionaries.html"
@@ -69,11 +73,10 @@ class ResettingDictionaries(
 
     def setup(self, request, *args, **kwargs):
         super().setup(request, *args, **kwargs)
-        self.setup_settings(request.user)
-
+        self.setup_settings_reset(request.user)
+        self.setup_settings_status(request.user)
 
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(*args, **kwargs)
         context["title"] = "Сброс словаря"
         return context
-

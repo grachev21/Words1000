@@ -7,13 +7,13 @@ register = template.Library()
 
 @register.inclusion_tag("includes/progress_bar_game.html", takes_context=True)
 def progress_bar_game(context):
-
-    study = WordsUser.objects.filter(user=context["user"], status=2).count()
-    studied = WordsSettings.objects\
-        .filter(
-            user=context["user"]).latest("id").number_words - study
-
+    user = context["user"]
+    words_user = WordsUser.objects.filter(user=user, status=2)
+    words_settings = WordsSettings.objects.filter(user=user).latest("id")
+    study = words_user.count()
+    studied = words_settings.number_words - study
     print(study, studied)
     return {
         "progress": round(((study - studied) / study) * 100) - 100,
-        "remainder": study}
+        "remainder": study,
+    }
