@@ -1,4 +1,4 @@
-{{ user_settings|json_script:"user-settings" }}
+{% load static %} {{ user_settings|json_script:"user-settings" }}
 <main
     class="max-w-4xl h-[400px] mx-auto bg-col_bas_ave rounded-lg p-6 text-center flex flex-col justify-between fill-white drop-shadow-xl/25"
 >
@@ -12,16 +12,22 @@
         </div>
         <span class="flex flex-col justify-center h-full">
             <!-- word-en -->
-            <input
-                id="input-text-en"
-                placeholder="{{correct_word.word_en}}"
-                class="text-3xl text-col_suc_ave focus:outline-none"
-                autofocus
-                data-word="{{correct_word.word_en}}"
-                type="text"
-            />
+            <div class="flex flex-row items-center">
+                <img class="w-6 h-6 mr-4 mt-1" src="{% static 'icons/keyboard.png' %}" alt="Logo" />
+                <input
+                    id="input-text-en"
+                    placeholder="{{correct_word.word_en}}"
+                    class="text-3xl text-col_suc_ave focus:outline-none"
+                    autofocus
+                    data-word="{{correct_word.word_en}}"
+                    type="text"
+                />
+            </div>
             <!-- word-ru -->
             {% with correct_word.word_ru.split.0|cut:"," as first_word %}
+
+            <div class="flex flex-row items-center">
+                <img class="w-6 h-6 mr-4 mt-1" src="{% static 'icons/keyboard.png' %}" alt="Logo" />
             <input
                 id="input-text-ru"
                 placeholder="{{first_word}}"
@@ -30,6 +36,7 @@
                 data-word="{{first_word}}"
                 type="text"
             />
+            </div>
             {% endwith %}
         </span>
     </div>
@@ -37,10 +44,9 @@
 
 <div
     id="screen-blackout"
-    class="invisible fixed left-0 top-0
-    bg-col_nit_con/25 w-full h-full z-50
-    flex justify-center items-center
-    "
+    class="invisible fixed left-0 top-0 bg-col_nit_con/25 w-full h-full z-50 flex justify-center items-center"
 >
-    <div class="text-col_suc text-9xl rounded-lg backdrop-blur-lg p-34 bg-col_bas_mai border border-col_con_inv/15 shadow-lg"></div>
+    <div
+        class="text-col_suc text-9xl rounded-lg backdrop-blur-lg p-34 bg-col_bas_mai border border-col_con_inv/15 shadow-lg"
+    ></div>
 </div>

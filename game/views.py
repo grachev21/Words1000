@@ -28,6 +28,7 @@ class Game(HtmxMixin, GameMixin, SettingsMixin, LoginRequiredMixin, FormView):
         self.setup_game(request.user)
 
     def form_valid(self, form):
+        print("post request for game <--")
         """
         Processes form validation:
         1. Handles word selection if present in POST data
