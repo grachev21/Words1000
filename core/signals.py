@@ -21,6 +21,7 @@ logger = logging.getLogger(__name__)
 
 # Special Function for Word incision
 def create_initial_words_for_user(user, words_count=1000):
+    print("core/signals - create_initial_words")
     all_words = WordsCard.objects.all()
     if all_words.exists():
         # We determine the number of words for
@@ -37,7 +38,7 @@ def installation_status(user):
     """
     Sets the status of all words by default in WordsUser.
     """
-    print("signal ...")
+    print("core/signals - installation_status")
 
     # Number of words per day
     lim = int(WordsSettings.objects.filter(user=user).latest("id").number_words)
@@ -71,18 +72,3 @@ def handle_user_creation(sender, instance, created, **kwargs):
     if created and not instance.is_superuser:
         create_initial_words_for_user(user=instance)
         installation_status(user=instance)
-
-
-# # If suddenly at the time the base is empty
-# @receiver(user_logged_in)
-# def handle_user_login(sender, request, user, **kwargs):
-#     if not user.is_superuser:  # If not a super user
-#         # If the base is empty
-#         if not WordsUser.objects.filter(user=user).exists():
-#             create_initial_words_for_user(user)
-
-
-
-
-
-

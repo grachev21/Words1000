@@ -22,25 +22,22 @@ class WordsSettings(models.Model):
     number_words = models.IntegerField(
         default=20,
         validators=[MaxValueValidator(100), MinValueValidator(5)],
-        verbose_name="Количество слов за день",
     )
 
     number_repetitions = models.CharField(
         max_length=1,
         choices=NUMBER_REPETITIONS_CHOICES,
         default=3,
-        verbose_name="Как хорошо вы хотите запомнить слово",
     )
     number_write = models.IntegerField(default=5)
     max_number_read = models.IntegerField(default=10, validators=[MaxValueValidator(30)])
     translation_list = models.BooleanField(
         choices=TRANSLATION_CHOICES,
         default=True,
-        verbose_name="Спрятать/Показать перевод в списке слов",
     )
 
     user = models.ForeignKey(User, on_delete=models.CASCADE)
 
     class Meta:
-        verbose_name = "Настройки"
-        verbose_name_plural = "Настройки"
+        verbose_name = "Setting"
+        verbose_name_plural = "Settings"

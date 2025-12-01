@@ -4,7 +4,7 @@ from . import views
 
 
 urlpatterns = [
-    path("settings/", views.SettingsPage.as_view(), name="settings"),
+    path("settings/", views.SettingsView.as_view(), name="settings"),
     path(
         "resettings_dictionaries/",
         views.ResettingDictionaries.as_view(),

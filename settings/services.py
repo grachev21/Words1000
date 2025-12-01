@@ -6,55 +6,37 @@ import random
 
 class SettingsMixin:
 
-    @staticmethod
-    def delite_list_words(form, user):
-        """Deleys all records in 'WordsUser'
-        Args:
-            form (object): Data from the form.
-            user (object): User.
-        """
-        # Checking the form
+    def setup_settings(self, user):
+        self.words_settings = WordsSettings.objects.filter(user=user)
+        self.words_card = WordsCard.objects.all()
+        self.user = user
+        self.limiter = self.words_settings.latest("id").number_words
+
+    def delete_list_words_user(self, form):
         if form.cleaned_data["status"] and form.cleaned_data["yes"] == "yes":
-            # We get the number of words from the user settings WordsSettings
-            (
-                WordsSettings.objects.filter(user=user)
-                .last()
-                .number_words
-            )
-            # We delete all user words
-            WordsUser.objects.filter(user=user).delete()
+            WordsUser.objects.filter(user=self.user).delete()
 
-    @staticmethod
-    def get_random_list(user):
-        """
-        Creates a random list with words.
-        Args:
-            user (object): User.
-        """
-        random_elements = random.sample(
-            list(WordsCard.objects.all()), 1000
-        )
-        for element in random_elements:
-            print("random elements", element)
-            WordsUser.objects.create(
-                user=user, core_words=element
-            )
+    def create_list_words_user(self):
+        random_elements = random.sample(list(self.words_card), 1000)
+        objects_list = [WordsUser(user=self.user, core_words=e) for e in random_elements ]
+        WordsUser.objects.bulk_create(objects_list)
 
-    @staticmethod
-    def installation_status(user):
-        """
-        Sets the status of all words by default in WordsUser.
-        """
-        # Number all the statuses of words
-        for status_zero in WordsUser.objects.filter(user=user):
-            status_zero.status = "1"
-            status_zero.save()
+    def installation_status_default(self):
+        object_status = list(WordsUser.objects.filter(user=self.user))
+        for obj_stat in object_status:
+            obj_stat.status = "1"
+        WordsUser.objects.bulk_update(object_status, ["status",])
 
-        # Number of words per day
-        limiter = WordsSettings.objects.filter(user=user).latest("id").number_words
-        # We set the status only to the number of words indicated in number_words
-        for status_change in WordsUser.objects.filter(user=user, status="1")[:int(limiter)]:
-            print("install status...")
-            # Set the status - study
+    def installation_status_for_learning(self):
+        for status_change in WordsUser.objects.filter(status="1")[: int(self.limiter)]:
             status_change.status = "2"
             status_change.save()
+
+    def form_valid(self, form):
+        # mixins method
+        self.delete_list_words_user(form=form)
+        self.create_list_words_user()
+        self.installation_status_default()
+        self.installation_status_for_learning()
+
+        return super().form_valid(form)

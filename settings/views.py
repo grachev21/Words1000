@@ -2,28 +2,33 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import redirect
 from django.template.response import TemplateResponse
 from django.urls import reverse_lazy
-from django.views.generic import CreateView, FormView
+from django.views.generic import CreateView, FormView, UpdateView
 
 from mixins.htmx_mixin import HtmxMixin
-from settings.forms import ResettingDictionariesForm, WordCountForm
+from settings.forms import ResettingDictionariesForm, SettingsForm
 from settings.models import WordsSettings
 from settings.services import SettingsMixin
 
 
-class SettingsPage(HtmxMixin, SettingsMixin, LoginRequiredMixin, FormView):
+class SettingsView(HtmxMixin, LoginRequiredMixin, FormView):
     # Можно не указывать модель, так как указан form_class
-    # model = WordsSettings
+    model = WordsSettings
+    form_class = SettingsForm
     template_name = "include_block.html"
     partial_template_name = "settings/settings.html"
-    form_class = WordCountForm
     success_url = reverse_lazy("home")
     login_url = reverse_lazy("login")
 
-    # The get_form_kwargs method transmits to the user form
-    def get_form_kwargs(self):
-        kwargs = super().get_form_kwargs()
-        kwargs["user"] = self.request.user
-        return kwargs
+    def get_initial(self):
+        # Passes the user's current settings to the form when displayed
+        settings = self.model.objects.get(user=self.request.user)
+        return {
+            "number_words": settings.number_words,
+            "number_repetitions": settings.number_repetitions,
+            "number_write": settings.number_write,
+            "max_number_read": settings.max_number_read,
+            "translation_list": settings.translation_list,
+        }
 
     # This method conveys the context to the template
     def get_context_data(self, **kwargs):
@@ -32,38 +37,43 @@ class SettingsPage(HtmxMixin, SettingsMixin, LoginRequiredMixin, FormView):
         return context
 
     def form_valid(self, form):
-        # Удаляем существующие настройки
-        WordsSettings.objects.filter(user=self.request.user).delete()
-
-        # Создаем новые настройки
-        WordsSettings.objects.create(
-            user=self.request.user,
-            number_words=form.cleaned_data["number_words"],
-            number_repetitions=form.cleaned_data["number_repetitions"],
-            translation_list=form.cleaned_data["translation_list"],
+        """Saving user settings"""
+        settings_instance, create = WordsSettings.objects.get_or_create(
+            user=self.request.user
         )
 
-        self.installation_status(user=self.request.user)
+        # Обновляем поля
+        settings_instance.number_words = form.cleaned_data["number_words"]
+        settings_instance.number_repetitions = form.cleaned_data[
+            "number_repetitions"
+        ]
+        settings_instance.number_write = form.cleaned_data["number_write"]
+        settings_instance.max_number_read = form.cleaned_data["max_number_read"]
+        settings_instance.translation_list = form.cleaned_data[
+            "translation_list"
+        ]
 
-        return redirect(self.success_url)
+        settings_instance.save()
+
+        return super().form_valid(form)
 
 
-class ResettingDictionaries(HtmxMixin, SettingsMixin, LoginRequiredMixin, FormView):
+class ResettingDictionaries(
+    HtmxMixin, SettingsMixin, LoginRequiredMixin, FormView
+):
     template_name = "include_block.html"
     partial_template_name = "settings/resetting_dictionaries.html"
     form_class = ResettingDictionariesForm
     login_url = reverse_lazy("register")
     success_url = reverse_lazy("home")
 
+    def setup(self, request, *args, **kwargs):
+        super().setup(request, *args, **kwargs)
+        self.setup_settings(request.user)
+
+
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(*args, **kwargs)
         context["title"] = "Сброс словаря"
         return context
 
-    def form_valid(self, form):
-        # mixins method
-        self.delite_list_words(form=form, user=self.request.user)
-        self.get_random_list(user=self.request.user)
-        self.installation_status(user=self.request.user)
-
-        return super().form_valid(form)

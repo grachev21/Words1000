@@ -1,59 +1,71 @@
 from django import forms
-
+from django.core.exceptions import ValidationError
 from settings.models import WordsSettings
 
 
-class WordCountForm(forms.ModelForm):
-    """
-    Form for configuring word count settings for a specific user.
-    Fields are populated from the WordsSettings model.
-    """
-
+class SettingsForm(forms.ModelForm):
     class Meta:
         model = WordsSettings
-        fields = (
+        fields = [
             "number_words",
             "number_repetitions",
             "number_write",
             "max_number_read",
             "translation_list",
-        )
+        ]
+        widgets = {
+            "number_words": forms.NumberInput(
+                attrs={
+                    "class": "form-control",
+                    "min": 5,
+                    "max": 100,
+                    "step": 1,
+                }
+            ),
+            "number_repetitions": forms.Select(
+                attrs={
+                    "class": "form-control",
+                }
+            ),
+            "number_write": forms.NumberInput(
+                attrs={
+                    "class": "form-control",
+                    "min": 1,
+                    "step": 1,
+                }
+            ),
+            "max_number_read": forms.NumberInput(
+                attrs={
+                    "class": "form-control",
+                    "min": 1,
+                    "max": 30,
+                    "step": 1,
+                }
+            ),
+            "translation_list": forms.Select(attrs={"class": "form-control"}),
+        }
+        labels = {
+            "number_words": "Количество слов за день",
+            "number_repetitions": "Как хорошо вы хотите запомнить слово",
+            "number_write": "Количество письменных повторений",
+            "max_number_read": "Максимальное количество чтения",
+            "translation_list": "Показывать перевод в списке слов",
+        }
+        help_text = {
+            "number_words": "От 5 до 100 слов",
+            "max_number_read": "Максимум 30 раз",
+        }
 
-    def __init__(self, *args, **kwargs):
-        # Extract the user from keyword arguments, if provided
-        # ← Сохраняем пользователя как атрибут
-        self.user = kwargs.pop("user", None)
-        super().__init__(*args, **kwargs)
+        def clean_number_words(self):
+            number_words = self.cleanded_data["number_words"]
+            if number_words < 5 or number_words > 100:
+                raise ValidationError("Количество слов должно сыть от 5 до 100")
+            return number_words
 
-        # If no user is passed, skip initialization of field values
-        if not self.user:
-            return
-
-        # Retrieve the user's settings from the database
-        user_settings = WordsSettings.objects.filter(user=self.user).first()
-        if user_settings:
-            self._initialize_fields(user_settings)
-
-    def _initialize_fields(self, settings):
-        """
-        Set initial values for form fields based on user's saved settings.
-        """
-        self.fields["number_words"].initial = settings.number_words
-        self.fields["number_repetitions"].initial = settings.number_repetitions
-        self.fields["translation_list"].initial = settings.translation_list
-
-    def save(self, commit=True):
-        """
-        Save the form with the user.
-        """
-        instance = super().save(commit=False)
-        if self.user:
-            instance.user = self.user  # ← Устанавливаем пользователя
-
-        if commit:
-            instance.save()
-
-        return instance
+        def clean_max_number_read(self):
+            max_number_read = self.cleaned_data["max_number_read"]
+            if max_number_read > 30:
+                raise ValidationError("Максимум количество чтений не может превышать 30")
 
 
 class ResettingDictionariesForm(forms.Form):
