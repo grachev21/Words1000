@@ -3,10 +3,6 @@ class WriteContainer {
         this.data = JSON.parse(
             document.getElementById("user-settings").textContent,
         );
-        this.data_correct_word = JSON.parse(
-            document.getElementById("game-data-correct-word").textContent,
-        );
-        console.log(this.data_correct_word);
         this.inputEn = document.getElementById("input-text-en");
         this.inputRu = document.getElementById("input-text-ru");
         this.en = false;
@@ -52,46 +48,6 @@ class WriteContainer {
         }
     }
 
-    postRequest(wordId) {
-        async function sendWordSelection(wordId) {
-            const csrfToken = document.querySelector(
-                "[name=csrfmiddlewaretoken]",
-            ).value;
-
-            const formData = new FormData();
-            // Добавляем поля из твоей формы WordCheck (обязательно!)
-            // Если форма пустая — можно ничего не добавлять, но лучше добавить хотя бы одно поле
-            formData.append("select_data", wordId); // это то, что ты ловишь в view
-
-            // Если у твоей формы WordCheck есть другие обязательные поля — добавь их тоже!
-            // Например: formData.append('some_field', 'value');
-
-            try {
-                const response = await fetch('{% url "game" %}', {
-                    // или точный URL
-                    method: "POST",
-                    headers: {
-                        "X-Requested-With": "XMLHttpRequest", // важно для Django (или 'HX-Request' если через htmx)
-                        "X-CSRFToken": csrfToken,
-                    },
-                    body: formData,
-                    credentials: "same-origin",
-                });
-
-                if (response.ok) {
-                    const html = await response.text();
-                    // Если используешь HTMX — он сам заменит блок
-                    // Если чистый JS — заменяешь вручную:
-                    document.querySelector("#game-block").innerHTML = html;
-                } else {
-                    console.error("Ошибка:", response.status);
-                }
-            } catch (err) {
-                console.error("Fetch error:", err);
-            }
-        }
-    }
-
     blackoutRun(typeRun) {
         if (typeRun) {
             this.blackout.value = this.data.number_write;
@@ -104,9 +60,13 @@ class WriteContainer {
             this.blackout.classList.add("invisible");
             this.inputEn.classList.replace("text-col_con", "text-col_suc_ave");
 
-            console.log(this.blackout.value);
             if (this.data.number_write == 0) {
-                this.postRequest();
+                document
+                    .getElementById("write-container")
+                    .classList.replace("z-50", "z-0");
+                document
+                    .getElementById("read-container")
+                    .classList.replace("z-0", "z-50");
             }
         }
     }

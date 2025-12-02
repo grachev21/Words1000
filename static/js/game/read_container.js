@@ -3,7 +3,10 @@ import Tools from "../Tools.js";
 class Carousel {
     constructor() {
         this.tools = new Tools();
-        this.slideWidth = 640;
+        this.slideWidth = document.querySelector(
+            "#read-container div",
+        ).clientWidth;
+        console.log(this.slideWidth);
         this.line = document.getElementById("line-carousel");
         this.quantityCards = this.line.querySelectorAll("section").length;
         this.currentPosition = 0;
@@ -13,9 +16,16 @@ class Carousel {
     }
 
     init() {
+        this.setWidthWindow();
         this.line.style.left = `${this.currentPosition}px`;
         this.updateCounter();
         this.actionBtn();
+    }
+
+    setWidthWindow() {
+        document.querySelectorAll("section div").forEach((value) => {
+            value.style.width = `${this.slideWidth}px`;
+        });
     }
 
     next() {
@@ -39,13 +49,15 @@ class Carousel {
     }
 
     btnDoneShow() {
+        console.log(this.currentSlide);
+        console.log(this.quantityCards);
         if (this.currentSlide == this.quantityCards) {
-            document.getElementById("next-done").classList.add("hidden")
-            document.getElementById("next-learn").classList.remove("hidden")
+            document.getElementById("next-done").classList.add("hidden");
+            document.getElementById("next-learn").classList.remove("hidden");
         } else {
-            document.getElementById("next-done").classList.remove("hidden")
-            document.getElementById("next-learn").classList.add("hidden")
-        };
+            document.getElementById("next-done").classList.remove("hidden");
+            document.getElementById("next-learn").classList.add("hidden");
+        }
     }
     updateCounter() {
         const counter = document.getElementById("carousel-counter");

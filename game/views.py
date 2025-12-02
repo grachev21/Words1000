@@ -1,10 +1,11 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpResponseRedirect
+from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views.generic.edit import FormView
 
 from game.forms import WordCheck
-from game.services import GameMixin,  SettingsMixin
+from game.services import GameMixin, SettingsMixin
 from mixins.htmx_mixin import HtmxMixin
 from users.models import WordsUser
 
@@ -19,7 +20,7 @@ class Game(HtmxMixin, GameMixin, SettingsMixin, LoginRequiredMixin, FormView):
     partial_template_name = "game/game.html"
     form_class = WordCheck
     login_url = reverse_lazy("register")
-    success_url = reverse_lazy("game")
+    success_url = reverse_lazy("home")
 
     def setup(self, request, *args, **kwargs):
         super().setup(request, *args, **kwargs)

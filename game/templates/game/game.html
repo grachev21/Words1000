@@ -3,15 +3,14 @@
 
 
 {{ mixer_words|json_script:"game-data" }}
-{{ correct_word.id|json_script:"game-data-correct-word" }}
 
 <!-- Game bar -->
 {% progress_bar_game %}
 
 {% csrf_token %}
-<main id="game-container" class="hidden max-w-4xl h-[400px] mx-auto bg-col_bas_ave
-  rounded-lg p-6 text-center flex-col justify-between
-  fill-white drop-shadow-xl/25
+<main id="game-container" class="w-4xl h-[400px] mx-auto bg-col_bas_mai
+  rounded-lg p-6 text-center flex flex-col justify-between absolute
+  drop-shadow-xl/25 border border-col_con/15 z-50
   ">
   <!-- Title -->
   <div class="mb-4">

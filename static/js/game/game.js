@@ -10,10 +10,11 @@ class Game {
         this.tools = new Tools();
 
         this.readContainer = document.getElementById("read-container");
+        this.writeContainer = document.getElementById("write-container");
         this.answering = document.getElementById("answering");
-        this.gameContainer = document.getElementById("game-container"); // Общий контейнер с кнопками
-        this.btnContainer = document.getElementById("btn-container"); // Контейнер с кнопками
-        this.btnTemplate = document.getElementById("btn-template"); // Шаблон из html
+        this.gameContainer = document.getElementById("game-container");
+        this.btnContainer = document.getElementById("btn-container");
+        this.btnTemplate = document.getElementById("btn-template");
         this.init();
     }
     init() {
@@ -44,8 +45,8 @@ class Game {
                 "transition-all",
             );
             setTimeout(() => {
-                this.gameContainer.classList.add("hidden");
-                this.readContainer.classList.remove("hidden");
+                this.gameContainer.classList.replace("z-50", "z-0");
+                this.writeContainer.classList.replace("z-0", "z-50");
             }, 1000);
         }
     }
