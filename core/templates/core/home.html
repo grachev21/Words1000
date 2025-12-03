@@ -1,8 +1,9 @@
-<!--home-->
-
+{% extends "base.html" %}
 {% load TagWords %}
 {% load static %}
 
+
+{% block content %}
 
 <div class="text-6xl font-bold text-col_con mb-8 ">Все слова</div>
 
@@ -69,3 +70,5 @@
 {% endif %}
 
 {% include 'includes/home/about.html' %}
+
+{% endblock content %}

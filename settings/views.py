@@ -10,12 +10,11 @@ from settings.models import WordsSettings
 from settings.services import SettingsReset, SettingsStatus
 
 
-class SettingsView(HtmxMixin, SettingsStatus, LoginRequiredMixin, FormView):
+class SettingsView(SettingsStatus, LoginRequiredMixin, FormView):
     # Можно не указывать модель, так как указан form_class
     model = WordsSettings
     form_class = SettingsForm
-    template_name = "include_block.html"
-    partial_template_name = "settings/settings.html"
+    tmplate_name = "settings/settings.html"
     success_url = reverse_lazy("home")
     login_url = reverse_lazy("login")
 

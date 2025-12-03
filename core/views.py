@@ -11,9 +11,8 @@ from mixins.htmx_mixin import HtmxMixin
 from users.models import WordsUser
 
 
-class Home(ChartMixin, HtmxMixin, ServicesMixin, TemplateView):
-    template_name = "include_block.html"
-    partial_template_name = "core/home.html"
+class Home(ChartMixin, ServicesMixin, TemplateView):
+    template_name = "core/home.html"
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)

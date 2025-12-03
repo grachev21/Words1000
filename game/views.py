@@ -10,14 +10,13 @@ from mixins.htmx_mixin import HtmxMixin
 from users.models import WordsUser
 
 
-class Game(HtmxMixin, GameMixin, SettingsMixin, LoginRequiredMixin, FormView):
+class Game(GameMixin, SettingsMixin, LoginRequiredMixin, FormView):
     """
     View for playing words.
     And increases the repetition counter for the interval system.
     """
 
-    template_name = "include_block.html"
-    partial_template_name = "game/game.html"
+    template_name = "game/game.html"
     form_class = WordCheck
     login_url = reverse_lazy("register")
     success_url = reverse_lazy("home")

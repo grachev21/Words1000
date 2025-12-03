@@ -11,10 +11,9 @@ from users.forms import LoginUserForm, RegisterUserForm
 from mixins.htmx_mixin import HtmxMixin
 
 
-class LoginUser(HtmxMixin, LoginView):
+class LoginUser(LoginView):
     form_class = LoginUserForm
-    template_name = "include_block.html"
-    partial_template_name = "users/login.html"
+    template_name = "users/login.html"
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
