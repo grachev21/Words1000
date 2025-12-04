@@ -1,7 +1,3 @@
-from django.conf import settings
-from django.utils import timezone
-
-
 def global_context(request):
     """Глобальный контекст для всех шаблонов"""
     return {

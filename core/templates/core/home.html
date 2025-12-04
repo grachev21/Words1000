@@ -24,47 +24,20 @@
 {{ chart_date|json_script:"chart-data" }}
 
 <!--Charts-->
-<div x-data="{tab: 'week'}" class="min-h-[500px] max-h-[500px]">
-    <div class="flex gap-3 mb-4">
-        <button
-            @click="tab = 'week'"
-            :class="tab === 'week' ? 'bg-col_attn text-white' : 'bg-col_nit text-col_con'"
-            class="font-bold py-2 px-4 cursor-pointer rounded transition-colors">
-            За неделю
-        </button>
-        <button
-            @click="tab = 'month'"
-            :class="tab === 'month' ? 'bg-col_attn text-white' : 'bg-col_nit text-col_con'"
-            class="font-bold py-2 px-4 cursor-pointer rounded transition-colors">
-            За месяц
-        </button>
-        <button
-            @click="tab = 'season'"
-            :class="tab === 'season' ? 'bg-col_attn text-white' : 'bg-col_nit text-col_con'"
-            class="font-bold py-2 px-4 cursor-pointer rounded transition-colors">
-            За сезон
-        </button>
-        <button
-            @click="tab = 'year'"
-            :class="tab === 'year' ? 'bg-col_attn text-white' : 'bg-col_nit text-col_con'"
-            class="font-bold py-2 px-4 cursor-pointer rounded transition-colors">
-            За год
-        </button>
-    </div>
+{% include 'components/tabs/tab_line.html' with btn='День-1,Неделя-2,Месяц-3,Сезон-4,Полгода-5,Год-6' %}
 
-    <div x-show="tab === 'week'" x-transition class="bg-col_nit_con p-6 rounded-lg shadow max-h-[440px] relative">
+    <div id="tab1" class="tab-content bg-col_nit_con p-6 rounded-lg shadow max-h-[440px] relative">
         <canvas id="myChartWeek" class="w-full h-[440px]"></canvas>
     </div>
-    <div x-show="tab === 'month'" x-transition class="bg-col_nit_con p-6 rounded-lg shadow max-h-[440px] relative">
+    <div id="tab2" x-transition class="tab-content bg-col_nit_con p-6 rounded-lg shadow max-h-[440px] relative hidden">
         <canvas id="myChartMonth" class="w-full h-[440px]"></canvas>
     </div>
-    <div x-show="tab === 'season'" x-transition class="bg-col_nit_con p-6 rounded-lg shadow max-h-[440px] relative">
+    <div id="tab3" x-transition class="tab-content bg-col_nit_con p-6 rounded-lg shadow max-h-[440px] relative hidden">
         <canvas id="myChartSeason" class="w-full h-[440px]"></canvas>
     </div>
-    <div x-show="tab === 'year'" x-transition class="bg-col_nit_con p-6 rounded-lg shadow max-h-[440px] relative">
+    <div id="tab4" x-transition class="tab-content bg-col_nit_con p-6 rounded-lg shadow max-h-[440px] relative hidden">
         <canvas id="myChartYear" class="w-full h-[440px]"></canvas>
     </div>
-</div>
 <!--End Charts-->
 
 {% endif %}

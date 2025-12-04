@@ -6,44 +6,22 @@ let routeInitialized = false;
 
 function checkRoute() {
     const currentPath = window.location.pathname;
-    console.log("Проверка маршрута:", currentPath);
 
     // Защита от повторного вызова для того же маршрута
     if (routeInitialized) return;
 
-    console.log("load header")
     new Header();
     if (currentPath === "/home/") {
         ChartHome();
-        console.log("<<< home loaded once");
     } else if (currentPath === "/words/") {
-        initHomePage();
+
     } else if (currentPath === "/game/") {
         new Game();
     } else if (currentPath === "/settings/") {
-        initSettingsPage();
     }
 
     routeInitialized = true;
 }
 
-// HTMX навигация - сбрасываем флаг
-document.addEventListener("htmx:afterSwap", function () {
-    routeInitialized = false;
-    setTimeout(checkRoute, 10);
-});
-
 // ОДИН обработчик загрузки
 document.addEventListener("DOMContentLoaded", checkRoute);
-
-function initGamePage() {
-    console.log("🎮 Инициализация игровой страницы");
-}
-
-function initHomePage() {
-    console.log("🏠 Инициализация домашней страницы");
-}
-
-function initSettingsPage() {
-    console.log("⚙️ Инициализация страницы настроек");
-}

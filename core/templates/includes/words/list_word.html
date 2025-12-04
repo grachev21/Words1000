@@ -1,0 +1,46 @@
+<div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
+  {% include 'includes/words/filter.html' %}
+  {% include 'includes/words/info_bar.html' %}
+</div>
+
+<!-- List of words -->
+<div class="space-y-3">
+  {% for word in page_obj %}
+  <div class="border border-col_suc_mai rounded-lg p-4 hover:shadow-md transition-shadow">
+    <div class="flex flex-col sm:flex-row sm:justify-between sm:items-start gap-2 mb-2">
+      <h5 class="text-lg font-semibold text-col_con">{{ word.core_words.word_en }}</h5>
+      <span class="text-sm text-col_con_inv">{{ word.created_at|date:'d.m.Y H:i' }}</span>
+    </div>
+    <p class="text-col_con mb-2">{{ word.core_words.word_ru }}</p>
+    <p class="text-sm text-col_con_inv mb-3">{{ word.core_words.transcription }}</p>
+    <div class="flex flex-wrap items-center gap-2">
+
+      <span class="text-sm text-col_con_inv">Статус:</span>
+      <span class="px-3 py-1 rounded-full text-xs font-medium
+        {% if word.status == '1' %}
+              bg-gray-200 text-gray-800
+            {% elif word.status == '2' %}
+              bg-yellow-200 text-yellow-800
+            {% elif word.status == '3' %}
+              bg-green-200 text-green-800
+            {% else %}
+              bg-blue-200 text-blue-800
+          {% endif %}">
+        {{ word.get_status_display }}
+      </span>
+      <span class="text-sm text-col_con_inv">Повторов:</span>
+      <span class="px-3 py-1 rounded-full
+          bg-blue-100 text-blue-800
+          text-xs font-medium">
+        {{ word.number_repetitions }}
+      </span>
+    </div>
+  </div>
+  {% empty %}
+  <div class="bg-col_bas_mai rounded-lg p-6 text-center">
+    <p class="text-col_attn">Слова не найдены</p>
+  </div>
+  {% endfor %}
+</div>
+
+{% include 'includes/words/pagination.html' %}

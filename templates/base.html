@@ -1,5 +1,5 @@
-{% load static %} 
-{% load TagWords %} 
+{% load static %}
+{% load TagWords %}
 
 <!doctype html>
 <html data-theme="dark" lang="ru">
@@ -11,23 +11,19 @@
             href="{% static 'icons/favicon.png' %}"
             type="image/x-icon"
         />
-        <script src="{% static 'js/htmx.min.js' %}"></script>
         <meta charset="utf-8" />
         <title>{{ title }}</title>
     </head>
 
     <body
-        hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'
         class="bg-col_bas_mai font-Rubik min-w-full overflow-x-hidden"
     >
-    {% include 'includes/header/header.html' %}
+        {% include 'components/header/header.html' %}
         <div
             class="mx-auto w-full max-w-full px-4 sm:px-6 lg:px-8 py-6 overflow-x-hidden flex flex-row justify-center"
         >
-            <main
-                id="main-content"
-                class="w-[1200px] overflow-x-auto mt-50 mb-96"
-            >
+            <!--Content-->
+            <main class="w-[1200px] overflow-x-auto mt-50 mb-96">
                 {% block content %} {% endblock %}
             </main>
         </div>

@@ -45,12 +45,10 @@
             text-col_suc_mai left-1/2 -translate-x-1/2
             cursor-pointer hover:opacity-85 transition-all rounded-lg drop-shadow-lg inset-shadow-lg">Перевести</button>
       <!--Продолжить-->
-      <button hx-post="{% url 'game' %}"
-              hx-target="#main-content"
-              hx-swap="innHTML"
+      <button
               name="select_data"
               value="{{ correct_word.id }}"
-          hx-push-url="true" id="next-learn" class="hidden absolute bg-col_attn p-1 px-4 bottom-7
+           id="next-learn" class="hidden absolute bg-col_attn p-1 px-4 bottom-7
                   text-col_con font-bold right-8 cursor-pointer
                   hover:opacity-85 transition-all rounded-lg drop-shadow-lg" type="button">Запомнил</button>
     </div>

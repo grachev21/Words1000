@@ -23,9 +23,8 @@ class Home(ChartMixin, ServicesMixin, TemplateView):
         )
 
 
-class WordsPage(HtmxMixin, WordsMixin, LoginRequiredMixin, TemplateView):
-    template_name = "include_block.html"
-    partial_template_name = "core/words.html"
+class WordsPage(WordsMixin, LoginRequiredMixin, TemplateView):
+    template_name = "core/words.html"
     login_url = reverse_lazy("register")
     paginate_by = 10
 

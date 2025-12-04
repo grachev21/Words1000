@@ -1,7 +1,6 @@
-{% extends "template" %}
+{% extends 'base.html' %}
 
 {% block content %}
-{% include "includes/load.html" %}
 <div class="h-full flex flex-col items-center justify-center">
   <form method="post" action="">
     {% csrf_token %}
@@ -47,8 +46,7 @@
       </button>
 
       <div class="mt-2.5 text-sm flex justify-between items-center">
-          <button hx-get="{% url 'resettings_dictionaries' %}"
-             hx-target="#main-content" hx-push-url="true"
+          <button
           class="
                 text-col_attn hover:text-col_attn/80
                 font-bold mt-4 transition-colors

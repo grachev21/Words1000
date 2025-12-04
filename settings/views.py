@@ -1,10 +1,7 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.shortcuts import redirect
-from django.template.response import TemplateResponse
 from django.urls import reverse_lazy
-from django.views.generic import CreateView, FormView, UpdateView
+from django.views.generic import FormView
 
-from mixins.htmx_mixin import HtmxMixin
 from settings.forms import ResettingDictionariesForm, SettingsForm
 from settings.models import WordsSettings
 from settings.services import SettingsReset, SettingsStatus
@@ -14,7 +11,7 @@ class SettingsView(SettingsStatus, LoginRequiredMixin, FormView):
     # Можно не указывать модель, так как указан form_class
     model = WordsSettings
     form_class = SettingsForm
-    tmplate_name = "settings/settings.html"
+    template_name = "settings/settings.html"
     success_url = reverse_lazy("home")
     login_url = reverse_lazy("login")
 
@@ -47,14 +44,10 @@ class SettingsView(SettingsStatus, LoginRequiredMixin, FormView):
 
         # Обновляем поля
         settings_instance.number_words = form.cleaned_data["number_words"]
-        settings_instance.number_repetitions = form.cleaned_data[
-            "number_repetitions"
-        ]
+        settings_instance.number_repetitions = form.cleaned_data["number_repetitions"]
         settings_instance.number_write = form.cleaned_data["number_write"]
         settings_instance.max_number_read = form.cleaned_data["max_number_read"]
-        settings_instance.translation_list = form.cleaned_data[
-            "translation_list"
-        ]
+        settings_instance.translation_list = form.cleaned_data["translation_list"]
 
         settings_instance.save()
 
@@ -62,10 +55,9 @@ class SettingsView(SettingsStatus, LoginRequiredMixin, FormView):
 
 
 class ResettingDictionaries(
-    HtmxMixin, SettingsReset, SettingsStatus, LoginRequiredMixin, FormView
+    SettingsReset, SettingsStatus, LoginRequiredMixin, FormView
 ):
-    template_name = "include_block.html"
-    partial_template_name = "settings/resetting_dictionaries.html"
+    template_name = "settings/resetting_dictionaries.html"
     form_class = ResettingDictionariesForm
     login_url = reverse_lazy("register")
     success_url = reverse_lazy("home")
