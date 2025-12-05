@@ -1,10 +1,9 @@
-const week = (label_data, count_data) => {
+const week = (label_data, count_data, id) => {
 
-  console.log("<<<>>>");
 
   let chartInstance = null;
   // --- Основная функция создания графика ---
-  const ctx = document.getElementById("myChartWeek");
+  const ctx = document.getElementById(id);
   if (!ctx) return;
 
   // Если график уже существовал — удаляем

@@ -12,7 +12,7 @@ function checkRoute() {
 
     new Header();
     if (currentPath === "/home/") {
-        ChartHome();
+        new ChartHome();
     } else if (currentPath === "/words/") {
 
     } else if (currentPath === "/game/") {

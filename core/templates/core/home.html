@@ -1,47 +1,34 @@
-{% extends "base.html" %}
+{% extends 'base.html' %}
 {% load TagWords %}
 {% load static %}
 
-
 {% block content %}
+  <div class="text-6xl font-bold text-col_con mb-8">Все слова</div>
 
-<div class="text-6xl font-bold text-col_con mb-8 ">Все слова</div>
+  {% include 'includes/running_line.html' %}
 
-{% include 'includes/running_line.html' %}
+  <div class="text-6xl font-bold text-col_con mb-8 mt-28">Ваши настройки</div>
 
-<div class="text-6xl font-bold text-col_con mb-8 mt-28">Ваши настройки</div>
-
-<!-- Card -->
-<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-4">
+  <!-- Card -->
+  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-4">
     {% for sd in services_data %}
-        {% card sd.name sd.description sd.data %}
+      {% card sd.name sd.description sd.data %}
     {% endfor %}
-</div>
+  </div>
 
-<div class="text-6xl font-bold text-col_con mb-8 mt-28">Ваши графики</div>
-{% if request.user.is_authenticated %}
+  {% if request.user.is_authenticated %}
+    {{ chart_date|json_script:'chart-data' }}
 
-{{ chart_date|json_script:"chart-data" }}
+    <!-- Charts -->
+    {% include 'components/tabs/tab_line.html' with btn='Неделя-1,Месяц-2,Сезон-3,Полгода-4,Год-5' %}
 
-<!--Charts-->
-{% include 'components/tabs/tab_line.html' with btn='День-1,Неделя-2,Месяц-3,Сезон-4,Полгода-5,Год-6' %}
+    {% include 'includes/home/charts/chart.html' with tab='tab1' id='myChartWeek' %}
+    {% include 'includes/home/charts/chart.html' with tab='tab2' id='myChartMonth' class='hidden' %}
+    {% include 'includes/home/charts/chart.html' with tab='tab3' id='myChartSeason' class='hidden' %}
+    {% include 'includes/home/charts/chart.html' with tab='tab4' id='myChartHalfYear' class='hidden' %}
+    {% include 'includes/home/charts/chart.html' with tab='tab5' id='myChartYear' class='hidden' %}
+    <!-- End Charts -->
+  {% endif %}
 
-    <div id="tab1" class="tab-content bg-col_nit_con p-6 rounded-lg shadow max-h-[440px] relative">
-        <canvas id="myChartWeek" class="w-full h-[440px]"></canvas>
-    </div>
-    <div id="tab2" x-transition class="tab-content bg-col_nit_con p-6 rounded-lg shadow max-h-[440px] relative hidden">
-        <canvas id="myChartMonth" class="w-full h-[440px]"></canvas>
-    </div>
-    <div id="tab3" x-transition class="tab-content bg-col_nit_con p-6 rounded-lg shadow max-h-[440px] relative hidden">
-        <canvas id="myChartSeason" class="w-full h-[440px]"></canvas>
-    </div>
-    <div id="tab4" x-transition class="tab-content bg-col_nit_con p-6 rounded-lg shadow max-h-[440px] relative hidden">
-        <canvas id="myChartYear" class="w-full h-[440px]"></canvas>
-    </div>
-<!--End Charts-->
-
-{% endif %}
-
-{% include 'includes/home/about.html' %}
-
-{% endblock content %}
+  {% include 'includes/home/about.html' %}
+{% endblock %}
