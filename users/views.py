@@ -8,7 +8,6 @@ from django.urls import reverse_lazy
 from django.views.generic import CreateView
 
 from users.forms import LoginUserForm, RegisterUserForm
-from mixins.htmx_mixin import HtmxMixin
 
 
 class LoginUser(LoginView):
@@ -24,10 +23,9 @@ class LoginUser(LoginView):
         return reverse_lazy("home")
 
 
-class RegisterUser(HtmxMixin, CreateView):
+class RegisterUser(CreateView):
     form_class = RegisterUserForm
-    template_name = "include_block.html"
-    partial_template_name = "users/register.html"
+    template_name = "users/register.html"
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)

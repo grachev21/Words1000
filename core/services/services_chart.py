@@ -1,7 +1,7 @@
+
 from datetime import timedelta
-
+from tracemalloc import start
 from django.utils import timezone
-
 from users.models import WordsUser
 
 
@@ -12,7 +12,7 @@ class ChartMixin:
 
         # Сразу создаем данные
         self.week_data = self.create_graph_week()
-        self.month_data = self.creating_graph(42)
+        self.month_data = self.creating_graph(35)
         # self.season_data = self.creating_graph(90)
         # self.half_year_data = self.creating_graph(180)
         # self.year_data = self.creating_graph(365)
@@ -46,31 +46,29 @@ class ChartMixin:
             )
         return full_date
 
+
     def creating_graph(self, quantity):
-        """Создает данные для графика за указанное количество дней."""
         full_date = []
 
         if not self.current_user.is_authenticated:
             return full_date
 
-        today = timezone.now().date()
-        dates = [(today - timedelta(days=d)) for d in range(quantity) if (today - timedelta(days=d)).weekday() == 0]
+        today = timezone.now()
+        dates = sorted([today - timedelta(days=d) for d in range(0, quantity, 7)])
+        dates_out = list(zip(dates, dates[1:]))
 
-        for value in list(zip(dates[:-1], dates[1:])):
-            print(value[0])
-            print(value[1])
+        for i in dates_out:
             obj = WordsUser.objects.filter(
                 user=self.current_user,
                 status=1,
-                created_at__range=[value[0], value[1]],   # Убрал str(), используем объект date напрямую
-            )
-            print(obj)
-            full_date.append(
-                {
-                    "date_graph": value[0],
-                    "count_graph": obj.count(),
-                }
-                )
+                created_at__range=[i[0], i[1]],
+            ).count()
+
+            full_date.append({
+                "date_graph": i[0],
+                "count_graph": obj,
+            })
+
         return full_date
 
     def get_context_data(self, **kwargs):
