@@ -23,9 +23,9 @@ class ChartHome {
     console.log(this.chart_data);
     this.getData(this.chart_data.week_data, "myChartWeek");
     this.getData(this.chart_data.month_data, "myChartMonth");
-    // this.getData(this.chart_data.season_data, "myChartSeason");
-    // this.getData(this.chart_data.half_year_data, "myChartHalfYear");
-    // this.getData(this.chart_data.year_data, "myChartYear");
+    this.getData(this.chart_data.season_data, "myChartSeason");
+    this.getData(this.chart_data.half_year_data, "myChartHalfYear");
+    this.getData(this.chart_data.year_data, "myChartYear");
   }
 }
 export default ChartHome;
