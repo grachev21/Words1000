@@ -20,12 +20,10 @@
     {{ chart_date|json_script:'chart-data' }}
 
     <!-- Charts -->
-    {% include 'components/tabs/tab_line.html' with btn='Неделя-1,Месяц-2,Сезон-3,Полгода-4,Год-5' %}
+    {% include 'components/tabs/tab_line.html' with btn='Неделя-1,Месяц-2,Год-5' %}
 
     {% include 'includes/home/charts/chart.html' with tab='tab1' id='myChartWeek' %}
     {% include 'includes/home/charts/chart.html' with tab='tab2' id='myChartMonth' class='hidden' %}
-    {% include 'includes/home/charts/chart.html' with tab='tab3' id='myChartSeason' class='hidden' %}
-    {% include 'includes/home/charts/chart.html' with tab='tab4' id='myChartHalfYear' class='hidden' %}
     {% include 'includes/home/charts/chart.html' with tab='tab5' id='myChartYear' class='hidden' %}
     <!-- End Charts -->
   {% endif %}

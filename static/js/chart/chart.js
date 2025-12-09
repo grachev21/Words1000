@@ -3,7 +3,6 @@
 // count_data - массив значений для оси Y (количество слов)
 // id - идентификатор HTML элемента canvas, куда будет отрисован график
 const week = (label_data, count_data, id) => {
-    console.log(count_data)
     // Переменная для хранения экземпляра графика
     // Это позволяет управлять им (например, перерисовывать)
     let chartInstance = null;
