@@ -1,14 +1,11 @@
 {% load static %}
 
-<div class="hidden flex-row items-center sm:flex sm:ml-4 lg:ml-12 xl:ml-22">
+<div class="hidden flex-row items-center sm:flex sm:ml-4 lg:ml-12 xl:mx-46">
     {% for m in menu %}
-    <div class="flex flex-row items-center md:mx-4">
-        <img class="w-4 h-4" src="{% static m.img_name %}" alt="" />
-        <a
-            href="{% url m.url_name %}"
-            class="text-col_suc cursor-pointer mx-2 hover:opacity-80 duration-300">
-                {{ m.name }}
-            </a>
-    </div>
+        {% if request.resolver_match.url_name == m.url_name %}
+            {% include "components/link/link.html" with image=m.img_name link=m.url_name name=m.name active="ok" %}
+        {% else %}
+            {% include "components/link/link.html" with image=m.img_name link=m.url_name name=m.name active="no" %}
+        {% endif %}
     {% endfor %}
 </div>

@@ -1,5 +1,4 @@
 def global_context(request):
-    """Глобальный контекст для всех шаблонов"""
     return {
         "menu": [
             {

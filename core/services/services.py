@@ -71,7 +71,7 @@ class ServicesMixin:
 
         context.update(
             {
-                "services_data": services_data,
+                "serve": services_data,
                 "all_words": WordsCard.objects.all(),
             }
         )
