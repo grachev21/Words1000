@@ -64,7 +64,6 @@ class ChartMixin:
                 }
             )
 
-        print(full_date)
         return full_date
 
 

@@ -1,36 +1,39 @@
 {% extends 'base.html' %}
 {% load TagWords %}
+{% load template_simple_tags %}
+{% load core_filters %}
 {% load static %}
 
 {% block content %}
-{% include 'components/title/title_and_description.html' with start='Все слова,' center='|_Тут' finish='!' description='Пробегает вся 1000 слов, те которые вы уже выучили имеют странный вид...'%}
+  {% include 'components/title/title_and_description.html' with start='Все слова,' center='|_Тут' finish='!' description='Пробегает вся 1000 слов, те которые вы уже выучили имеют странный вид...' %}
 
   {% include 'includes/running_line.html' %}
 
-  <div class="text-6xl font-bold text-col_con mb-8 mt-28">Ваши настройки</div>
-
-{% include "components/icons/icon.html" with icon="list" class="text-col_bright_1 w-8 h-8" %}
-{% include "components/icons/icon.html" with icon="next" class="text-col_bright_3 w-8 h-8" %}
+  {% include 'components/title/title_and_description.html' with start='Ваши настройки' center='|_Тут' finish='!' description='Все ваши установки и достижения' %}
 
   <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-2 gap-8">
-      {% include "components/card/card_info.html" with name=serve.0.name description=serve.0.description data=serve.0.data class="bg-col_bright_1" icon="settings" icon_class="text-col_bright_1" %}
-      {% include "components/card/card_info.html" with name=serve.1.name description=serve.1.description data=serve.1.data class="bg-col_bright_2" %}
-      {% include "components/card/card_info.html" with name=serve.2.name description=serve.2.description data=serve.2.data class="bg-col_bright_3" %}
-      {% include "components/card/card_info.html" with name=serve.3.name description=serve.3.description data=serve.3.data class="bg-col_bright_4" %}
-      {% include "components/card/card_info.html" with name=serve.4.name description=serve.4.description data=serve.4.data class="bg-col_bright_5" %}
+    {% card_data serve as data_card%}
+    {% for item in data_card %}
+      {% include 'components/card/card_info.html#card_info' %}
+    {% endfor %}
   </div>
 
   {% if request.user.is_authenticated %}
     {{ chart_date|json_script:'chart-data' }}
 
+    <div class="mt-20">
+      {% include 'components/tabs/tab_line.html' with btn='Неделя-1,Месяц-2,Год-5' %}
 
-    {% include 'components/tabs/tab_line.html' with btn='Неделя-1,Месяц-2,Год-5' %}
-
-    {% include 'includes/home/charts/chart.html' with tab='tab1' id='myChartWeek' %}
-    {% include 'includes/home/charts/chart.html' with tab='tab2' id='myChartMonth' class='hidden' %}
-    {% include 'includes/home/charts/chart.html' with tab='tab5' id='myChartYear' class='hidden' %}
+      {% include 'includes/home/charts/chart.html' with tab='tab1' id='myChartWeek' %}
+      {% include 'includes/home/charts/chart.html' with tab='tab2' id='myChartMonth' class='hidden' %}
+      {% include 'includes/home/charts/chart.html' with tab='tab5' id='myChartYear' class='hidden' %}
+    </div>
     <!-- End Charts -->
   {% endif %}
+
+  {% block check %}
+
+  {% endblock %}
 
   {% include 'includes/home/about.html' %}
 {% endblock %}
