@@ -1,5 +1,6 @@
 {% load static %}
 
+{% partialdef link_icon %}
 <div class="flex flex-row items-center md:mx-4">
     <div {% if active == "ok" %}
         class="bg-col_bright_2/25 p-2 rounded-full"
@@ -7,7 +8,7 @@
         class="bg-col_bright_1/25 p-2 rounded-full"
         {% endif %}
     >
-        <img class=" w-4 h-4" src="{% static image %}" alt="" />
+        {% include "icons.html#"|add:image with class="text-col_bright_3 w-4 h-4" %}
     </div>
 <a
     href="{% url link %}"
@@ -22,3 +23,19 @@
     {{ name }}
 </a>
 </div>
+{% endpartialdef %}
+
+{% partialdef link_simple %}
+<a
+    href="{% url link %}"
+    {% if active == "ok" %}
+        class="text-col_bright_1 cursor-pointer
+        border-b-2 border-col_bright_1 py-2"
+    {% elif  active == "no" %}
+        class="text-col_con cursor-pointer
+        hover:text-col_bright_6 py-2"
+    {% endif %} }
+>
+    {{ name }}
+</a>
+{% endpartialdef %}

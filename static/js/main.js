@@ -1,4 +1,4 @@
-import Header from "./header/header.js";
+// import Header from "./header/header.js";
 import ChartHome from "./home.js";
 import Game from "./game/game.js";
 
@@ -10,7 +10,7 @@ function checkRoute() {
     // Защита от повторного вызова для того же маршрута
     if (routeInitialized) return;
 
-    new Header();
+    // new Header();
     if (currentPath === "/home/") {
         new ChartHome();
     } else if (currentPath === "/words/") {

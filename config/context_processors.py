@@ -4,22 +4,22 @@ def global_context(request):
             {
                 "name": "Главная",
                 "url_name": "home",
-                "img_name": "icons/home.png",
+                "img_name": "home",
             },
             {
                 "name": "Слова",
                 "url_name": "words",
-                "img_name": "icons/list.png",
+                "img_name": "list",
             },
             {
                 "name": "Учить",
                 "url_name": "game",
-                "img_name": "icons/learn.png",
+                "img_name": "learn",
             },
             {
                 "name": "Настройки",
                 "url_name": "settings",
-                "img_name": "icons/settings.png",
+                "img_name": "settings",
             },
         ],
         "user_menu": [

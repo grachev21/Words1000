@@ -12,15 +12,19 @@
   {% include 'components/title/title_and_description.html' with start='Ваши настройки' center='|_Тут' finish='!' description='Все ваши установки и достижения' %}
 
   <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-2 gap-8">
-    {% card_data serve as data_card%}
-    {% for item in data_card %}
-      {% include 'components/card/card_info.html#card_info' %}
-    {% endfor %}
+      {% if request.user.is_authenticated %}
+          {% card_data serve as data_card%}
+          {% for item in data_card %}
+            {% include 'components/card/card_info.html#card_info' %}
+          {% endfor %}
+      {% endif %}
   </div>
+
 
   {% if request.user.is_authenticated %}
     {{ chart_date|json_script:'chart-data' }}
 
+  {% include 'components/title/title_and_description.html' with start='Графики' center='|_Тут' finish='!' description='' %}
     <div class="mt-20">
       {% include 'components/tabs/tab_line.html' with btn='Неделя-1,Месяц-2,Год-5' %}
 
