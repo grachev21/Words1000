@@ -1,4 +1,5 @@
 from datetime import date
+import random
 
 from core.models import WordsCard
 from settings.models import WordsSettings
@@ -14,6 +15,7 @@ class ServicesMixin:
     Args:
         user, context.
     """
+
 
     @staticmethod
     def data_incision(user):
@@ -72,7 +74,7 @@ class ServicesMixin:
         context.update(
             {
                 "serve": services_data,
-                "all_words": WordsCard.objects.all(),
+                "all_words": WordsUser.objects.filter(user=user)
             }
         )
 

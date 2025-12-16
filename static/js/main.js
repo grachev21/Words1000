@@ -6,13 +6,15 @@ let routeInitialized = false;
 
 function checkRoute() {
     const currentPath = window.location.pathname;
+    console.log(currentPath);
 
     // Защита от повторного вызова для того же маршрута
     if (routeInitialized) return;
 
     // new Header();
-    if (currentPath === "/home/") {
+    if (currentPath === "/") {
         new ChartHome();
+        console.log("hello");
     } else if (currentPath === "/words/") {
 
     } else if (currentPath === "/game/") {

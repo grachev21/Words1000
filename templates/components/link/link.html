@@ -8,7 +8,11 @@
         class="bg-col_bright_1/25 p-2 rounded-full"
         {% endif %}
     >
-        {% include "icons.html#"|add:image with class="text-col_bright_3 w-4 h-4" %}
+        {% if active == "ok" %}
+            {% include "icons.html#"|add:image with class="text-col_bright_2 w-4 h-4" %}
+        {% elif active == "no" %}
+            {% include "icons.html#"|add:image with class="text-col_bright_1 w-4 h-4" %}
+        {% endif %}
     </div>
 <a
     href="{% url link %}"

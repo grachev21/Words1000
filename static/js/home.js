@@ -10,6 +10,7 @@ class ChartHome {
   }
 
   getData(data, id) {
+
     let label_data = [];
     let count_data = [];
     data.forEach((element) => {
@@ -23,6 +24,7 @@ class ChartHome {
     this.getData(this.chart_data.week_data, "myChartWeek");
     this.getData(this.chart_data.month_data, "myChartMonth");
     this.getData(this.chart_data.year_data, "myChartYear");
+
   }
 }
 export default ChartHome;

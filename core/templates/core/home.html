@@ -25,19 +25,14 @@
     {{ chart_date|json_script:'chart-data' }}
 
   {% include 'components/title/title_and_description.html' with start='Графики' center='|_Тут' finish='!' description='' %}
-    <div class="mt-20">
+    <div x-data="{ activeTab: 'tab1' }" class="mt-20 p-8 border border-col_con/15 rounded-lg shadow-lg bg-gradient-to-br from-col_bas_hig to-col_bas_mai">
       {% include 'components/tabs/tab_line.html' with btn='Неделя-1,Месяц-2,Год-5' %}
 
-      {% include 'includes/home/charts/chart.html' with tab='tab1' id='myChartWeek' %}
-      {% include 'includes/home/charts/chart.html' with tab='tab2' id='myChartMonth' class='hidden' %}
-      {% include 'includes/home/charts/chart.html' with tab='tab5' id='myChartYear' class='hidden' %}
+      {% include 'includes/home/charts/chart.html' with id='myChartWeek' tab_number=1 %}
+      {% include 'includes/home/charts/chart.html' with id='myChartMonth' tab_number=2 %}
+      {% include 'includes/home/charts/chart.html' with id='myChartYear' tab_number=3 %}
     </div>
     <!-- End Charts -->
   {% endif %}
 
-  {% block check %}
-
-  {% endblock %}
-
-  {% include 'includes/home/about.html' %}
 {% endblock %}

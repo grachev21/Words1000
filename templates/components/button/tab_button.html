@@ -1,9 +1,11 @@
 <button
-    class="px-4 border-t border-x border-col_con/15
-    py-2 text-col_con rounded-t-lg font-semibold
-    hover:bg-col_attn cursor-pointer
-    focus:bg-col_att_base tab-button"
-    onclick="showTab('{{fun}}')"
+
+    @click="activeTab = 'tab{{tab_number}}'"
+    :class="{
+    'bg-col_bright_1 shadow-lg shadow-col_bright_1/50': activeTab === 'tab{{tab_number}}',
+    'bg-col_bright_4/20': activeTab !== 'tab{{tab_number}}',
+    }"
+    class="px-4 py-2 text-col_con rounded-lg font-semibold hover:bg-col_bright_2/30 cursor-pointer"
 >
     {{name}}
 </button>
