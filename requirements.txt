@@ -1,6 +1,5 @@
-asgiref==3.11.0
 Django==6.0
 django-browser-reload==1.21.0
 django-debug-toolbar==6.1.0
-sqlparse==0.5.4
-tzdata==2025.2
+psycopg2-binary==2.9.11
+python-decouple==3.8
