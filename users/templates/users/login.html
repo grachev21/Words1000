@@ -1,6 +1,17 @@
 {% extends "base.html" %} }
 
 {% block content %}
+
+{% load socialaccount %}
+
+<h2>Вход через соцсети</h2>
+{% providers_media_js %}  <!-- Для стилей кнопок -->
+
+<a href="{% provider_login_url 'vk' %}">Войти через VK</a>
+<!-- И т.д. -->
+
+
+
 <div class="h-full flex flex-col items-center justify-center">
   <form method="post" action="">
     {% csrf_token %}

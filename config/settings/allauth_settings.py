@@ -4,26 +4,38 @@ INSTALLED_APPS += [
     "allauth",
     "allauth.account",
     "allauth.socialaccount",
-    "allauth.socialaccount.providers.google",
+    "allauth.socialaccount.providers.vk",
 ]
+
+SITE_ID = 2
 
 MIDDLEWARE += [
     "allauth.account.middleware.AccountMiddleware",
 ]
 
 AUTHENTICATION_BACKENDS = [
-    # Needed to login by username in Django admin, regardless of `allauth`
     "django.contrib.auth.backends.ModelBackend",
-    # `allauth` specific authentication methods, such as login by email
     "allauth.account.auth_backends.AuthenticationBackend",
 ]
 
-# Provider specific settings
 SOCIALACCOUNT_PROVIDERS = {
-    "google": {
-        # For each OAuth based provider, either add a ``SocialApp``
-        # (``socialaccount`` app) containing the required client
-        # credentials, or list them here:
-        "APP": {"client_id": "123", "secret": "456", "key": ""}
+    "vk": {
+        "APP": {"client_id": config("vk_id"), "secret": config("vk_secret"), "key": config("vk_key")}
+    },
+}
+
+SOCIALACCOUNT_PROVIDERS = {
+    'vk': {
+        'APPS': [  # Ключ ВО МНОЖЕСТВЕННОМ ЧИСЛЕ - 'APPS', не 'APP'!
+            {
+                'client_id': config("vk_id"),  # ID приложения VK
+                'secret': config("vk_secret"),  # Защищенный ключ
+                'key': config("vk_key"),  # Сервисный ключ
+            }
+        ],
+        'SCOPE': ['email', 'photos'],  # Права доступа
+        'AUTH_PARAMS': {'auth_type': 'reauthenticate'},
+        'METHOD': 'oauth2',
+        'VERSION': '5.131',
     }
 }
