@@ -1,113 +1,93 @@
-from core.models import WordsCard  # Импорт модели слов из другого приложения
+from core.models import WordsCard
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin
 from django.contrib.auth.base_user import BaseUserManager
-from django.conf import (
-    settings,
-)  # Для динамического указания модели пользователя в ForeignKey
+
+# To dynamically specify the user model in the ForeignKey
+from django.conf import settings
 
 
-# Кастомный менеджер пользователей — отвечает за создание пользователей и суперпользователей
+# Custom user manager - responsible for creating users and superusers
 class UserManager(BaseUserManager):
     def create_user(self, email, password=None, **extra_fields):
-        # Проверяем, что email передан
+        # Check that the email has been sent
         if not email:
             raise ValueError("Email обязателен")
-
-        # Нормализуем email (приводим к нижнему регистру и убираем лишние пробелы)
+        # Normalize email (convert to lower case and remove extra spaces)
         email = self.normalize_email(email)
-
-        # Создаём объект пользователя с email и дополнительными полями
+        # Create a user object with email and additional fields
         user = self.model(email=email, **extra_fields)
-
-        # Устанавливаем пароль (хэшируется)
+        # Set the password (hashed)
         user.set_password(password)
-
-        # Сохраняем пользователя в базу
+        # Save the user to the database
         user.save(using=self._db)
-
         return user
 
     def create_superuser(self, email, password=None, **extra_fields):
-        # Устанавливаем необходимые флаги для суперпользователя
+        # Set the necessary flags for the superuser
         extra_fields.setdefault("is_staff", True)
         extra_fields.setdefault("is_superuser", True)
         extra_fields.setdefault("is_active", True)
-
-        # Проверяем, что флаги установлены правильно
+        # Check that the flags are set correctly
         if not extra_fields.get("is_staff"):
             raise ValueError("Superuser должен быть staff")
         if not extra_fields.get("is_superuser"):
             raise ValueError("Superuser должен быть superuser")
-
-        # Создаём суперпользователя с указанными параметрами
+        # Create super useless with parameters
         return self.create_user(email, password, **extra_fields)
 
 
-# Кастомная модель пользователя
+# Custom user model
 class User(AbstractBaseUser, PermissionsMixin):
-    # Поле email, по которому будет осуществляться вход (уникально)
+    # Email field that will be used to log in (unique)
     email = models.EmailField(unique=True)
-
-    # Имя и фамилия, необязательные для заполнения
+    # First and last name, optional
     first_name = models.CharField(max_length=150, blank=True)
     last_name = models.CharField(max_length=150, blank=True)
-
-    # Активен ли пользователь (можно блокировать)
-    is_active = models.BooleanField(default=False)
-
-    # Является ли пользователь сотрудником (для доступа в админку и т.п.)
+    # Is the user active (can be blocked)
+    is_active = models.BooleanField(default=True)
+    # Is the user an employee (for access to the admin panel, etc.)
     is_staff = models.BooleanField(default=False)
-
-    # Дата регистрации пользователя (автоматически ставится при создании)
+    # User registration date (automatically set upon creation)
     date_joined = models.DateTimeField(auto_now_add=True)
-
-    # Подключаем наш кастомный менеджер для работы с пользователями
+    # Connect our custom manager to work with users
     objects = UserManager()
-
-    # Поле, которое будет использоваться для аутентификации (логин по email)
+    # Field that will be used for authentication (login by email)
     USERNAME_FIELD = "email"
-    # Поля, обязательные для создания пользователя (оставляем пустым, т.к. email — обязательный)
+    # Fields required to create a user (leave empty, because email is required)
     REQUIRED_FIELDS = []
 
     def __str__(self):
-        # Строковое представление объекта — email пользователя
+        # String representation of the object - user email
         return self.email
 
 
-# Модель, которая хранит информацию о прогрессе пользователя с некоторыми словами
+# A model that stores information about the user's progress with some words
 class WordsUser(models.Model):
-
-    # Варианты статуса пользователя по отношению к слову
+    # Options for user status in relation to the word
     class Status(models.IntegerChoices):
         UNKNOWN = 1, "Неизвестно"
         LEARNING = 2, "Изучаю"
         REPETITION = 3, "Повторяю"
         LEARNED = 4, "Изучил"
 
-    # Дата создания записи (автоматически ставится при создании)
+    # Record creation date (automatically set upon creation)
     created_at = models.DateTimeField(auto_now_add=True, verbose_name="Дата создания")
-
-    # Количество сделанных повторов слова пользователем
+    # Number of repetitions of a word made by the user
     number_repetitions = models.IntegerField(
         default=0, verbose_name="Количество сделанных повторов"
     )
-
-    # Статус изучения слова с использованием предопределённых вариантов
+    # Status of word learning using predefined options
     status = models.IntegerField(
         choices=Status.choices,
         default=Status.UNKNOWN,
         verbose_name="Этап запоминания",
     )
-
-    # Связь с пользователем — указываем модель пользователя из настроек, чтобы не жестко привязываться
+    # Communication with the user - specify the user model from the settings so as not to be strictly bound
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-
-    # Связь со словом из основной модели слов
+    # Link to a word from the main word model
     core_words = models.ForeignKey(WordsCard, on_delete=models.CASCADE)
 
     class Meta:
-        verbose_name = "Накопитель слов"  # Название модели в ед. числе для админки
-        verbose_name_plural = (
-            "Накопитель слов"  # Название модели во мн. числе для админки
-        )
+        verbose_name = "Накопитель слов"
+        verbose_name_plural = "Накопитель слов"

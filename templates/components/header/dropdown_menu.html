@@ -1,4 +1,5 @@
 {% load static %}
+{% load account socialaccount %}
 
 <!-- Parent block -->
 <div class="hidden mx-auto items-center justify-center md:flex relative">
@@ -9,7 +10,6 @@
             <span class="hidden h-10 space-x-5 items-center justify-between lg:flex text-col_con font-bold">
                 Пользователь
             </span>
-
            {% include "icons.html#user" with class="text-col_bright_2 w-6 h-6 ml-4" %}
         </button>
         <!-- Menu -->
@@ -17,17 +17,10 @@
             class="bg-col_bas_mai z-50 mt-3.5 lg:mt-5 text-md lg:text-md pl-5 flex flex-col w-full
             shadow-xl lg:border lg:border-col_con_inv/15 rounded-lg absolute">
             {% if request.user.is_authenticated %}
-                {% include "components/link/link.html#link_simple" with name=user_menu.0.name link=user_menu.0.url_name active="no" %}
-                {% else %}
-
-                <a href="{% url user_menu.1.url_name %}"
-                    class="w-full text-col_con hover:opacity-80 py-3">
-                        {{ user_menu.1.name }}
-                </a>
-
-                <a href="{% url user_menu.2.url_name %}"
-                    class="w-full text-col_con hover:opacity-80 py-3">
-                    {{ user_menu.2.name }}</a>
+                {% include "components/link/link.html#link_simple" with name='Выйти' link='account_logout' active="no" %}
+            {% else %}
+                {% include "components/link/link.html#link_simple" with name='Войти' link='account_login' active="no" %}
+                {% include "components/link/link.html#link_simple" with name='Регистрация' link='account_signup' active="no" %}
             {% endif %}
         </div>
     </div>

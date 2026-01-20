@@ -4,10 +4,11 @@ INSTALLED_APPS += [
     "allauth",
     "allauth.account",
     "allauth.socialaccount",
-    "allauth.socialaccount.providers.vk",
+    "allauth.socialaccount.providers.google",
 ]
 
-SITE_ID = 2
+
+SITE_ID = 1
 
 MIDDLEWARE += [
     "allauth.account.middleware.AccountMiddleware",
@@ -18,24 +19,28 @@ AUTHENTICATION_BACKENDS = [
     "allauth.account.auth_backends.AuthenticationBackend",
 ]
 
-SOCIALACCOUNT_PROVIDERS = {
-    "vk": {
-        "APP": {"client_id": config("vk_id"), "secret": config("vk_secret"), "key": config("vk_key")}
-    },
-}
+
+ACCOUNT_USER_MODEL_USERNAME_FIELD = None
+ACCOUNT_UNIQUE_EMAIL = True
+ACCOUNT_SIGNUP_FIELDS = ['email*', 'password1*', 'password2*']
+ACCOUNT_LOGIN_METHODS = {"email"}
+ACCOUNT_EMAIL_VERIFICATION = "optional"
+LOGIN_REDIRECT_URL = "/"
+SOCIALACCOUNT_LOGIN_ON_GET = True
 
 SOCIALACCOUNT_PROVIDERS = {
-    'vk': {
-        'APPS': [  # Ключ ВО МНОЖЕСТВЕННОМ ЧИСЛЕ - 'APPS', не 'APP'!
-            {
-                'client_id': config("vk_id"),  # ID приложения VK
-                'secret': config("vk_secret"),  # Защищенный ключ
-                'key': config("vk_key"),  # Сервисный ключ
-            }
+    "google": {
+        "APP": {
+            "client_id": config("google_id"),  # ID приложения VK
+            "secret": config("google_secret"),  # Защищенный ключ
+            "key": "",
+        },
+        "SCOPE": [
+            "profile",
+            "email",
         ],
-        'SCOPE': ['email', 'photos'],  # Права доступа
-        'AUTH_PARAMS': {'auth_type': 'reauthenticate'},
-        'METHOD': 'oauth2',
-        'VERSION': '5.131',
+        "AUTH_PARAMS": {
+            "access_type": "online",
+        },
     }
 }

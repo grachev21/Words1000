@@ -8,6 +8,7 @@ from config import settings
 urlpatterns = [
     path("admin/", admin.site.urls),
     path('accounts/', include('allauth.urls')),
+    # path('accounts/', include('allauth.socialaccount.urls')),
     path("", include("core.urls")),
     path("", include("users.urls")),
     path("", include("settings.urls")),

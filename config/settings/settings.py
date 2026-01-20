@@ -17,10 +17,18 @@ MIDDLEWARE += [
     "django_browser_reload.middleware.BrowserReloadMiddleware",
 ]
 
+# TEMPLATES
+TEMPLATES[0]["DIRS"] = [BASE_DIR / "templates", BASE_DIR / "icons"]
+TEMPLATES[0]["OPTIONS"]["context_processors"] += [
+    "core.context_processors.site_settings",
+    "config.context_processors.global_context",
+]
+
 # for debug_toolbar
 INTERNAL_IPS = ["127.0.0.1"]
 AUTH_USER_MODEL = "users.User"
 
+# DATABASES
 if DEBUG:
     DATABASES = {
         "default": {
@@ -31,12 +39,12 @@ if DEBUG:
 else:
     DATABASES = {
         "default": {
-            "ENGINE": config("DB_ENGINE"),
-            "NAME": config("DB_NAME"),
-            "USER": config("DB_USER"),
-            "PASSWORD": config("DB_PASSWORD"),
-            "HOST": config("DB_HOST"),
-            "PORT": config("DB_PORT"),
+            "ENGINE": config("db_engine"),
+            "NAME": config("db_name"),
+            "USER": config("db_user"),
+            "PASSWORD": config("db_password"),
+            "HOST": config("db_host"),
+            "PORT": config("db_port"),
             # Дополнительные настройки (опционально):
             "CONN_MAX_AGE": 600,  # время жизни соединения в секундах
             "OPTIONS": {
