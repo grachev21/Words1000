@@ -10,6 +10,7 @@ INSTALLED_APPS += [
     # Libs
     "debug_toolbar",
     "django_browser_reload",
+    "heroicons",
 ]
 
 MIDDLEWARE += [
@@ -23,6 +24,10 @@ TEMPLATES[0]["OPTIONS"]["context_processors"] += [
     "core.context_processors.site_settings",
     "config.context_processors.global_context",
 ]
+TEMPLATES[0]["OPTIONS"]["builtins"] = [
+    "heroicons.templatetags.heroicons",
+]
+print(TEMPLATES)
 
 # for debug_toolbar
 INTERNAL_IPS = ["127.0.0.1"]

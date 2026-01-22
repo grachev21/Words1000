@@ -1,10 +1,11 @@
 {% extends 'base.html' %}
 {% load i18n %}
 {% load account socialaccount %}
+{% load heroicons %}
 
 {% block content %}
   <div class="min-h-screen flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
-    <div class="max-w-md w-full space-y-8 bg-col_bas_ave p-8 rounded-xl shadow-lg">
+    <div class="max-w-md w-full space-y-8 bg-gradient-to-br from-col_bas_hig to-col_bas_mai shadow-lg p-8 rounded-xl">
       <div>
         <h2 class="mt-6 text-center text-3xl font-extrabold text-col_con">Войти</h2>
         <p class="mt-2 text-center text-sm text-col_suc_ave">
@@ -16,6 +17,7 @@
       <form class="mt-8 space-y-6" method="POST" action="{% url 'account_login' %}">
         {% csrf_token %}
 
+        <!-- Error -->
         {% if form.errors %}
           <div class="bg-col_con_inv border-l-4 border-col_attn p-4 mb-4">
             <div class="flex">
@@ -28,29 +30,27 @@
           </div>
         {% endif %}
 
+        <!-- Input -->
         <div class="rounded-md shadow-sm -space-y-px">
           <div class="my-6">
-            <label for="id_username" class="sr-only">{% trans 'Email address' %}</label>
-            <input id="id_username" name="login" type="email" required  placeholder="Адрес электронной почты" />
+            {% include 'components/input/input.html#input_label' with label='Почта' name='email' type='email' required=True placeholder='****@mail.ru' %}
           </div>
           <div class="my-6">
-            <label for="id_password" class="sr-only">{% trans 'Password' %}</label>
-            <input id="id_password" name="password" type="password" required  placeholder="Пароль" />
+            {% include 'components/input/input.html#input_label' with label='Введите пароль' name='password' type='password' required=True placeholder='Пароль' %}
           </div>
         </div>
 
         <div class="flex items-center justify-between">
           <div class="flex items-center">
-            <input id="id_remember" name="remember" type="checkbox" class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded" />
-            <label for="id_remember" class="ml-2 block text-sm text-gray-900">{% trans 'Remember Me' %}</label>
+            {% include 'components/button/button.html#check_button' with label='Запомнить меня?' %}
           </div>
           <div class="text-sm">
-            <a href="{% url 'account_reset_password' %}" class="font-medium text-blue-600 hover:text-blue-500">{% trans 'Forgot Password?' %}</a>
+            <a href="{% url 'account_reset_password' %}" class="font-medium text-col_bright_2 hover:text-col_bright_3">Забыл пароль</a>
           </div>
         </div>
 
         <div>
-          <button type="submit" class="group relative w-full flex justify-center py-3 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition duration-150 ease-in-out">{% trans 'Sign In' %}</button>
+          {% include 'components/button/button.html#button' with type='submit' name='Войти с почтой' %}
         </div>
       </form>
 
@@ -59,14 +59,19 @@
         <div class="mt-6">
           <div class="relative">
             <div class="absolute inset-0 flex items-center">
-              <div class="w-full border-t border-gray-300"></div>
+              <div class="w-full border-t border-col_con_inv"></div>
             </div>
             <div class="relative flex justify-center text-sm">
-              <span class="px-2 bg-white text-gray-500">{% trans 'Or continue with' %}</span>
+              <span class="px-2 bg-col_con_inv text-col_con">Или войти с</span>
             </div>
           </div>
-          <div class="mt-6 grid grid-cols-2 gap-3">
-            {% include 'socialaccount/snippets/provider_list.html' with process='login' %}
+          <div class="mt-6 rounded-lg border border-col_bright_1">
+            <div class="flex flex-row justify-center items-center py-4 text-col_con font-bold text-xl">
+              <div class="bg-col_bright_1/30 rounded-full p-2 mr-4">
+                {% heroicon_outline 'arrow-left-end-on-rectangle' size=20 class='text-col_bright_1' %}
+              </div>
+              {% include 'socialaccount/snippets/provider_list.html' with process='login' %}
+            </div>
           </div>
         </div>
       {% endif %}

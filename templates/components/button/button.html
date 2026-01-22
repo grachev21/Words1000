@@ -1,7 +1,15 @@
-<button class="
-    mt-12 px-4 py-2 bg-col_suc_mai text-col_con
-    rounded-lg hover:bg-col_con_inv transition-colors flip-btn
-    cursor-pointer
+{% partialdef button %}
+<button type="{{type}}" class="
+    mt-12 px-4 py-2 bg-col_suc_mai text-col_con font-bold
+    rounded-lg hover:bg-col_bright_1 transition-colors flip-btn
+    cursor-pointer w-full
     ">
     {{name}}
 </button>
+{% endpartialdef %}
+
+
+{% partialdef check_button %}
+    <input id="id_remember" name="remember" type="checkbox" class="h-4 w-4 text-col_bright_1 focus:ring-col_bright_2 border-col_bright_3 rounded" />
+    <label for="id_remember" class="ml-2 block text-sm text-col_bright_6">{{label}}</label>
+{% endpartialdef %}

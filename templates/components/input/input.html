@@ -1,0 +1,16 @@
+{% partialdef input_label %}
+    <label for="id_input" class="text-col_con ml-2">{{label}}</label>
+    <input
+        class="bg-col_bas_mai w-full p-2.5 border-0 rounded-lg
+                text-col_con text-sm focus:outline-none focus:ring-2
+                focus:ring-col_suc_mai mt-4"
+        id="id_input"
+        type="{{type}}"
+        {% if required %}
+            required
+        {% endif %}
+        name="{{name}}"
+        placeholder="{{placeholder}}"
+    />
+
+{% endpartialdef %}
