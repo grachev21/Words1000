@@ -1,101 +1,48 @@
-{% extends 'base.html' %}
+{% extends "base.html" %}
 {% load allauth i18n %}
 
+{% block head_title %}
+    {% trans "Signup" %}
+{% endblock head_title %}
+
 {% block content %}
-  <div class="min-h-screen flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8 bg-gray-50">
-    <div class="max-w-md w-full space-y-8 bg-white shadow-xl p-8 rounded-xl border border-gray-200">
-      <!-- Заголовок -->
-      <div class="text-center">
-        <h2 class="mt-6 text-3xl font-bold text-gray-900">Регистрация</h2>
-        <p class="mt-2 text-sm text-gray-600">
-          Создайте новый аккаунт
+
+<div class="min-h-screen flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+  <div class="max-w-md w-full space-y-8 bg-gradient-to-br from-col_bas_hig to-col_bas_mai shadow-lg p-8 rounded-xl">
+      <h2 class="mt-6 text-center text-3xl font-extrabold text-col_con">Регистрация</h2>
+
+
+        <p class="mt-2 text-center text-sm text-col_suc_ave">
+            Если уже зарегистрированы
+          <a href="{{ login_url }}" class="font-medium text-col_bright_2 hover:text-col_bright_3">войти</a>
         </p>
-      </div>
 
-      <!-- Ссылка на вход -->
-      <p class="text-center text-sm text-gray-600">
-        Уже есть аккаунт? 
-        <a href="{{ login_url }}" class="font-medium text-blue-600 hover:text-blue-500 transition-colors">
-          Войдите
-        </a>
-      </p>
-
-      <!-- Форма регистрации -->
-      {% if not SOCIALACCOUNT_ONLY %}
+    {% if not SOCIALACCOUNT_ONLY %}
         {% url 'account_signup' as action_url %}
-        <form method="post" action="{{ action_url }}" class="mt-8 space-y-6">
-          {% csrf_token %}
-          
-          <!-- Отображение полей формы -->
-          {% for field in form %}
-            <div>
-              <label for="{{ field.id_for_label }}" class="block text-sm font-medium text-gray-700 mb-1">
-                {{ field.label }}
-                {% if field.field.required %}<span class="text-red-500">*</span>{% endif %}
-              </label>
-              <input type="{{ field.field.widget.input_type }}" 
-                     name="{{ field.name }}"
-                     id="{{ field.id_for_label }}"
-                     value="{{ field.value|default_if_none:'' }}"
-                     class="appearance-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 focus:z-10 sm:text-sm transition-all"
-                     placeholder="{{ field.field.widget.attrs.placeholder|default:'' }}">
-              {% if field.errors %}
-                <div class="mt-1 text-sm text-red-600">
-                  {{ field.errors }}
-                </div>
-              {% endif %}
-              {% if field.help_text %}
-                <p class="mt-1 text-xs text-gray-500">{{ field.help_text }}</p>
-              {% endif %}
-            </div>
-          {% endfor %}
-          
-          <!-- Скрытое поле для редиректа -->
-          {{ redirect_field }}
-          
-          <!-- Кнопка отправки -->
-          <button type="submit" class="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors">
-            Зарегистрироваться
-          </button>
-        </form>
-      {% endif %}
-
-      <!-- Дополнительные опции -->
-      {% if PASSKEY_SIGNUP_ENABLED %}
-        <div class="relative mt-6">
-          <div class="absolute inset-0 flex items-center">
-            <div class="w-full border-t border-gray-300"></div>
-          </div>
-          <div class="relative flex justify-center text-sm">
-            <span class="px-2 bg-white text-gray-500">Или</span>
-          </div>
-        </div>
-        
-        <a href="{{ signup_by_passkey_url }}" class="w-full flex justify-center py-2 px-4 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors">
-          Зарегистрироваться с помощью passkey
-        </a>
-      {% endif %}
-
-      <!-- Социальные сети -->
-      {% if SOCIALACCOUNT_ENABLED %}
-        <div class="relative mt-6">
-          <div class="absolute inset-0 flex items-center">
-            <div class="w-full border-t border-gray-300"></div>
-          </div>
-          <div class="relative flex justify-center text-sm">
-            <span class="px-2 bg-white text-gray-500">Или войдите через</span>
-          </div>
-        </div>
-        
-        <div class="mt-6 space-y-3">
-          {% for provider in socialaccount.providers %}
-            <a href="{% provider_login_url provider.id process='login' scope=scope auth_params=auth_params %}" 
-               class="w-full flex justify-center items-center py-2 px-4 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors">
-              <span>Войти через {{ provider.name }}</span>
-            </a>
-          {% endfor %}
-        </div>
-      {% endif %}
+        {% element form form=form method="post" action=action_url tags="entrance,signup" %}
+            {% slot body %}
+                {% csrf_token %}
+                {% element fields form=form unlabeled=True %}
+                {% endelement %}
+                {{ redirect_field }}
+            {% endslot %}
+            {% slot actions %}
+                {% element button tags="prominent,signup" type="submit" %}
+                    {% trans "Sign Up" %}
+                {% endelement %}
+            {% endslot %}
+        {% endelement %}
+    {% endif %}
+    {% if PASSKEY_SIGNUP_ENABLED %}
+        {% element hr %}
+        {% endelement %}
+        {% element button href=signup_by_passkey_url tags="prominent,signup,outline,primary" %}
+            {% trans "Sign up using a passkey" %}
+        {% endelement %}
+    {% endif %}
+    {% if SOCIALACCOUNT_ENABLED %}
+        {% include "socialaccount/snippets/login.html" with page_layout="entrance" %}
+    {% endif %}
     </div>
-  </div>
-{% endblock %}
+</div>
+{% endblock content %}

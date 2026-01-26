@@ -12,7 +12,14 @@
             type="image/x-icon"
         />
         <meta charset="utf-8" />
-        <title>{{ title }}</title>
+        {% if title  %}
+            <title>{{ title }}</title>
+        {% else %}
+        <title>
+            {% block head_title %}
+            {% endblock %}
+        </title>
+        {% endif %}
     </head>
 
     <body
