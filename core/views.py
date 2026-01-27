@@ -49,6 +49,6 @@ class WordsPage(WordsMixin, LoginRequiredMixin, TemplateView):
         context["page_obj"] = page_obj
         context["words_user"] = filter_data["words_user"]
         # Получаем STATUS_CHOICES из модели WordsUser, а не из QuerySet
-        context["status_choices"] = WordsUser.STATUS_CHOICE
+        context["status_choices"] = WordsUser.Status
         context["current_status"] = filter_data["status_filter"]
         return self.init_data(user=self.request.user, context=context)

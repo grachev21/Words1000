@@ -27,7 +27,6 @@ TEMPLATES[0]["OPTIONS"]["context_processors"] += [
 TEMPLATES[0]["OPTIONS"]["builtins"] = [
     "heroicons.templatetags.heroicons",
 ]
-print(TEMPLATES)
 
 # for debug_toolbar
 INTERNAL_IPS = ["127.0.0.1"]

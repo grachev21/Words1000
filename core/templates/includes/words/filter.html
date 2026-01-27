@@ -29,7 +29,7 @@
           Все статусы
         </a>
 
-        {% for value, label in status_choices %}
+        {% for value, label in Status %}
           <a href="?status={{ value }}"
             class="my-2 block py-2 font-semibold {% if current_status == value %}
               text-col_attn

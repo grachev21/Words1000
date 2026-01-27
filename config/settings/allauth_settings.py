@@ -1,10 +1,13 @@
 from .root_settings import *
 
 INSTALLED_APPS += [
+    "allauth_ui",
     "allauth",
     "allauth.account",
     "allauth.socialaccount",
     "allauth.socialaccount.providers.google",
+    "widget_tweaks",
+    "slippers",
 ]
 
 
@@ -44,3 +47,5 @@ SOCIALACCOUNT_PROVIDERS = {
         },
     }
 }
+# settings.py
+ALLAUTH_UI_THEME = "dark"

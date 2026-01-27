@@ -9,17 +9,17 @@ def global_context(request):
             {
                 "name": "Слова",
                 "url_name": "words",
-                "img_name": "list",
+                "img_name": "list-bullet",
             },
             {
                 "name": "Учить",
                 "url_name": "game",
-                "img_name": "learn",
+                "img_name": "book-open",
             },
             {
                 "name": "Настройки",
                 "url_name": "settings",
-                "img_name": "settings",
+                "img_name": "cog-6-tooth",
             },
         ],
         "user_menu": [
