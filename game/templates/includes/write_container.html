@@ -1,61 +1,30 @@
-{% load static %} {{ user_settings|json_script:"user-settings" }}
-<main
-    id="write-container"
-    class="w-4xl h-[400px] mx-auto bg-col_bas_mai absolute rounded-lg p-6 text-center flex-col justify-between border border-col_con/15 fill-white drop-shadow-xl/25 z-0"
->
-    <div class="flex flex-col justify-center h-full">
-        <div>
-            <p class="text-col_con text-2xl">Введите слово</p>
-            <div class="flex flex-row text-col_con_inv">
-                <p class="px-2">Осталось:</p>
-                <p id="counter-write" class="px-2">8</p>
-            </div>
-        </div>
-        <span class="flex flex-col justify-center h-full">
-            <!-- word-en -->
-            <div class="flex flex-row items-center">
-                <img
-                    class="w-6 h-6 mr-4 mt-1"
-                    src="{% static 'icons/keyboard.png' %}"
-                    alt="Logo"
-                />
-                <input
-                    id="input-text-en"
-                    placeholder="{{correct_word.word_en}}"
-                    class="text-3xl text-col_suc_ave focus:outline-none border border-col_con/15 p-1 rounded-lg"
-                    autofocus
-                    data-word="{{correct_word.word_en}}"
-                    type="text"
-                />
-            </div>
-            <!-- word-ru -->
-            {% with correct_word.word_ru.split.0|cut:"," as first_word %}
-
-            <div class="flex flex-row items-center">
-                <img
-                    class="w-6 h-6 mr-4 mt-1"
-                    src="{% static 'icons/keyboard.png' %}"
-                    alt="Logo"
-                />
-                <input
-                    id="input-text-ru"
-                    placeholder="{{first_word}}"
-                    class="text-3xl text-col_suc_ave focus:outline-none border border-col_con/15 p-1 rounded-lg"
-                    autofocus
-                    data-word="{{first_word}}"
-                    type="text"
-                />
-            </div>
-            {% endwith %}
-        </span>
+{% load static %} {{ user_settings|json_script:'user-settings' }}
+<template x-if="false" id="write-container" class="w-4xl h-[400px] mx-auto bg-col_bas_mai rounded-lg p-6 text-center flex-col justify-between border border-col_con/15 fill-white drop-shadow-xl/25 z-0">
+  <div class="flex flex-col justify-center h-full">
+    <div>
+      <p class="text-col_con text-2xl">Введите слово</p>
+      <div class="flex flex-row text-col_con_inv">
+        <p class="px-2">Осталось:</p>
+        <p id="counter-write" class="px-2">8</p>
+      </div>
     </div>
-</main>
+    <span class="flex flex-col justify-center h-full">
+      <!-- word-en -->
+      <div class="flex flex-row items-center">
+        <img class="w-6 h-6 mr-4 mt-1" src="{% static 'icons/keyboard.png' %}" alt="Logo" />
+        <input id="input-text-en" placeholder="{{ correct_word.word_en }}" class="text-3xl text-col_suc_ave focus:outline-none border border-col_con/15 p-1 rounded-lg" autofocus data-word="{{ correct_word.word_en }}" type="text" />
+      </div>
+      <!-- word-ru -->
+      {% with first_word=correct_word.word_ru.split.0|cut:',' %}
+        <div class="flex flex-row items-center">
+          <img class="w-6 h-6 mr-4 mt-1" src="{% static 'icons/keyboard.png' %}" alt="Logo" />
+          <input id="input-text-ru" placeholder="{{ first_word }}" class="text-3xl text-col_suc_ave focus:outline-none border border-col_con/15 p-1 rounded-lg" autofocus data-word="{{ first_word }}" type="text" />
+        </div>
+      {% endwith %}
+    </span>
+  </div>
+</template>
 
-<div
-    id="screen-blackout"
-    class="invisible fixed left-0 top-0 bg-col_nit_con/25 w-full h-full z-50 flex justify-center items-center"
->
-    <div
-        class="text-col_suc text-9xl rounded-lg backdrop-blur-lg p-34 bg-col_bas_mai border border-col_con_inv/15 shadow-lg"
-    ></div>
+<div id="screen-blackout" class="invisible fixed left-0 top-0 bg-col_nit_con/25 w-full h-full z-50 flex justify-center items-center">
+  <div class="text-col_suc text-9xl rounded-lg backdrop-blur-lg p-34 bg-col_bas_mai border border-col_con_inv/15 shadow-lg"></div>
 </div>

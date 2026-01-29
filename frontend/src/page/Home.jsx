@@ -1,0 +1,48 @@
+import TitleDescription from "@/components/typography/TitleDescription";
+
+const Home = () => {
+  return (
+    <main>
+      <TitleDescription
+        start={"Все слова,"}
+        center={"|_Тут"}
+        finish={"!"}
+        description={
+          "Пробегает вся 1000 слов, те которые вы уже выучили имеют странный вид..."
+        }
+      />
+
+      {/* {% include 'includes/running_line.html' %} */}
+
+      {/* {% include 'components/title/title_and_description.html' with start='Ваши настройки' center='|_Тут' finish='!' description='Все ваши установки и достижения' %} */}
+
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-2 gap-8">
+        {/* {% if request.user.is_authenticated %}
+          {% card_data serve as data_card %}
+          {% for item in data_card %}
+            {% include 'components/card/card_info.html#card_info' %}
+          {% endfor %}
+      {% endif %} */}
+      </div>
+
+      {/* {% if request.user.is_authenticated %}
+    {{ chart_date|json_script:'chart-data' }}
+
+  {% include 'components/title/title_and_description.html' with start='Графики' center='|_Тут' finish='!' description='' %} */}
+      <div
+        x-data="{ activeTab: 'tab1' }"
+        className="mt-20 p-8 border border-col_con/15 rounded-lg shadow-lg bg-gradient-to-br from-col_bas_hig to-col_bas_mai"
+      >
+        {/* {% include 'components/tabs/tab_line.html' with btn='Неделя-1,Месяц-2,Год-5' %}
+
+      {% include 'includes/home/charts/chart.html' with id='myChartWeek' tab_number=1 %}
+      {% include 'includes/home/charts/chart.html' with id='myChartMonth' tab_number=2 %}
+      {% include 'includes/home/charts/chart.html' with id='myChartYear' tab_number=3 %} */}
+      </div>
+      {/* <!-- End Charts -->
+  {% endif %} */}
+    </main>
+  );
+};
+
+export default Home;

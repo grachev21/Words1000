@@ -5,7 +5,7 @@
       <!-- Передняя сторона -->
       <div class="flip-card-front absolute w-full h-full backface-hidden border border-col_con/15 rounded-xl shadow-lg p-6 flex flex-col justify-center items-center">
         <h3 class="text-3xl font-bold text-col_con_inv mb-2">{{name.word_en}}</h3>
-        {% include "components/button/button.html" with name="Перевернуть" %}
+        {% include "components/button/button.html#button" with name="Перевернуть" class="flip-btn" %}
       </div>
 
       <!-- Задняя сторона -->

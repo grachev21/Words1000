@@ -1,6 +1,6 @@
 // import Header from "./header/header.js";
 import ChartHome from "./home.js";
-import Game from "./game/game.js";
+// import Game from "./game/game.js";
 
 let routeInitialized = false;
 
@@ -17,8 +17,6 @@ function checkRoute() {
         console.log("hello");
     } else if (currentPath === "/words/") {
 
-    } else if (currentPath === "/game/") {
-        new Game();
     } else if (currentPath === "/settings/") {
     }
 

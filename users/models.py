@@ -64,12 +64,13 @@ class User(AbstractBaseUser, PermissionsMixin):
 
 # A model that stores information about the user's progress with some words
 class WordsUser(models.Model):
-    # Options for user status in relation to the word
-    class Status(models.IntegerChoices):
-        UNKNOWN = 1, "Неизвестно"
-        LEARNING = 2, "Изучаю"
-        REPETITION = 3, "Повторяю"
-        LEARNED = 4, "Изучил"
+    STATUS_CHOICE = [
+        ("1", "Неизвестно"),
+        ("2", "Изучаю"),
+        ("3", "Повторяю"),
+        ("4", "Изучил"),
+    ]
+
 
     # Record creation date (automatically set upon creation)
     created_at = models.DateTimeField(auto_now_add=True, verbose_name="Дата создания")
@@ -77,12 +78,12 @@ class WordsUser(models.Model):
     number_repetitions = models.IntegerField(
         default=0, verbose_name="Количество сделанных повторов"
     )
+
     # Status of word learning using predefined options
-    status = models.IntegerField(
-        choices=Status.choices,
-        default=Status.UNKNOWN,
-        verbose_name="Этап запоминания",
+    status = models.CharField(
+        choices=STATUS_CHOICE, max_length=1, default="1", verbose_name="Этап запоминания"
     )
+
     # Communication with the user - specify the user model from the settings so as not to be strictly bound
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     # Link to a word from the main word model

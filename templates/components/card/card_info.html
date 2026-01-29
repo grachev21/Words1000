@@ -5,7 +5,8 @@
       <div class="flex-grow truncate">
         <div class="w-full sm:flex justify-between items-center mb-3">
           <h2 class="text-1xl leading-snug font-extrabold text-col_con_inv truncate mb-1 sm:mb-0">{{ item.serve.name }}</h2>
-            {% include "icons.html#"|add:item.icon with class=item.icon_class  %}
+            {% comment %} {% include "icons.html#"|add:item.icon with class=item.icon_class  %} {% endcomment %}
+            {% heroicon_outline item.icon class=item.icon_class %}
         </div>
         <a href="" class="bg-col_bright_4/25 px-4 py-2 font-light text-xs rounded-lg text-col_con">ПОСМОТРЕТЬ</a>
         <div class="flex items-end justify-between whitespace-normal mt-4">

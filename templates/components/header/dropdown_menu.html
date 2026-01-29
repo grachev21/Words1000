@@ -10,7 +10,7 @@
             <span class="hidden h-10 space-x-5 items-center justify-between lg:flex text-col_con font-bold">
                 Пользователь
             </span>
-           {% include "icons.html#user" with class="text-col_bright_2 w-6 h-6 ml-4" %}
+           {% heroicon_outline "user" class="text-col_bright_2" %}
         </button>
         <!-- Menu -->
         <div x-show="open" @click.outside="open = false"
