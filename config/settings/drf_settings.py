@@ -2,8 +2,17 @@ from .root_settings import *
 
 
 INSTALLED_APPS += [
+    "corsheaders",
     "rest_framework",
 ]
+
+MIDDLEWARE += ['corsheaders.middleware.CorsMiddleware',]
+
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:5173",
+]
+
+CORS_ALLOW_CREDENTIALS = True
 
 REST_FRAMEWORK = {
     "DEFAULT_RENDERER_CLASSES": [

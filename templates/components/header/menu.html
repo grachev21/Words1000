@@ -1,11 +1,4 @@
 {% load static %}
 
 <div class="hidden flex-row items-center sm:flex sm:ml-4 lg:ml-12 xl:mx-46">
-    {% for m in menu %}
-        {% if request.resolver_match.url_name == m.url_name %}
-            {% include "components/link/link.html#link_icon" with image=m.img_name link=m.url_name name=m.name active="ok" %}
-        {% else %}
-            {% include "components/link/link.html#link_icon" with image=m.img_name link=m.url_name name=m.name active="no" %}
-        {% endif %}
-    {% endfor %}
 </div>

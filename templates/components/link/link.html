@@ -1,4 +1,3 @@
-{% load heroicons %}
 {% load static %}
 
 {% partialdef link_icon %}
@@ -10,9 +9,7 @@
         {% endif %}
     >
         {% if active == "ok" %}
-            {% heroicon_outline image class="text-col_bright_2 w-4 h-4" %}
         {% elif active == "no" %}
-            {% heroicon_outline image class="text-col_bright_1 w-4 h-4" %}
         {% endif %}
     </div>
 <a

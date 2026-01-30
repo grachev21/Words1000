@@ -7,25 +7,14 @@ INSTALLED_APPS += [
     "settings.apps.SettingsConfig",
     "users.apps.UsersConfig",
     "game.apps.GameConfig",
-    # Libs
-    "debug_toolbar",
-    "django_browser_reload",
-    "heroicons",
 ]
 
-MIDDLEWARE += [
-    "debug_toolbar.middleware.DebugToolbarMiddleware",
-    "django_browser_reload.middleware.BrowserReloadMiddleware",
-]
 
 # TEMPLATES
 TEMPLATES[0]["DIRS"] = [BASE_DIR / "templates", BASE_DIR / "icons"]
 TEMPLATES[0]["OPTIONS"]["context_processors"] += [
     "core.context_processors.site_settings",
     "config.context_processors.global_context",
-]
-TEMPLATES[0]["OPTIONS"]["builtins"] = [
-    "heroicons.templatetags.heroicons",
 ]
 
 # for debug_toolbar
