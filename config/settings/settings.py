@@ -1,6 +1,5 @@
 from .root_settings import *
 
-
 INSTALLED_APPS += [
     # App
     "core.apps.CoreConfig",
@@ -8,6 +7,7 @@ INSTALLED_APPS += [
     "users.apps.UsersConfig",
     "game.apps.GameConfig",
     # Libs
+    "django_cotton",
     "debug_toolbar",
     "django_browser_reload",
     "heroicons",

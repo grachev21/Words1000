@@ -1,0 +1,12 @@
+<a
+    href="{% url link %}"
+    {% if active %}
+        class="text-col_bright_1 cursor-pointer
+        border-b-2 border-col_bright_1 py-2"
+    {% else %}
+        class="text-col_con cursor-pointer
+        hover:text-col_bright_6 py-2"
+    {% endif %} }
+>
+    {{ name }}
+</a>

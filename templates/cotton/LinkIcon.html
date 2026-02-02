@@ -1,0 +1,26 @@
+<div class="flex flex-row items-center md:mx-4">
+    <div {% if active %}
+            class="bg-col_bright_2/25 p-2 rounded-full"
+        {% else %}
+            class="bg-col_bright_1/25 p-2 rounded-full"
+        {% endif %}
+    >
+        {% if active %}
+            {% heroicon_outline image class="text-col_bright_2 w-4 h-4" %}
+        {% else %}
+            {% heroicon_outline image class="text-col_bright_1 w-4 h-4" %}
+        {% endif %}
+    </div>
+<a
+    href="{% url link %}"
+    {% if active %}
+        class="text-col_bright_1 cursor-pointer
+        mx-2 border-b-2 border-col_bright_1 pb-1"
+    {% else %}
+        class="text-col_con cursor-pointer
+        mx-2 pb-1 hover:text-col_bright_6"
+    {% endif %} }
+>
+    {{ name }}
+</a>
+</div>

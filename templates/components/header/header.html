@@ -1,20 +1,25 @@
-<!-- Header -->
-
 {% load static %}
+
 <header
-  class="fixed flex items-center border-b border-col_con/15 top-0 left-0 w-full z-50 min-h-16 bg-col_bas_mai/80 backdrop-blur-2xl">
+  class="fixed flex items-center border-b border-col_con/15 top-0 left-0 w-full z-50 min-h-16 bg-col_bas_mai/80 backdrop-blur-2xl"
+>
   <main class="w-full mx-4 md:mx-12 flex flex-row justify-between items-center">
     <div class="flex flex-row justify-between items-center">
-      {% include 'components/header/logo.html' %}
+      <c-Logo />
       <nav class="flex flex-row">
-        {% include 'components/header/menu.html' %}
-        {% include 'components/header/dropdown_menu.html' %}
+        <c-Menu />
+        <c-DropDownMenu />
       </nav>
     </div>
 
-    {% include 'components/header/theme_toggle.html' %}
+    <c-ThemeToggle />
 
     <!-- burger -->
-    <img class="sm:hidden w-6 h-6" id="burger" src="{% static 'icons/menu.png' %}" alt="" />
+    <img
+      class="sm:hidden w-6 h-6"
+      id="burger"
+      src="{% static 'icons/menu.png' %}"
+      alt=""
+    />
   </main>
 </header>
