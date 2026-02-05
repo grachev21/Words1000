@@ -1,5 +1,5 @@
 <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
-  <c-pages.words.filter 
+  <c-navigation.filter 
     :btn="btn_status"
     :status="current_status"
     :list_status="status_choices"
@@ -12,42 +12,28 @@
 <!-- List of words -->
 <div class="space-y-3">
   {% for word in page_obj %}
-  <div class="border border-col_suc_mai rounded-lg p-4 hover:shadow-md transition-shadow">
-    <div class="flex flex-col sm:flex-row sm:justify-between sm:items-start gap-2 mb-2">
-      <h5 class="text-lg font-semibold text-col_con">{{ word.core_words.word_en }}</h5>
-      <span class="text-sm text-col_con_inv">{{ word.created_at|date:'d.m.Y H:i' }}</span>
-    </div>
-    <p class="text-col_con mb-2">{{ word.core_words.word_ru }}</p>
-    <p class="text-sm text-col_con_inv mb-3">{{ word.core_words.transcription }}</p>
-    <div class="flex flex-wrap items-center gap-2">
-
-      <span class="text-sm text-col_con_inv">Статус:</span>
-      <span class="px-3 py-1 rounded-full text-xs font-medium
-        {% if word.Status == 1 %}
-              bg-col_bright_2 text-col_con
-            {% elif word.status == 2 %}
-              bg-col_bright_3 text-col_con
-            {% elif word.status == 3 %}
-              bg-col_bright_4 text-col_con
-            {% elif word.status == 4 %}
-              bg-col_bright_5 text-col_con
-            {% else %}
-              bg-col_bright_1 text-col_con
-          {% endif %}">
-        {{ word.get_status_display }}
-      </span>
-      <span class="text-sm text-col_con_inv">Повторов:</span>
-      <span class="px-3 py-1 rounded-full
-          bg-blue-100 text-blue-800
-          text-xs font-medium">
-        {{ word.number_repetitions }}
-      </span>
-    </div>
-  </div>
-  {% empty %}
-  <div class="bg-col_bas_mai rounded-lg p-6 text-center">
-    <p class="text-col_attn">Слова не найдены</p>
-  </div>
+    <c-cards.card-list 
+      :title="word.core_words.word_en"
+      :meaning="word.core_words.word_ru"
+      :description="word.core_words.transcription"
+      :status="word.status"
+      :status_display="word.get_status_display"
+      :count="word.number_repetitions"
+      :created="word.created_at"
+      class="
+        {% if word.status == 1 %}
+          bg-col_bright_2
+        {% elif word.status == 2 %}
+          bg-col_bright_3
+        {% elif word.status == 3 %}
+          bg-col_bright_4
+        {% elif word.status == 4 %}
+          bg-col_bright_5
+        {% else %}
+          bg-col_bright_1
+        {% endif %}
+        "
+    />
   {% endfor %}
 </div>
 

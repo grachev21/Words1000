@@ -19,11 +19,16 @@
   </div>
 
   <div x-show="activeTab === 'tab2'" class="p-4 rounded-lg">
-    <c-cards.card-flip
-      content="{{ page_obj }}"
-      front_button="Перевернуть"
-      back_button="Назад"
-    />
+    {% for word in page_obj %}
+      <c-cards.card-flip
+        front-content="{{ word.core_words.word.en}}"
+        back-content="{{ word.core_words.word.ru}}"
+        front-button="Перевернуть"
+        back-utton="Назад"
+        id_btn="flip-btn-{{ forloop.counter }}"
+        id_card="flip-card-{{ forloop.counter }}"
+      />
+    {% endfor %}
   </div>
 </div>
 
