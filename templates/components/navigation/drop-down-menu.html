@@ -17,6 +17,7 @@
     <div
       x-show="open"
       @click.outside="open = false"
+      x-transition
       class="bg-col_bas_mai z-50 mt-3.5 lg:mt-5 text-md lg:text-md pl-5 flex flex-col w-full shadow-xl lg:border lg:border-col_con_inv/15 rounded-lg absolute"
     >
         {% for item in data %}

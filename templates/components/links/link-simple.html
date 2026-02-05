@@ -1,12 +1,17 @@
 <a
+  {% if custom_link %}
+    href="{{ link }}"
+  {% else %}
     href="{% url link %}"
+  {% endif %}
+  class="
+    cursor-pointer py-2
     {% if active %}
-        class="text-col_bright_1 cursor-pointer
-        border-b-2 border-col_bright_1 py-2"
+      text-col_bright_1 border-b-2 border-col_bright_1
     {% else %}
-        class="text-col_con cursor-pointer
-        hover:text-col_bright_6 py-2"
-    {% endif %} }
+      text-col_con hover:text-col_bright_6
+    {% endif %}
+  "
 >
-    {{ name }}
+  {{ name }}
 </a>

@@ -1,5 +1,9 @@
 <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
-  <c-pages.words.filter />
+  <c-pages.words.filter 
+    :btn="btn_status"
+    :status="current_status"
+    :list_status="status_choices"
+  />
   {% for bar in info_bar_data %}
     <c-others.info-marker class="bg-col_bright_{{forloop.counter}}" content="{{bar.title}}" count="{{bar.data}}" />
   {% endfor %}
@@ -19,14 +23,16 @@
 
       <span class="text-sm text-col_con_inv">Статус:</span>
       <span class="px-3 py-1 rounded-full text-xs font-medium
-        {% if word.status == '1' %}
-              bg-gray-200 text-gray-800
-            {% elif word.status == '2' %}
-              bg-yellow-200 text-yellow-800
-            {% elif word.status == '3' %}
-              bg-green-200 text-green-800
+        {% if word.Status == 1 %}
+              bg-col_bright_2 text-col_con
+            {% elif word.status == 2 %}
+              bg-col_bright_3 text-col_con
+            {% elif word.status == 3 %}
+              bg-col_bright_4 text-col_con
+            {% elif word.status == 4 %}
+              bg-col_bright_5 text-col_con
             {% else %}
-              bg-blue-200 text-blue-800
+              bg-col_bright_1 text-col_con
           {% endif %}">
         {{ word.get_status_display }}
       </span>

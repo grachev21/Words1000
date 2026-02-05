@@ -1,5 +1,3 @@
-# Views
-
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
 from django.urls import reverse_lazy
@@ -7,7 +5,6 @@ from django.views.generic import TemplateView
 
 from core.services.services import ServicesMixin, WordsMixin
 from core.services.services_chart import ChartMixin
-from mixins.htmx_mixin import HtmxMixin
 from users.models import WordsUser
 
 
@@ -26,17 +23,12 @@ class Home(ChartMixin, ServicesMixin, TemplateView):
 class WordsPage(WordsMixin, LoginRequiredMixin, TemplateView):
     template_name = "components/pages/words/words.html"
     login_url = reverse_lazy("register")
-    paginate_by = 10
+    paginate_by = 100
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        filter_data = self.filter(
-            status=self.request.GET.get("status"), user=self.request.user
-        )
 
-        # Создаём Paginator
-        paginator = Paginator(filter_data["words_user"], self.paginate_by)
-        # Получаем номер страницы из GET-параметра
+        paginator = Paginator(self.filter["words_user"], self.paginate_by)
         page_number = self.request.GET.get("page", 1)
 
         try:
@@ -47,8 +39,4 @@ class WordsPage(WordsMixin, LoginRequiredMixin, TemplateView):
             page_obj = paginator.page(paginator.num_pages)
 
         context["page_obj"] = page_obj
-        context["words_user"] = filter_data["words_user"]
-        # Получаем STATUS_CHOICES из модели WordsUser, а не из QuerySet
-        context["status_choices"] = WordsUser.Status
-        context["current_status"] = filter_data["status_filter"]
-        return self.init_data(user=self.request.user, context=context)
+        return context
