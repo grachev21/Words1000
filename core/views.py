@@ -12,7 +12,7 @@ from users.models import WordsUser
 
 
 class Home(ChartMixin, ServicesMixin, TemplateView):
-    template_name = "core/home.html"
+    template_name = "components/pages/home/home.html"
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -24,7 +24,7 @@ class Home(ChartMixin, ServicesMixin, TemplateView):
 
 
 class WordsPage(WordsMixin, LoginRequiredMixin, TemplateView):
-    template_name = "core/words.html"
+    template_name = "components/pages/words/words.html"
     login_url = reverse_lazy("register")
     paginate_by = 10
 

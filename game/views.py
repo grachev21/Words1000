@@ -16,7 +16,7 @@ class Game(GameMixin, SettingsMixin, LoginRequiredMixin, FormView):
     And increases the repetition counter for the interval system.
     """
 
-    template_name = "game/game.html"
+    template_name = "components/pages/game/game.html"
     form_class = WordCheck
     login_url = reverse_lazy("register")
     success_url = reverse_lazy("home")

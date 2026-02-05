@@ -1,0 +1,10 @@
+<button
+  @click="activeTab = 'tab{{tab_number}}'"
+  :class="{
+    'bg-col_bright_1 shadow-lg shadow-col_bright_1/50': activeTab === 'tab{{tab_number}}',
+    'bg-col_bright_4/20': activeTab !== 'tab{{tab_number}}',
+    }"
+  class="px-4 py-2 text-col_con rounded-lg font-semibold hover:bg-col_bright_2 hover:shadow-col_bright_2/50 cursor-pointer"
+>
+  {{name}}
+</button>

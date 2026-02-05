@@ -1,0 +1,14 @@
+<main class="mb-8">
+  <div
+    class="relative h-4 rounded-full overflow-hidden bg-col_nit_con mt-10 mx-10"
+  >
+    <div
+      class="absolute top-0 bottom-0 left-0 rounded-full bg-gradient-to-r from-col_con_inv to-col_suc"
+      style="width: {{ progress }}%"
+    ></div>
+  </div>
+
+  <div class="ml-10 mt-4 text-col_con_inv">
+    Осталось выучить: {{remainder}} слов {{progress}}
+  </div>
+</main>

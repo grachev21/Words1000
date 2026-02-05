@@ -19,7 +19,7 @@ MIDDLEWARE += [
 ]
 
 # TEMPLATES
-TEMPLATES[0]["DIRS"] = [BASE_DIR / "templates", BASE_DIR / "icons"]
+TEMPLATES[0]["DIRS"] = [BASE_DIR / "templates"]
 TEMPLATES[0]["OPTIONS"]["context_processors"] += [
     "core.context_processors.site_settings",
     "config.context_processors.global_context",
@@ -67,3 +67,6 @@ STATIC_URL = "/static/"  # URL для статики
 
 MEDIA_URL = "/media/"
 MEDIA_ROOT = os.path.join(BASE_DIR, "media/")
+
+COTTON_DIR = "components"
+COTTON_SNAKE_CASED_NAMES = False 

@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+{% load template_simple_tags %}
+
+{% block content %}
+  <c-typography.title-and-description
+    start='Все слова,'
+    center='|_Тут'
+    finish='!'
+    description='Пробегает вся 1000 слов, те которые вы уже выучили имеют странный вид...'
+  />
+
+  <c-organism.running-line />
+
+  <c-typography.title-and-description 
+    start='Ваши настройки' 
+    center='|_Тут' 
+    finish='!' 
+    description='Все ваши установки и достижения'
+  />
+
+  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-2 gap-8">
+      {% if request.user.is_authenticated %}
+          {% card_data serve as data_card%}
+          {% for item in data_card %}
+            <c-cards.card-info />
+          {% endfor %}
+      {% endif %}
+  </div>
+
+
+  {% if request.user.is_authenticated %}
+    {{ chart_date|json_script:'chart-data' }}
+
+    <c-typography.title-and-description 
+      start='Графики' 
+      center='|_Тут' 
+      finish='!' 
+      description='' 
+    />
+
+    <div 
+      x-data="{ activeTab: 'tab1' }" 
+      class="mt-20 p-8 border border-col_con/15 rounded-lg shadow-lg bg-gradient-to-br from-col_bas_hig to-col_bas_mai">
+      <c-tabs.tab-line  
+        :content="[
+          {'btn': 'Неделя', 'num': 1}, 
+          {'btn': 'Месяц', 'num': 2}, 
+          {'btn': 'Год', 'num': 5}
+      ]" />
+      <c-charts.chart id='myChartWeek' tab_number=1 />
+      <c-charts.chart id='myChartMonth' tab_number=2 />
+      <c-charts.chart id='myChartYear' tab_number=3 />
+    </div>
+  {% endif %}
+{% endblock %}

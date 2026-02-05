@@ -1,0 +1,10 @@
+<div class="flex flex-row items-center text-col_con ml-6">
+  <div class="p-1 h-4 w-4 my-2 rounded-full {{ class }}"></div>
+
+  <p class="ml-4 font-light">{{content}}</p>
+
+  {% if count %}
+  <div class="text-col_bright_2 mx-1.5">/</div>
+  <div class="text-col_con_inv">{{count}}</div>
+  {% endif %}
+</div>

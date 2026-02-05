@@ -13,27 +13,27 @@ def card_data(serve):
     data = [
         {
             "serve": serve[0],
-            "icon": "settings",
+            "icon": "cog-6-tooth",
             "icon_class": "w-12 h-12 text-col_bright_1",
         },
         {
             "serve": serve[1],
-            "icon": "weight",
+            "icon": "scale",
             "icon_class": "w-12 h-12 text-col_bright_2",
         },
         {
             "serve": serve[2],
-            "icon": "weight",
+            "icon": "presentation-chart-bar",
             "icon_class": "w-12 h-12 text-col_bright_3",
         },
         {
             "serve": serve[3],
-            "icon": "balance",
+            "icon": "circle-stack",
             "icon_class": "w-12 h-12 text-col_bright_4",
         },
         {
             "serve": serve[4],
-            "icon": "learn",
+            "icon": "book-open",
             "icon_class": "w-12 h-12 text-col_bright_5",
         },
     ]
