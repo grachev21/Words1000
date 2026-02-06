@@ -1,36 +1,35 @@
 <div class="w-full rounded-lg flex flex-wrap justify-between">
-
   <div class="flip-card w-64 h-86 m-8 perspective-1000">
     <div
-      class="flip-card-inner relative w-full h-full transition-transform duration-700 transform-style-preserve-3d"
+      id="{{IdCard}}"
+      class="relative w-full h-full transition-transform duration-700 transform-style-preserve-3d"
     >
       <div
         class="flip-card-front absolute w-full h-full backface-hidden border border-col_con/15 rounded-xl shadow-lg p-6 flex flex-col justify-center items-center"
       >
         <h3 class="text-3xl font-bold text-col_con_inv mb-2">
-          {{ item.core_words.word_en }}
+          {{ FrontContent }}
         </h3>
-        <c-buttons.button name={{front_button}} />
+        <c-buttons.button name="{{FrontButton}}" id="{{IdBtnFront}}" />
       </div>
 
       <div
         class="flip-card-back absolute w-full h-full backface-hidden bg-gradient-to-br from-col_suc to-col_suc_mai text-col_con rounded-xl shadow-lg p-6 flex flex-col justify-center items-center transform rotate-y-180 border border-col_con/15"
       >
         <h3 class="text-2xl font-bold mb-2">Ответ</h3>
-        <p class="text-center">{{ item.core_words.word_ru }}</p>
-        <c-buttons.button-light name={{back_button}} />
+        <p class="text-center">{{ BackContent }}</p>
+        <c-buttons.button-light name="{{BackButton}}" id="{{IdBtnBack}}" />
       </div>
     </div>
   </div>
-
 </div>
 
 <script>
-  document.querySelectorAll(".flip-btn").forEach((btn) => {
-    btn.addEventListener("click", function () {
-      const flipCard = this.closest(".flip-card-inner");
-      flipCard.classList.toggle("flipped");
-    });
+  document.getElementById("{{IdBtnFront}}").addEventListener("click", function () {
+    document.getElementById("{{IdCard}}").classList.toggle("flipped");
+  });
+  document.getElementById("{{IdBtnBack}}").addEventListener("click", function () {
+    document.getElementById("{{IdCard}}").classList.toggle("flipped");
   });
 </script>
 

@@ -39,4 +39,6 @@ class WordsPage(WordsMixin, LoginRequiredMixin, TemplateView):
             page_obj = paginator.page(paginator.num_pages)
 
         context["page_obj"] = page_obj
+        for obj in page_obj:
+            print(obj.core_words.word_en)
         return context
