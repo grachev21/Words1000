@@ -6,10 +6,13 @@ from users.models import WordsUser
 
 
 class SettingsMixin:
-    def setup_settings(self, user):
-        self.user = user
-        self.user_settings = WordsSettings.objects.filter(user=user).latest("id")
-        self.get_user_settings()
+    def dispatch(self, request, *args, **kwargs):
+        if request.user.is_authenticated:
+            self.request = request
+            self.user_settings = WordsSettings.objects.filter(user=request.user).latest("id")
+            self.get_user_settings()
+            return super().dispatch(request, *args, **kwargs)
+
 
     def get_user_settings(self):
         settings = self.user_settings
@@ -23,21 +26,22 @@ class SettingsMixin:
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context.update({"user_settings": self.get_user_settings()})
-
         return context
 
 
 class GameMixin:
-    def setup_game(self, user):
-        self.user = user
-        self.user_settings = WordsSettings.objects.filter(user=user).first()
-        self.words_card = WordsCard.objects.all()
+    def dispatch(self, request, *args, **kwargs):
+        if request.user.is_authenticated:
+            self.request = request
+            self.user_settings = WordsSettings.objects.filter(user=request.user).first()
+            self.words_card = WordsCard.objects.all()
+            self.get_random_one_word()
+            self.get_three_wrong_words()
+        return super().dispatch(request, *args, **kwargs)
 
-        self.get_random_one_word()
-        self.get_three_wrong_words()
 
     def get_random_one_word(self):
-        learned_words = WordsUser.objects.filter(user=self.user, status="2")
+        learned_words = WordsUser.objects.filter(user=self.request.user, status="2")
         self.correct_one_word = random.choice(learned_words) if learned_words else None
 
     def get_three_wrong_words(self):
@@ -95,4 +99,26 @@ class GameMixin:
                 "mixer_words": self.mixer_words(),  # Слова
             }
         )
+        return context
+
+class ProgressBarGameMixin:
+    def dispatch(self, request, *args, **kwargs):
+        if request.user.is_authenticated:
+            self.request = request
+        return super().dispatch(request, *args, **kwargs)
+
+    def progress_bar_game(self):
+        words_user = WordsUser.objects.filter(user=self.request.user, status=2)
+        words_settings = WordsSettings.objects.filter(user=self.request.user).latest("id")
+        study = words_user.count()
+        studied = words_settings.number_words - study
+
+        return {
+            "progress": round(((study - studied) / study) * 100) - 100,
+            "remainder": study,
+        }
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context.update({"progress_bar_game": self.progress_bar_game()})
         return context

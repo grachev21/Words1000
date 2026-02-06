@@ -1,13 +1,11 @@
 {% extends "base.html" %}
-{% load game_tag %}
-{% load static %}
 
 {% block content %}
 
 {{ mixer_words|json_script:"game-data" }}
 
 <!-- Game bar -->
-{% progress_bar_game %}
+ <c-progress-bar.progress-bar-simple :progress="progress_bar_game" />
 
 {% csrf_token %}
 <main id="game-container" class="w-4xl h-[400px] mx-auto bg-col_bas_mai
@@ -33,9 +31,9 @@
   </div>
 </main>
 
-{% include 'includes/answering.html' %}
-{% include 'includes/read_container.html' %}
-{% include 'includes/write_container.html' %}
+<c-pages.game.answering />
+<c-pages.game.read-container />
+<c-pages.game.write-container />
 
 
 <template id="btn-template">

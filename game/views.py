@@ -5,12 +5,14 @@ from django.urls import reverse_lazy
 from django.views.generic.edit import FormView
 
 from game.forms import WordCheck
-from game.services import GameMixin, SettingsMixin
+from game.services import GameMixin, SettingsMixin, ProgressBarGameMixin
 from mixins.htmx_mixin import HtmxMixin
 from users.models import WordsUser
 
 
-class Game(GameMixin, SettingsMixin, LoginRequiredMixin, FormView):
+class Game(
+    GameMixin, SettingsMixin, ProgressBarGameMixin, LoginRequiredMixin, FormView
+):
     """
     View for playing words.
     And increases the repetition counter for the interval system.
@@ -20,12 +22,6 @@ class Game(GameMixin, SettingsMixin, LoginRequiredMixin, FormView):
     form_class = WordCheck
     login_url = reverse_lazy("register")
     success_url = reverse_lazy("home")
-
-    def setup(self, request, *args, **kwargs):
-        super().setup(request, *args, **kwargs)
-
-        self.setup_settings(request.user)
-        self.setup_game(request.user)
 
     def form_valid(self, form):
         print("post request for game <--")

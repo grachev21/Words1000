@@ -89,8 +89,7 @@ class WordsMixin:
             self.filter = self.create_filter()
             self.status = WordsUser.Status.choices
 
-        response = super().dispatch(request, *args, **kwargs)
-        return response
+        return super().dispatch(request, *args, **kwargs)
 
     def create_info_bar(self):
         obj = WordsUser.objects.filter(user=self.request.user)

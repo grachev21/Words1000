@@ -69,4 +69,6 @@ MEDIA_URL = "/media/"
 MEDIA_ROOT = os.path.join(BASE_DIR, "media/")
 
 COTTON_DIR = "components"
-COTTON_SNAKE_CASED_NAMES = False 
+
+
+COTTON_SNAKE_CASED_NAMES = False
