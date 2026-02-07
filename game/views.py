@@ -11,26 +11,22 @@ from users.models import WordsUser
 
 
 class Game(
-    GameMixin, SettingsMixin, ProgressBarGameMixin, LoginRequiredMixin, FormView
+    GameMixin,
+    SettingsMixin,
+    ProgressBarGameMixin,
+    LoginRequiredMixin,
+    HtmxMixin,
+    FormView,
 ):
-    """
-    View for playing words.
-    And increases the repetition counter for the interval system.
-    """
 
-    template_name = "components/pages/game/game.html"
+    # template_name = "components/pages/game/game.html"
     form_class = WordCheck
+    template_name = "components/pages/game/game.html"
+    partial_template_name = "components/pages/game/game-container.html"
     login_url = reverse_lazy("register")
     success_url = reverse_lazy("home")
 
     def form_valid(self, form):
-        print("post request for game <--")
-        """
-        Processes form validation:
-        1. Handles word selection if present in POST data
-        2. Always redirects to success URL
-        """
-
         # Word selection processing by user
         if "select_data" in self.request.POST:
             select_data = self.request.POST.get("select_data")

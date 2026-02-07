@@ -1,6 +1,7 @@
 {{ user_settings|json_script:"user-settings" }}
+
 <main 
-x-show="write"
+    x-show="answer === 'yes'"
     class="w-4xl h-[400px] mx-auto bg-col_bas_mai rounded-lg p-6 
     text-center flex-col justify-between border border-col_con/15 fill-white drop-shadow-xl/25 z-0"
 >

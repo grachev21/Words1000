@@ -8,7 +8,6 @@ class HtmxMixin:
 
     def render_to_response(self, context, **response_kwargs):
         if self.request.headers.get("HX-Request"):
-
             return TemplateResponse(self.request, self.partial_template_name, context)
         else:
             return TemplateResponse(self.request, self.template_name, context)

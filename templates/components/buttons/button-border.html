@@ -1,7 +1,28 @@
 <button
-    @click="{{option}} ? answer = 'yes': answer = 'no'"
+    type="button"
+    {% if option == 'false' %}
+        @click="
+            highlightActiveRed = true;
+            setTimeout(() => {
+                $dispatch('load-next')
+            }, 1000)
+        "
+        hx-get="{% url 'game' %}"
+        hx-trigger="load-next"
+        hx-target="#game-main"
+        hx-swap="outerHTML"
+    {% elif option == 'true' %}
+        @click="
+            highlightActiveGreen = true;
+                setTimeout(() => {
+                    answer = 'yes'
+                }, 1000)
+        "
+    {% endif %}
     class="{{class}} flex flex-wrap my-8 justify-center gap-4 px-4 py-2 
-    border cursor-pointer word_btn 
-    rounded transition drop-shadow-lg 
-    drop-shadow-col_suc/50 mx-2"
->{{content}}-{{option}}</button>
+            border cursor-pointer word_btn 
+            rounded transition drop-shadow-lg 
+            drop-shadow-col_suc/50 mx-2"
+>
+    {{ content }}-{{ option }}
+</button>

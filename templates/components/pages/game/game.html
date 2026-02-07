@@ -1,22 +1,16 @@
-{% extends "base.html" %} {% block content %} 
+{% extends "base.html" %} {% block content %}
 {{mixer_words|json_script:"game-data" }}
 
 <!-- Game bar -->
-<c-progress-bar.progress-bar-simple :progress="progress_bar_game" />
 
-<main x-data="{ highlightActive: false, answer: 'neutral', write: false, read: false, game: true, open: true }">
+<main
+  x-data="{ answer: 'neutral', read: false }"
+>
+
+  <c-progress-bar.progress-bar-simple :progress="progress_bar_game" />
   <c-pages.game.game-container />
   <c-pages.game.read-container />
   <c-pages.game.write-container />
 </main>
 
-<div x-data="{ title: 'Hello' }">
-    <button
-        @click="
-            title = 'Hello World!';
-            $nextTick(() => { console.log($el.innerText) });
-        "
-        x-text="title"
-    ></button>
-</div>
 {% endblock content %}
