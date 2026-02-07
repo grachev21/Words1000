@@ -1,46 +1,22 @@
-{% extends "base.html" %}
-
-{% block content %}
-
-{{ mixer_words|json_script:"game-data" }}
+{% extends "base.html" %} {% block content %} 
+{{mixer_words|json_script:"game-data" }}
 
 <!-- Game bar -->
- <c-progress-bar.progress-bar-simple :progress="progress_bar_game" />
+<c-progress-bar.progress-bar-simple :progress="progress_bar_game" />
 
-{% csrf_token %}
-<main id="game-container" class="w-4xl h-[400px] mx-auto bg-col_bas_mai
-  rounded-lg p-6 text-center flex flex-col justify-between absolute
-  drop-shadow-xl/25 border border-col_con/15 z-50
-  ">
-  <!-- Title -->
-  <div class="mb-4">
-
-    <!--Слово которое нужно угадать-->
-    <h4 class="correct_word text-4xl font-semibold
-        text-col_con_inv border border-col_con/20 p-4 rounded-lg">
-
-      {{correct_word_ru}}
-
-    </h4>
-  </div>
-  <!-- Buttons -->
-  <div>
-    <!--Контейнер в который будут вставляться кнопки-->
-    <div id="btn-container" class="flex flex-wrap justify-center gap-4 my-8">
-    </div>
-  </div>
+<main x-data="{ highlightActive: false, answer: 'neutral', write: false, read: false, game: true, open: true }">
+  <c-pages.game.game-container />
+  <c-pages.game.read-container />
+  <c-pages.game.write-container />
 </main>
 
-<c-pages.game.answering />
-<c-pages.game.read-container />
-<c-pages.game.write-container />
-
-
-<template id="btn-template">
-  <button type="button" class="word_btn px-4 py-2 border border-col_suc text-col_suc
-    rounded hover:bg-col_suc_mai
-    transition cursor-pointer
-    fill-col_suc drop-shadow-lg drop-shadow-col_suc/50"></button>
-</template>;
-
+<div x-data="{ title: 'Hello' }">
+    <button
+        @click="
+            title = 'Hello World!';
+            $nextTick(() => { console.log($el.innerText) });
+        "
+        x-text="title"
+    ></button>
+</div>
 {% endblock content %}

@@ -1,0 +1,36 @@
+<main
+  x-show="answer === 'neutral' || answer === 'no'"
+  :class="highlightActive 
+    ? 'border-2 border-col_bright_2 animate-pulse' 
+    : (answer === 'no' ? 'border border-col_bright_2' : 'border border-col_con/15')"
+  class="flex flex-col z-50 w-4xl h-[400px] mx-auto p-6 text-center bg-col_bas_mai rounded-lg justify-between drop-shadow-xl/25"
+  x-init="
+    $watch('answer', (value) => {
+      if (value === 'no') {
+        highlightActive = true;
+        setTimeout(() => {
+          window.location.reload();
+        }, 300);
+      }
+    })
+  "
+>
+  >
+  <div class="mb-4">
+    <h4
+      class="p-4 text-4xl font-semibold text-col_con_inv border border-col_con/20 rounded-lg correct_word"
+    >
+      {{correct_word_ru}}
+    </h4>
+  </div>
+
+  <div class="flex flex-row items-center justify-center">
+    {% for btn in mixer_words %}
+    <c-buttons.button-border
+      content="{{btn.en}}"
+      :option="btn.option"
+      class="border-col_bright_3 hover:bg-col_bright_3/15 text-col_bright_3"
+    />
+    {% endfor %}
+  </div>
+</main>
