@@ -1,0 +1,23 @@
+<div 
+  x-effect="
+      if (answerInputRu === 'yes' && answerInputEn === 'yes') {
+        setTimeout(() => {
+          inputValueEn = '';
+          inputValueRu = '';
+        }, 2000);
+      }
+    "
+  x-show="answerInputRu === 'yes' && answerInputEn === 'yes'"
+  x-transition
+  class="absolute left-0 top-0 w-full bg-col_bright_1 h-full flex justify-center items-center rounded-lg">
+  <div 
+    class="rounded-lg bg-col_bas_mai z-50 shadow-col_bas_mai shadow-lg border border-col_con/20">
+    <div class="flex flex-col items-start p-8">
+      <div class="ml-6 flex flex-row">
+        <p class="text-col_suc text-2xl" x-text="counter"></p>
+        <p class="text-col_bright_3 text-2xl ml-2">- Раз...</p>
+      </div>
+      <c-others.info-marker class="bg-col_bright_2 ml-0" content="Осталось" count="{{ user_settings.number_write }}" />
+  </div>
+  </div>
+</div

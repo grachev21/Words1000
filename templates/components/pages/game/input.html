@@ -1,0 +1,14 @@
+<div class="flex flex-row items-center mb-4">
+  <input
+    x-ref="{{inputRef}}"
+    placeholder="{{placeholder}}"
+    x-model="{{model}}"
+    :class="{
+            'border border-col_bright_3 text-col_bright_3': {{answerInput}} === 'yes',
+            'border border-col_suc_ave text-col_suc_ave': {{answerInput}} === 'neutral',
+            'border border-col_bright_2 text-col_bright_2': {{answerInput}} === 'no'
+          }"
+    class="text-2xl text-col_suc_ave focus:outline-none p-2 rounded-lg"
+    type="text"
+  />
+</div>

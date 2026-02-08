@@ -1,16 +1,10 @@
-{% extends "base.html" %} {% block content %}
-{{mixer_words|json_script:"game-data" }}
+{% extends "base.html" %} 
 
-<!-- Game bar -->
-
-<main
-  x-data="{ answer: 'neutral', read: false }"
->
-
+{% block content %}
+<main x-data="{ answer: 'neutral', read: false }">
   <c-progress-bar.progress-bar-simple :progress="progress_bar_game" />
   <c-pages.game.game-container />
   <c-pages.game.read-container />
   <c-pages.game.write-container />
 </main>
-
 {% endblock content %}
