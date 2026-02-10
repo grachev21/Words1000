@@ -1,28 +1,34 @@
-<button
-    type="button"
-    {% if option == 'false' %}
-        @click="
-            highlightActiveRed = true;
+<div x-data="{
+    handleButton() {
+        {% if option == 'false' %}
+            this.highlightActiveRed = true;
             setTimeout(() => {
-                $dispatch('load-next')
+                this.$dispatch('load-next')
             }, 1000)
-        "
-        hx-get="{% url 'game' %}"
-        hx-trigger="load-next"
-        hx-target="#game-main"
-        hx-swap="outerHTML"
-    {% elif option == 'true' %}
-        @click="
-            highlightActiveGreen = true;
-                setTimeout(() => {
-                    answer = 'yes'
-                }, 1000)
-        "
-    {% endif %}
-    class="{{class}} flex flex-wrap my-8 justify-center gap-4 px-4 py-2 
-            border cursor-pointer word_btn 
-            rounded transition drop-shadow-lg 
-            drop-shadow-col_suc/50 mx-2"
->
-    {{ content }}
-</button>
+        {% elif option == 'true' %}
+            this.highlightActiveGreen = true;
+            setTimeout(() => {
+                this.answer = 'yes'
+            }, 1000)
+        {% endif %}
+    }
+}">
+    <button
+        type="button"
+        @keydown.{{key}}.prevent.window="handleButton()"
+        @click="handleButton()"
+        {% if option == 'false' %}
+            hx-get="{% url 'game' %}"
+            hx-trigger="load-next"
+            hx-target="#game-main"
+            hx-swap="outerHTML"
+        {% endif %}
+        class="{{class}} flex flex-wrap my-8 justify-center gap-4 px-4 py-2 
+                border cursor-pointer word_btn 
+                rounded transition drop-shadow-lg 
+                drop-shadow-col_suc/50 mx-2"
+    >
+        {{ content }}
+        <p class="absolute -bottom-10 text-col_bright_2">{{ key }}</p>
+    </button>
+</div>

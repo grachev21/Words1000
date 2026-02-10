@@ -66,7 +66,8 @@ class GameMixin:
 
         # List for final result
         result = []
-        for item in for_result:
+        key = ["a", "s", "d", "f"]
+        for index, item in enumerate(for_result):
             result.append(
                 {
                     "option": item[0],
@@ -74,6 +75,7 @@ class GameMixin:
                     "en": item[1].word_en,
                     "ru": item[1].word_ru,
                     "transcriptions": item[1].transcription,
+                    "key": key[index],
                 }
             )
 

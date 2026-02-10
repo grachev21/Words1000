@@ -1,10 +1,10 @@
 {% extends "base.html" %} 
 
 {% block content %}
-<main x-data="{ answer: 'neutral', read: false }">
+<main x-data="{ answer: 'neutral', read: false, read: false }">
   <c-progress-bar.progress-bar-simple :progress="progress_bar_game" />
   <c-pages.game.game-container />
-  <c-pages.game.read-container />
+  <c-pages.game.read-container.read-container />
   <c-pages.game.write-container />
 </main>
 {% endblock content %}

@@ -20,7 +20,7 @@
     }
   }" 
 
-  x-show="answer === 'yes'" 
+  x-show="answer === 'yes' && read === false" 
 
   x-effect="
       if (answer === 'yes') {
@@ -30,9 +30,11 @@
         $nextTick(() => $refs.inputRu.focus())
       }
       if (counter === {{user_settings.number_write}} ){
-        console.log('out ... ... ...')
+          answer = 'neutrual';
+          read = true;
       }
   " 
+
   class="w-4xl h-[400px] mx-auto bg-col_bas_mai rounded-lg p-6 text-center 
           flex-col justify-between border border-col_con/15 fill-white 
           drop-shadow-xl/25 z-0">

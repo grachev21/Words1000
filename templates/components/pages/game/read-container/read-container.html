@@ -1,6 +1,5 @@
 <!--carousel-->
-{% load static %}
-<main x-show="read" class="w-4xl h-[400px] mx-auto bg-col_bas_mai 
+<main x-data="{slideWidth: 640, currentPosition: 0, currentSlide: 1, quantityCards: '{{ phrases|legth }}' }" class="w-4xl h-[400px] mx-auto bg-col_bas_mai 
     rounded-lg p-6 text-center flex-col justify-between border border-col_con/15
     fill-white drop-shadow-xl/25 z-0">
   <div class="w-full h-full flex flex-col">

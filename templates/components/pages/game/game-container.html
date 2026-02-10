@@ -1,15 +1,14 @@
 <main
   id="game-main"
   x-data="{ highlightActiveGreen: false, highlightActiveRed: false,  }"
-  @set-answer.window="answer = $event.detail"
-  x-show="answer !== 'yes'"
+  x-show="answer !== 'yes' && read === false"
+  x-transition
   :class="{
     'border border-col_bright_3': highlightActiveGreen,
     'border border-col_bright_2': highlightActiveRed,
     'border border-col_con/20': !highlightActiveGreen && !highlightActiveRed
   }"
-  class="flex flex-col z-50 w-4xl h-[400px] mx-auto p-6 
-         text-center rounded-lg justify-between drop-shadow-xl/25 border border-col_con/20"
+  class="flex flex-col z-50 w-4xl h-[400px] mx-auto p-6 text-center rounded-lg justify-between drop-shadow-xl/25 border border-col_con/20"
 >
   <div class="mb-4">
     <h4
@@ -25,7 +24,13 @@
       content="{{btn.en}}"
       option="{{btn.option}}"
       class="border-col_bright_3 hover:bg-col_bright_3/15 text-col_bright_3"
+      key="{{btn.key}}"
     />
     {% endfor %}
+  </div>
+  <div class="text-left absolute left-6 bottom-6 w-32">
+    <p class="text-col_bright_5/50 text-xs">
+      Вы можете нажать на клавишу a, s, d, f на клавиатуре для выбора варианта
+    </p>
   </div>
 </main>
