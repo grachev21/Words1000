@@ -1,53 +1,44 @@
-<!--carousel-->
-<main x-data="{slideWidth: 640, currentPosition: 0, currentSlide: 1, quantityCards: '{{ phrases|legth }}' }" class="w-4xl h-[400px] mx-auto bg-col_bas_mai 
-    rounded-lg p-6 text-center flex-col justify-between border border-col_con/15
-    fill-white drop-shadow-xl/25 z-0">
+<main x-data="{ slideWidth: 896, currentPosition: 0, currentSlide: 1, quantityCards: '{{ phrases|length }}', ru: true }"
+  :style="{width: slideWidth + 'px'}" class="w-4xl h-[400px] mx-auto bg-col_bas_mai rounded-lg text-center 
+            flex-col justify-between border border-col_con/15
+          fill-white drop-shadow-xl/25 z-0">
+
   <div class="w-full h-full flex flex-col">
-    <!--title-->
-    <div class="font-extrabold text-2xl flex justify-center border-b border-col_con/15">
-      <span class="py-2 mr-2 text-col_con">Предложение с словом</span>
-      <span class="py-2 text-col_con uppercase">{{correct_word.word_en}}</span>
-    </div>
-    <!--window-->
-    <div class="h-full w-full relative overflow-hidden">
-      <!--line-->
-      <div id="line-carousel" class="h-full w-full absolute flex flex-row transition-all duration-300">
+    <c-pages.game.read-container.title />
+
+    <div class="h-full w-full relative overflow-hidden flex flex-col justify-end">
+
+      <div class="h-full w-full absolute flex flex-row transition-all duration-300"
+        :style="{left: - currentPosition + 'px'}">
         {% for i in phrases %}
-        <!--content-->
-        <section>
-          <div
-            class="border-col_con flex flex-col
-            justify-center items-center h-full
-            drop-shadow-lg rounded-b-lg">
-            <div class="text-lg mb-5 border-b border-col_con pb-3 font-bold mx-2">
-              <p class="text-col_con px-4 ml-2 text-center">{{i.0}}</p>
-            </div>
-            <p id="russian-words-translate" class="text-col_con opacity-0 transition">{{i.1}}</p>
-          </div>
-        </section>
+          <c-pages.game.read-container.content />
         {% endfor %}
       </div>
-      <!--Счетчик-->
-      <div id="carousel-counter" class="top-8 right-8 bg-col_con absolute p-1 text-col_con_inv text-sm rounded-lg drop-shadow-lg"></div>
-      <!--Назад-->
-      <span id="back-done" class="left-8 bottom-8 absolute bg-col_con w-6 h-6 rounded-full cursor-pointer
-        hover:opacity-85 transition-all flex items-center justify-center drop-shadow-lg">
-      </span>
-      <!--Вперед-->
-      <span id="next-done" class="right-8 bottom-8 absolute bg-col_con w-6 h-6 rounded-full
-        cursor-pointer hover:opacity-85 transition-all flex items-center justify-center drop-shadow-lg">
-      </span>
-      <!--Перевод-->
-      <button id="translate-phrases" class="absolute bg-col_con p-1 px-4 bottom-7
-            text-col_suc_mai left-1/2 -translate-x-1/2
-            cursor-pointer hover:opacity-85 transition-all rounded-lg drop-shadow-lg inset-shadow-lg">Перевести</button>
-      <!--Продолжить-->
-      <button
-              name="select_data"
-              value="{{ correct_word.id }}"
-           id="next-learn" class="hidden absolute bg-col_attn p-1 px-4 bottom-7
-                  text-col_con font-bold right-8 cursor-pointer
-                  hover:opacity-85 transition-all rounded-lg drop-shadow-lg" type="button">Запомнил</button>
+
+
+      <div class="w-full flex flex-row justify-between mb-6 px-4">
+          <c-pages.game.read-container.button-circle 
+            icon="arrow-long-left" 
+            @click="currentPosition > 0 && (currentPosition -= slideWidth, currentSlide--)"/>
+          <c-pages.game.read-container.button-translate
+            @click="ru = !ru"
+          />
+          <c-pages.game.read-container.button-circle 
+            icon="arrow-long-right"
+            @click="currentSlide != quantityCards && (currentPosition += slideWidth, currentSlide++)"
+            x-show="currentSlide != quantityCards"
+          />
+
+      <form x-show="currentSlide == quantityCards" hx-post="{% url 'game' %}" 
+          hx-target="#game-main"
+          hx-swap="innerHTML">
+          {% csrf_token %}
+          <c-pages.game.read-container.button-done  />
+      </form>
+
+      </div>
+
     </div>
+
   </div>
 </main>

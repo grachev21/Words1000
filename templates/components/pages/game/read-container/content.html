@@ -1,0 +1,12 @@
+<section>
+    <div 
+        class="border-col_con flex flex-col justify-center items-center h-full drop-shadow-lg"
+        :style="{width: slideWidth + 'px'}">
+        <div class="text-lg mb-5 border-b border-col_con pb-3 font-bold">
+            <p class="text-col_con px-4 text-center">{{i.0}}</p>
+        </div>
+        <p :class="ru && 'opacity-0 transition'" class="text-col_con">
+            {{i.1}}
+        </p>
+    </div>
+</section>

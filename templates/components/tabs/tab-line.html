@@ -1,12 +1,15 @@
 <div class="w-full py-6">
-    <div class="flex justify-between">
-    <h1 class="text-col_con text-2xl" >Графики прогресса</h1>
+  <div class="flex justify-between">
+    <h1 class="text-col_con text-2xl">Графики прогресса</h1>
     <div class="w-1/4 flex justify-between">
-        {% for item in content %}
-            <c-buttons.glow-button name=item.btn tab_number=item.num/>
-        {% endfor %}
+      {% for item in content %}
+      <c-buttons.glow-button
+        :name="item.btn"
+        @click="activeTab = 'tab{{item.num}}'"
+        x-bind:class="activeTab === 'tab{{item.num}}' && 'bg-col_bright_1 shadow-lg shadow-col_bright_1/50', 
+                      activeTab !== 'tab{{item.num}}' && 'bg-col_bright_4/20'"
+      />
+      {% endfor %}
     </div>
-    </div>
+  </div>
 </div>
-
-

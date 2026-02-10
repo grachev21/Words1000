@@ -30,10 +30,12 @@ class Game(
         # Word selection processing by user
         if "select_data" in self.request.POST:
             select_data = self.request.POST.get("select_data")
+            print(select_data)
 
             # Increase the repetition counter for the selected word
             word = WordsUser.objects.get(user=self.request.user, core_words=select_data)
             word.number_repetitions += 1
+            print("Данные записаны")
             word.save()
 
         # Standard redirect after successful form processing
