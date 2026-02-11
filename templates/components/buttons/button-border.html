@@ -1,23 +1,24 @@
 <div x-data="{
-    handleButton() {
-        {% if option == 'false' %}
-            this.highlightActiveRed = true;
-            setTimeout(() => {
-                this.$dispatch('load-next')
-            }, 1000)
-        {% elif option == 'true' %}
-            this.highlightActiveGreen = true;
-            setTimeout(() => {
-                this.answer = 'yes'
-            }, 1000)
-        {% endif %}
+    buttonFalse() {
+        this.highlightActiveRed = true;
+        setTimeout(() => {
+            this.$dispatch('load-next')
+        }, 1000)
+    },
+    buttonTrue() {
+        this.highlightActiveGreen = true;
+        setTimeout(() => {
+            this.answer = 'yes'
+        }, 1000)
     }
 }">
     <button
         type="button"
         @keydown.{{key}}.prevent.window="handleButton()"
-        @click="handleButton()"
-        {% if option == 'false' %}
+        {% if option %}
+            @click="buttonFalse()"
+        {% else %}
+            @click="buttonTrue()"
             hx-get="{% url 'game' %}"
             hx-trigger="load-next"
             hx-target="#game-main"

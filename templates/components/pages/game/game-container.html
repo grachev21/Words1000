@@ -1,8 +1,7 @@
 <main
+  {{attrs}}
   id="game-main"
   x-data="{ highlightActiveGreen: false, highlightActiveRed: false }"
-  x-show="answer !== 'yes' && read === false"
-  x-transition
   :class="{
     'border border-col_bright_3': highlightActiveGreen,
     'border border-col_bright_2': highlightActiveRed,
@@ -11,21 +10,19 @@
   class="flex flex-col z-50 w-4xl h-[400px] mx-auto p-6 text-center rounded-lg justify-between drop-shadow-xl/25 border border-col_con/20"
 >
   <div class="mb-4">
-    <h4
-      class="p-4 text-4xl font-semibold text-col_con_inv border border-col_con/20 rounded-lg correct_word"
-    >
+    <h4 class="p-4 text-4xl font-semibold text-col_con_inv border border-col_con/20 rounded-lg correct_word">
       {{correct_word_ru}}
     </h4>
   </div>
 
   <div class="flex flex-row items-center justify-center">
     {% for btn in mixer_words %}
-    <c-buttons.button-border
-      content="{{btn.en}}"
-      option="{{btn.option}}"
-      class="border-col_bright_3 hover:bg-col_bright_3/15 text-col_bright_3"
-      key="{{btn.key}}"
-    />
+      <c-buttons.button-border
+        content="{{btn.en}}"
+        option="{{btn.option}}"
+        class="border-col_bright_3 hover:bg-col_bright_3/15 text-col_bright_3"
+        key="{{btn.key}}"
+      />
     {% endfor %}
   </div>
   <div class="text-left absolute left-6 bottom-6 w-32">

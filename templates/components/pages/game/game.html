@@ -3,8 +3,13 @@
 {% block content %}
 <main x-data="{ answer: 'neutral', read: false, read: false }">
   <c-progress-bar.progress-bar-simple :progress="progress_bar_game" />
-  <c-pages.game.game-container />
-  <c-pages.game.read-container.read-container />
+  <c-pages.game.game-container 
+    x-show="answer !== 'yes' && read === false"
+    x-transition
+  />
   <c-pages.game.write-container />
+  <c-pages.game.read-container.read-container
+    x-show="read" 
+  />
 </main>
 {% endblock content %}

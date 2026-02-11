@@ -1,4 +1,4 @@
-<main x-data="{ slideWidth: 896, currentPosition: 0, currentSlide: 1, quantityCards: '{{ phrases|length }}', ru: true }"
+<main {{attrs}} x-data="{ slideWidth: 896, currentPosition: 0, currentSlide: 1, quantityCards: '{{ phrases|length }}', ru: true }"
   :style="{width: slideWidth + 'px'}" class="w-4xl h-[400px] mx-auto bg-col_bas_mai rounded-lg text-center 
             flex-col justify-between border border-col_con/15
           fill-white drop-shadow-xl/25 z-0">
@@ -33,7 +33,9 @@
           hx-target="#game-main"
           hx-swap="innerHTML">
           {% csrf_token %}
-          <c-pages.game.read-container.button-done  />
+          <c-pages.game.read-container.button-done
+            @click="read = false"
+            />
       </form>
 
       </div>
