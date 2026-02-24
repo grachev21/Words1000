@@ -1,18 +1,19 @@
-<div class="flex items-center ml-8 absolute right-18 sm:relative sm:right-0">
-  <span class="hidden lg::block mr-3 text-col_con_inv">Dark Mode</span>
+<div>
   <label for="toggle" class="flex items-center cursor-pointer">
-    <div class="relative">
+    <div  class="relative">
       <input
+        @click="light =! light"
         type="checkbox"
         id="toggle"
         class="sr-only"
-        onchange="toggleDarkMode(this)"
       />
       <div
-        class="block w-10 h-6 rounded-full shadow-neumorphic-toggle-outset transition-all duration-300 ease-in-out bg-col_suc_mai"
+        class="block w-10 h-6 rounded-full transition-all duration-300 ease-in-out"
+        :class="light? 'bg-col_bright_5': 'bg-col_bright_2'"
       ></div>
       <div
-        class="dot absolute left-1 top-1 bg-white w-4 h-4 rounded-full transition-transform duration-300 ease-in-out"
+        class="absolute top-1 bg-col_con w-4 h-4 rounded-full transition-all duration-300 ease-in-out"
+        :class="light? 'translate-x-5': 'translate-x-1'"
       ></div>
     </div>
   </label>

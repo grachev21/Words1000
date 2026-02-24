@@ -23,8 +23,8 @@ def global_context(request):
             },
         ],
         "user_menu": [
-            {"name": "Выйти", "url_name": "logout"},
-            {"name": "Регистрация", "url_name": "register"},
-            {"name": "Войти", "url_name": "login"},
+            {"name": "Выйти", "link": "account_logout"},
+            {"name": "Регистрация", "link": "account_signup"},
+            {"name": "Войти", "link": "account_login"},
         ],
     }

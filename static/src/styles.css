@@ -5,44 +5,66 @@
   themes: light --default, dark;
 }*/
 
-@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap");
 
+@custom-variant light (&:where(.light, .light *));
 @theme {
-    --font-Roboto-MyFont: "Roboto", sans-serif;
+  --font-Roboto-MyFont: "Roboto", sans-serif;
 
-    --color-col_bas_mai: #0f172a;
-    --color-col_bas_ave: #17212b;
-    --color-col_bas_hig: #1e2836;
-    --color-col_nit_con: #242f3d;
-    --color-col_nit: #202b36;
-    --color-col_suc: #5eb3f3;
-    --color-col_suc_ave: #6792c1;
-    --color-col_suc_mai: #2b5278;
-    --color-col_con: #deffff;
-    --color-col_con_inv: #7595a9;
-    --color-col_attn: #af333e;
-    --color-col_att_base: #572c39;
-    --color-col_bright_1: #8b5cf6;
-    --color-col_bright_2: #ec4899;
-    --color-col_bright_3: #22c55e;
-    --color-col_bright_4: #3b82f6;
-    --color-col_bright_5: #eab308;
-    --color-col_bright_6: #06b6d4;
+  --color-col_bas_mai: #0f172a;
+  --color-col_bas_ave: #17212b;
+  --color-col_bas_hig: #1e2836;
+  --color-col_nit_con: #242f3d;
+  --color-col_nit: #202b36;
+  --color-col_suc: #5eb3f3;
+  --color-col_suc_ave: #6792c1;
+  --color-col_suc_mai: #2b5278;
+  --color-col_con: #deffff;
+  --color-col_con_inv: #7595a9;
+  --color-col_attn: #af333e;
+  --color-col_att_base: #572c39;
+  --color-col_bright_1: #8b5cf6;
+  --color-col_bright_2: #ec4899;
+  --color-col_bright_3: #22c55e;
+  --color-col_bright_4: #3b82f6;
+  --color-col_bright_5: #eab308;
+  --color-col_bright_6: #06b6d4;
+
+}
+.light {
+  --color-col_bas_mai: #f1f5f9;
+  --color-col_bas_ave: #e2e8f0;
+  --color-col_bas_hig: #cbd5e1;
+  --color-col_nit_con: #94a3b8;
+  --color-col_nit: #64748b;
+  --color-col_suc: #3b82f6;
+  --color-col_suc_ave: #60a5fa;
+  --color-col_suc_mai: #dbeafe;
+  --color-col_con: #0f172a;
+  --color-col_con_inv: #334155;
+  --color-col_attn: #ef4444;
+  --color-col_att_base: #fee2e2;
+  --color-col_bright_1: #8b5cf6;
+  --color-col_bright_2: #ec4899;
+  --color-col_bright_3: #22c55e;
+  --color-col_bright_4: #3b82f6;
+  --color-col_bright_5: #eab308;
+  --color-col_bright_6: #06b6d4;
 }
 
 /* Стили для форм которые не возможно отредактировать в шаблоне */
 @layer components {
-    #id_username,
-    #id_password,
-    #id_number_words,
-    #id_number_repetitions,
-    #id_number_write,
-    #id_max_number_read,
-    #id_translation_list,
-    #id_email,
-    #id_password1,
-    #id_password2,
-    #id_yes {
-        @apply bg-col_bas_mai w-full p-2.5 border-0 rounded-lg text-col_con text-sm focus:outline-none focus:ring-2 focus:ring-col_suc_mai;
-    }
+  #id_username,
+  #id_password,
+  #id_number_words,
+  #id_number_repetitions,
+  #id_number_write,
+  #id_max_number_read,
+  #id_translation_list,
+  #id_email,
+  #id_password1,
+  #id_password2,
+  #id_yes {
+    @apply bg-col_bas_mai w-full p-2.5 border-0 rounded-lg text-col_con text-sm focus:outline-none focus:ring-2 focus:ring-col_suc_mai;
+  }
 }

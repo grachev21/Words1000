@@ -1,9 +1,16 @@
 {% load static %} {% load TagWords %}
 
 <!doctype html>
-<html data-theme="dark" lang="ru">
-
-<head>
+<html
+  x-data="{ light: localStorage.getItem('theme') === 'light' || 
+                 (!localStorage.getItem('theme') && window.matchMedia('(prefers-color-scheme: light)').matches) }"
+  :class="{ 'light': light}"
+  x-init="$watch('light', val => {
+    localStorage.setItem('theme', val ? 'light' : 'dark')
+  })"
+  lang="ru"
+>
+  <head>
     <link href="{% static 'dist/styles.css' %}" rel="stylesheet" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta charset="utf-8" />
@@ -12,22 +19,20 @@
     {% else %}
     <title>{% block head_title %} {% endblock %}</title>
     {% endif %}
-</head>
+  </head>
 
-<body class="bg-col_bas_mai font-Roboto-MyFont min-w-full overflow-x-hidden">
+  <body class="bg-col_bas_mai font-Roboto-MyFont min-w-full overflow-x-hidden">
     <c-organism.header />
-    <div class="mx-auto w-full max-w-full px-4 sm:px-6 lg:px-8 py-6 overflow-x-hidden flex flex-row justify-center">
-        <!--Content-->
-        <main class="w-[1200px] overflow-x-auto mt-50 mb-96">
-            {% block content %} 
-            {% endblock %}
-        </main>
+    <div
+      class="mx-auto w-full max-w-full px-4 sm:px-6 lg:px-8 py-6 overflow-x-hidden flex flex-row justify-center"
+    >
+      <!--Content-->
+      <main class="w-[1200px] overflow-x-auto mt-50 mb-96">{% block content %} {% endblock %}</main>
     </div>
     <c-organism.footer />
-</body>
-<script src="{% static 'js/htmx.min.js' %}"></script>
-<script src="{% static 'js/alpine.min.js' %}"></script>
-<script src="{% static 'js/chart.umd.js' %}"></script>
-<script type="module" src="{% static 'js/main.js' %}"></script>
-
+  </body>
+  <script src="{% static 'js/htmx.min.js' %}"></script>
+  <script src="{% static 'js/alpine.min.js' %}"></script>
+  <script src="{% static 'js/chart.umd.js' %}"></script>
+  <script type="module" src="{% static 'js/main.js' %}"></script>
 </html>
