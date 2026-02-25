@@ -10,15 +10,12 @@ flex-wrap p-12 bg-gradient-to-br from-col_bas_hig to-col_bas_mai shadow-lg">
     {% for word in all_words %}
         <div class="w-6 h-6 flex justify-center items-center group">
             <div
-            {% if word.status == '1' %}
-            class="bg-col_bright_1 rounded-full m-1 p-2 relative group-hover:bg-col_bright_5/70"
-            {% elif word.status == '2' %}
-            class="bg-col_bright_2 rounded-full m-1 p-2 relative group-hover:bg-col_bright_5/70"
-            {% elif word.status == '3' %}
-            class="bg-col_bright_3 rounded-full m-1 p-2 relative group-hover:bg-col_bright_5/70"
-            {% elif word.status == '4' %}
-            class="bg-col_bright_4 rounded-full m-1 p-2 relative group-hover:bg-col_bright_5/70"
-            {% endif %}
+                :class="{
+                'bg-col_bright_1 rounded-full m-1 p-2 relative group-hover:bg-col_bright_5/70': '{{word.status}}' == '1',
+                'bg-col_bright_2 rounded-full m-1 p-2 relative group-hover:bg-col_bright_5/70': '{{word.status}}' == '2',
+                'bg-col_bright_3 rounded-full m-1 p-2 relative group-hover:bg-col_bright_5/70': '{{word.status}}' == '3',
+                'bg-col_bright_4 rounded-full m-1 p-2 relative group-hover:bg-col_bright_5/70': '{{word.status}}' == '4'
+                }"
             >
             <p
                 class="text-col_con font-bold absolute bg-col_bright_4

@@ -1,48 +1,62 @@
 <main x-data="{open: false}">
-
-    <div @click="open =! open">
-        <div :class="open && 'hidden'">
-            <c-others.icon icon="bars-3" class="text-col_con sm:hidden"/>
-        </div>
-        <div :class="!open && 'hidden'">
-            <c-others.icon icon="x-mark" class="text-col_con sm:hidden"/>
-        </div>
+  <div @click="open =! open">
+    <div :class="open && 'hidden'">
+      <c-others.icon icon="bars-3" class="text-col_con sm:hidden" />
     </div>
+    <div :class="!open && 'hidden'">
+      <c-others.icon icon="x-mark" class="text-col_con sm:hidden" />
+    </div>
+  </div>
 
-    <menu
-        class="bg-col_bas_mai fixed left-0 top-0 w-96 h-screen border-r border-col_con/15 transform transition sm:hidden"
-        :class="open ? '-translate-x' : '-translate-x-full'"  
-        >
-
-        <section class="px-4 pt-8">
-            <div class="flex justify-center mb-8">
-                <c-buttons.theme-toggle />
-            </div>
-            <c-others.logo />
-                <nav class="flex-col mt-8">
-                    {% for m in menu %}
-                        {% if request.resolver_match.url_name == m.url_name %}
-                            <div class="my-8 bg-col_bright_2/5 p-2 rounded-lg">
-                                <c-links.link-icon image=m.img_name link=m.url_name name=m.name active=True />
-                            </div>
-                        {% else %}
-                            <div class="my-8 bg-col_bright_1/5 p-2 rounded-lg">
-                                <c-links.link-icon with image=m.img_name link=m.url_name name=m.name active=False />
-                            </div>
-                        {% endif %}
-                    {% endfor %}
-                </nav>
-                <div class="w-full h-0.5 bg-col_con/5 my-8"></div>
-                <nav>
-                    {% if request.user.is_authenticated %}
-                        <c-links.link-simple :link="user_menu.0.name" :name="user_menu.0.name" :custom_link=True/>
-                    {% else %}
-                        <c-links.link-simple :link="user_menu.0.name" :name="user_menu.1.name" :custom_link=True/>
-                        <c-links.link-simple :link="user_menu.0.name" :name="user_menu.2.name" :custom_link=True/>
-                    {% endif %}
-                    
-                </nav>
-
-        </section>
-    </menu>
+  <menu
+    class="bg-col_bas_mai fixed left-0 top-0 w-96 h-screen border-r border-col_con/15 transform transition sm:hidden"
+    :class="open ? '-translate-x' : '-translate-x-full'"
+  >
+    <section class="px-4 pt-8">
+      <div class="flex justify-between mb-8 relative">
+        <c-buttons.theme-toggle />
+        <div @click="open =! open">
+            <c-others.icon icon="x-mark" class="text-col_bright_3" />
+        </div>
+      </div>
+      <c-others.logo />
+      <nav class="flex-col mt-8">
+        {% for m in menu %} {% if request.resolver_match.url_name == m.url_name %}
+        <div class="my-8 bg-col_bright_2/5 p-2 rounded-lg">
+          <c-links.link-icon :image="m.img_name" :link="m.url_name" :name="m.name" :active="True" />
+        </div>
+        {% else %}
+        <div class="my-8 bg-col_bright_1/5 p-2 rounded-lg">
+          <c-links.link-icon
+            :image="m.img_name"
+            :link="m.url_name"
+            :name="m.name"
+            :active="False"
+          />
+        </div>
+        {% endif %} {% endfor %}
+      </nav>
+      <div class="w-full h-0.5 bg-col_con/5 my-8"></div>
+      <nav class="flex flex-col" >
+        {% if request.user.is_authenticated %}
+        <c-links.link-simple
+          :link="user_menu.0.name"
+          :name="user_menu.0.name"
+          :custom_link="True"
+        />
+        {% else %}
+        <c-links.link-simple
+          :link="user_menu.0.name"
+          :name="user_menu.1.name"
+          :custom_link="True"
+        />
+        <c-links.link-simple
+          :link="user_menu.0.name"
+          :name="user_menu.2.name"
+          :custom_link="True"
+        />
+        {% endif %}
+      </nav>
+    </section>
+  </menu>
 </main>
