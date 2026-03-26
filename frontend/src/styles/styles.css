@@ -1,11 +1,13 @@
 @import "tailwindcss";
 
-@import url("https://fonts.googleapis.com/css2?family=roboto:ital,wght@0,100..900;1,100..900&display=swap");
 
+/* 3. Кастомные варианты (если используешь light:/dark:/etc. как префиксы) */
 @custom-variant light (&:where(.light, .light *));
-@theme {
-    --font-roboto-myfont: "roboto", sans-serif;
 
+/* 4. Тема и токены — это можно сразу после */
+@theme {
+    --font-roboto: "Roboto", sans-serif;
+    /* Базовые цвета (темная тема) */
     --color-col_bas_mai: #0f172a;
     --color-col_bas_ave: #17212b;
     --color-col_bas_hig: #1e2836;
@@ -18,6 +20,7 @@
     --color-col_con_inv: #7595a9;
     --color-col_attn: #af333e;
     --color-col_att_base: #572c39;
+    /* Акцентные цвета (общие) */
     --color-col_bright_1: #8b5cf6;
     --color-col_bright_2: #ec4899;
     --color-col_bright_3: #22c55e;
@@ -25,6 +28,8 @@
     --color-col_bright_5: #eab308;
     --color-col_bright_6: #06b6d4;
 }
+
+/* 5. Переопределения для светлой темы */
 .light {
     --color-col_bas_mai: #f1f5f9;
     --color-col_bas_ave: #e2e8f0;
@@ -38,32 +43,18 @@
     --color-col_con_inv: #334155;
     --color-col_attn: #ef4444;
     --color-col_att_base: #fee2e2;
-    --color-col_bright_1: #8b5cf6;
-    --color-col_bright_2: #ec4899;
-    --color-col_bright_3: #22c55e;
-    --color-col_bright_4: #3b82f6;
-    --color-col_bright_5: #eab308;
-    --color-col_bright_6: #06b6d4;
 }
 
-/* стили для форм которые не возможно отредактировать в шаблоне */
+/* Дальше уже всё остальное — @layer, селекторы, body и т.д. */
 @layer components {
     #id_username,
     #id_password,
-    #id_number_words,
-    #id_number_repetitions,
-    #id_number_write,
-    #id_max_number_read,
-    #id_translation_list,
-    #id_email,
-    #id_password1,
-    #id_password2,
-    #id_yes {
-        @apply bg-col_bas_mai w-full p-2.5 border-0 rounded-lg text-col_con text-sm focus:outline-none focus:ring-2 focus:ring-col_suc_mai;
+    {
+        @apply bg-[--color-col_bas_mai] w-full p-2.5 border-0 rounded-lg text-[--color-col_con] text-sm focus:outline-none focus:ring-2 focus:ring-[--color-col_suc_mai];
     }
 }
 
-
-body{
+body {
     background-color: var(--color-col_bas_mai);
+    font-family: var(--font-roboto);
 }

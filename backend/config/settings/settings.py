@@ -1,35 +1,20 @@
 from .root_settings import *
 
 INSTALLED_APPS += [
+    # Lib
+    "corsheaders",
+    "rest_framework",
+    "djoser",
+    "rest_framework.authtoken",
     # App
     "core.apps.CoreConfig",
     "settings.apps.SettingsConfig",
     "users.apps.UsersConfig",
     "game.apps.GameConfig",
-    # Libs
-    "django_cotton",
-    "debug_toolbar",
-    "django_browser_reload",
-    "heroicons",
 ]
 
-MIDDLEWARE += [
-    "debug_toolbar.middleware.DebugToolbarMiddleware",
-    "django_browser_reload.middleware.BrowserReloadMiddleware",
-]
+MIDDLEWARE.insert(0, "corsheaders.middleware.CorsMiddleware")
 
-# TEMPLATES
-TEMPLATES[0]["DIRS"] = [BASE_DIR / "templates"]
-TEMPLATES[0]["OPTIONS"]["context_processors"] += [
-    "core.context_processors.site_settings",
-    "config.context_processors.global_context",
-]
-TEMPLATES[0]["OPTIONS"]["builtins"] = [
-    "heroicons.templatetags.heroicons",
-]
-
-# for debug_toolbar
-INTERNAL_IPS = ["127.0.0.1"]
 AUTH_USER_MODEL = "users.User"
 
 # DATABASES
@@ -57,18 +42,26 @@ else:
         }
     }
 
-
-STATICFILES_DIRS = [
-    BASE_DIR / "static",  # Путь к общей статике
-]
-
-STATIC_ROOT = BASE_DIR / "staticfiles"  # Куда collectstatic соберёт файлы
-STATIC_URL = "/static/"  # URL для статики
-
 MEDIA_URL = "/media/"
 MEDIA_ROOT = os.path.join(BASE_DIR, "media/")
+STATIC_URL = "/static/"
 
-COTTON_DIR = "components"
+# Настройки Django REST Framework
 
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:5173",     # Vite default
+    "http://127.0.0.1:5173",
+    "http://localhost:3000",     # если раньше был CRA
+    "http://127.0.0.1:3000",
+]
 
-COTTON_SNAKE_CASED_NAMES = False
+REST_FRAMEWORK = {
+    "DEFAULT_RENDERER_CLASSES": [
+        "rest_framework.renderers.JSONRenderer",
+        "rest_framework.renderers.BrowsableAPIRenderer",
+    ],
+    "DEFAULT_AUTHENTICATION_CLASSES": [
+        "rest_framework.authentication.TokenAuthentication",
+        "rest_framework.authentication.SessionAuthentication",
+    ],
+}

@@ -7,6 +7,8 @@ import Test from "@/pages/Test";
 import Words from "@/pages/Words";
 import Header from "@/components/navigations/Header";
 import Footer from "@/components/other/footer/Footer";
+import Register from "@/pages/Register"
+import Login from "@/pages/Login"
 
 const App = () => {
   return (
@@ -19,6 +21,8 @@ const App = () => {
             <Route path="/words" element={<Words />} />
             <Route path="/test" element={<Test />} />
             <Route path="/settings" element={<Settings />} />
+            <Route path="/registration" element={<Register />} />
+            <Route path="/login" element={<Login/>} />
           </Routes>
         </div>
         <Footer />

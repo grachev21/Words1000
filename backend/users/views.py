@@ -1,41 +1,42 @@
-# Views
+from rest_framework.response import Response
+from rest_framework import viewsets
+from rest_framework.permissions import IsAuthenticated
+from .serializers import RemainderCardInfoSerializer, ChartWeekSerializer, ChartMonthSerializer, ChartYearSerializer
+from .services import ChartWeekMixin, ChartMonthMixin, ChartYearMixin
+from users.models import WordsUser
 
-from django.contrib.auth import logout
-from django.contrib.auth.views import LoginView
-from django.shortcuts import redirect
-from django.template.response import TemplateResponse
-from django.urls import reverse_lazy
-from django.views.generic import CreateView
+class RemainderCardInfoSet(viewsets.ViewSet):
+    queryset = WordsUser.objects.all()
+    permission_classes = [IsAuthenticated]
 
-from users.forms import LoginUserForm, RegisterUserForm
-
-
-class LoginUser(LoginView):
-    form_class = LoginUserForm
-    template_name = "users/login.html"
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context["title"] = "Вход"
-        return context
-
-    def get_success_url(self):
-        return reverse_lazy("home")
+    def list(self, request):
+        serializer = RemainderCardInfoSerializer(request.user)
+        return Response(serializer.data)
 
 
-class RegisterUser(CreateView):
-    form_class = RegisterUserForm
-    template_name = "users/register.html"
+class ChartWeekSet(ChartWeekMixin, viewsets.ViewSet):
+    queryset = WordsUser.objects.all()
+    permission_classes = [IsAuthenticated]
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context["title"] = "Регистрация"
-        return context
+    def list(self, request):
+        chart = self.get_week_data(user=request.user)
+        serializer = ChartWeekSerializer(chart, many=True)
+        return Response(serializer.data)
 
-    def get_success_url(self):
-        return reverse_lazy("login")
+class ChartMonthSet(ChartMonthMixin, viewsets.ViewSet):
+    queryset = WordsUser.objects.all()
+    permission_classes = [IsAuthenticated]
 
+    def list(self, request):
+        chart = self.get_month_data(user=request.user)
+        serializer = ChartMonthSerializer(chart, many=True)
+        return Response(serializer.data)
 
-def logout_user(request):
-    logout(request)
-    return redirect("login")
+class ChartYearSet(ChartYearMixin, viewsets.ViewSet):
+    queryset = WordsUser.objects.all()
+    permission_classes = [IsAuthenticated]
+
+    def list(self, request):
+        chart = self.get_year_data(user=request.user)
+        serializer = ChartYearSerializer(chart, many=True)
+        return Response(serializer.data)

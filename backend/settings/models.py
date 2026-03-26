@@ -4,6 +4,7 @@ from django.conf import settings
 
 
 class WordsSettings(models.Model):
+    objects: models.Manager
     """
     Keeps user settings
     """
