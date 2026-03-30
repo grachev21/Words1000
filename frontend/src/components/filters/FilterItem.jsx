@@ -2,11 +2,10 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 
 const statusOptions = [
-  { value: "pending", label: "В ожидании" },
-  { value: "processing", label: "В обработке" },
-  { value: "shipped", label: "Отправлен" },
-  { value: "delivered", label: "Доставлен" },
-  { value: "cancelled", label: "Отменён" },
+  { value: "unknown", label: "Неизвестно" },
+  { value: "learning", label: "Изучаю" },
+  { value: "repetition", label: "Повторяю" },
+  { value: "learned", label: "Изучил" },
 ];
 
 function OrdersList() {
@@ -26,7 +25,18 @@ function OrdersList() {
     }
 
     try {
-      const response = await axios.get(url);
+      const token = localStorage.getItem("token");
+      if (!token) {
+        console.log("Токен не найден. Пожалуйста, войдите в систему.");
+        setLoading(false);
+        return;
+      }
+      const response = await axios.get(url, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Token ${token}`,
+        }
+      });
       // Если используешь пагинацию (PageNumberPagination), то обычно данные в .results
       setOrders(response.data.results || response.data);
     } catch (error) {

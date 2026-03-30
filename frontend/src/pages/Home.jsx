@@ -13,11 +13,11 @@ import Load from "@/components/other/Load";
 import { GrStatusUnknown } from "react-icons/gr";
 
 const Home = () => {
-  const dataWoordsSettings = useGetRequestToken("core/api/CardInfoSettings/");
-  const dataWordsUser = useGetRequestToken("users/api/RemainderCardInfo/");
-  const dataChartWeek = useGetRequestToken("/users/api/ChartWeek/");
-  const dataChartMonth = useGetRequestToken("/users/api/ChartMonth/");
-  const dataChartYear = useGetRequestToken("/users/api/ChartYear/");
+  const dataWoordsSettings = useGetRequestToken("/api/core/CardInfoSettings/"); 
+  const dataWordsUser = useGetRequestToken("api/users/RemainderCardInfo/");
+  const dataChartWeek = useGetRequestToken("/api/users/ChartWeek/");
+  const dataChartMonth = useGetRequestToken("/api/users/ChartMonth/");
+  const dataChartYear = useGetRequestToken("/api/users/ChartYear/");
 
   if (dataWoordsSettings.loading) return <Load />;
   if (dataWordsUser.loading) return <Load />;
