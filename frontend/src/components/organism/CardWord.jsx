@@ -1,0 +1,26 @@
+const CardWord = () => {
+  return (
+    <main>
+      {/* <div class="w-full rounded-lg flex flex-wrap justify-between">
+        {% for word in page_obj %}
+
+            {% if word.status == '2' %}
+                {% include "components/card/card_flip.html" with name=word.core_words %}
+            {% endif %}
+
+        {% endfor %}
+    </div>
+
+    <script>
+      document.querySelectorAll('.flip-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+          const flipCard = this.closest('.flip-card-inner');
+          flipCard.classList.toggle('flipped');
+          console.log("hello")
+        });
+      });
+    </script>*/}
+    </main>
+  );
+};
+export default CardWord;

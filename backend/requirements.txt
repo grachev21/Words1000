@@ -6,6 +6,7 @@ cryptography==46.0.5
 defusedxml==0.7.1
 Django==6.0
 django-cors-headers==4.6.0
+django-filter==25.2
 djangorestframework==3.16.1
 djangorestframework_simplejwt==5.4.0
 djoser==2.3.3

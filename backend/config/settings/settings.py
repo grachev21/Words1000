@@ -2,6 +2,7 @@ from .root_settings import *
 
 INSTALLED_APPS += [
     # Lib
+    'django_filters',
     "corsheaders",
     "rest_framework",
     "djoser",
@@ -49,13 +50,20 @@ STATIC_URL = "/static/"
 # Настройки Django REST Framework
 
 CORS_ALLOWED_ORIGINS = [
-    "http://localhost:5173",     # Vite default
+    "http://localhost:5173",  # Vite default
     "http://127.0.0.1:5173",
-    "http://localhost:3000",     # если раньше был CRA
+    "http://localhost:3000",  # если раньше был CRA
     "http://127.0.0.1:3000",
 ]
 
 REST_FRAMEWORK = {
+    'DEFAULT_FILTER_BACKENDS': [
+        'django_filters.rest_framework.DjangoFilterBackend',
+        'rest_framework.filters.SearchFilter',
+        'rest_framework.filters.OrderingFilter',
+    ],
+    "DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.PageNumberPagination",
+    "PAGE_SIZE": 10,
     "DEFAULT_RENDERER_CLASSES": [
         "rest_framework.renderers.JSONRenderer",
         "rest_framework.renderers.BrowsableAPIRenderer",

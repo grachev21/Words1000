@@ -15,10 +15,15 @@ import { GrStatusUnknown } from "react-icons/gr";
 const Home = () => {
   const dataWoordsSettings = useGetRequestToken("core/api/CardInfoSettings/");
   const dataWordsUser = useGetRequestToken("users/api/RemainderCardInfo/");
+  const dataChartWeek = useGetRequestToken("/users/api/ChartWeek/");
+  const dataChartMonth = useGetRequestToken("/users/api/ChartMonth/");
+  const dataChartYear = useGetRequestToken("/users/api/ChartYear/");
 
   if (dataWoordsSettings.loading) return <Load />;
   if (dataWordsUser.loading) return <Load />;
-  console.log(dataWordsUser.data);
+  if (dataChartWeek.loading) return <Load />;
+  if (dataChartMonth.loading) return <Load />;
+  if (dataChartYear.loading) return <Load />;
 
   return (
     <main>
@@ -26,7 +31,9 @@ const Home = () => {
         start={"Все слова,"}
         center={"|_Тут"}
         finish={"!"}
-        description={"Пробегает вся 1000 слов, те которые вы уже выучили имеют странный вид..."}
+        description={
+          "Пробегает вся 1000 слов, те которые вы уже выучили имеют странный вид..."
+        }
       />
 
       <AllWords />
@@ -42,7 +49,9 @@ const Home = () => {
         <CardInfo
           name={"Количество слов за день"}
           icon={FaDatabase}
-          description={"Это то количество слов которые вы должны выучить за один день"}
+          description={
+            "Это то количество слов которые вы должны выучить за один день"
+          }
           className="text-col_bright_1 w-7 h-7"
           data={dataWoordsSettings.data[0].number_words}
         />
@@ -66,7 +75,9 @@ const Home = () => {
         <CardInfo
           name={"Количество предложений"}
           icon={FaBookReader}
-          description={"Это количество предложений которое вы будите читать с заучиваемым словом"}
+          description={
+            "Это количество предложений которое вы будите читать с заучиваемым словом"
+          }
           className="text-col_bright_4 w-7 h-7"
           data={dataWoordsSettings.data[0].max_number_read}
         />
@@ -74,7 +85,9 @@ const Home = () => {
         <CardInfo
           name={"Перевод слов в списке"}
           icon={MdTranslate}
-          description={"Это то количество слов которые вы должны выучить за один день"}
+          description={
+            "Это то количество слов которые вы должны выучить за один день"
+          }
           className="text-col_bright_5 w-7 h-7"
           data={dataWoordsSettings.data[0].translation_list ? "Да" : "Нет"}
         />
@@ -91,7 +104,9 @@ const Home = () => {
         <CardInfo
           name={"Оставлось выучить за сегодня"}
           icon={FaBookReader}
-          description={"Это то количество слов которые вы должны выучить за один день"}
+          description={
+            "Это то количество слов которые вы должны выучить за один день"
+          }
           className="text-col_bright_1 w-7 h-7"
           data={dataWordsUser.data.remainder_day}
         />
@@ -137,7 +152,17 @@ const Home = () => {
         />
       </div>
 
-      <Chart />
+      <section className="flex flex-col">
+        <div className="w-full p-12 mt-4 mx-auto bg-linear-to-br from-col_bas_hig to-col_bas_mai rounded-lg border shadow-lg border-col_con/15">
+          <Chart dataChart={dataChartWeek.data} title={"График за неделю"} />
+        </div>
+        <div className="w-full p-12 mt-4 mx-auto bg-linear-to-br from-col_bas_hig to-col_bas_mai rounded-lg border shadow-lg border-col_con/15">
+          <Chart dataChart={dataChartMonth.data} title={"График за месяц"} />
+        </div>
+        <div className="w-full p-12 mt-4 mx-auto bg-linear-to-br from-col_bas_hig to-col_bas_mai rounded-lg border shadow-lg border-col_con/15">
+          <Chart dataChart={dataChartYear.data} title={"График за год"} />
+        </div>
+      </section>
     </main>
   );
 };
