@@ -1,12 +1,12 @@
 import ReactPaginate from "react-paginate";
 
-const Paginator = ({ data, onChangePage, currentPage = 1 }) => {
+const Paginator = ({ data, handlePageChange, currentPage = 1 }) => {
   if (!data?.count) return null;
 
   const pageCount = Math.ceil(data.count / 10); // если page_size = 10
 
   const handlePageClick = (event) => {
-    onChangePage(event.selected + 1); // ReactPaginate считает с 0
+    handlePageChange(event.selected + 1); // ReactPaginate считает с 0
   };
 
   return (
