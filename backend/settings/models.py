@@ -1,6 +1,6 @@
+from django.conf import settings
 from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
-from django.conf import settings
 
 
 class WordsSettings(models.Model):
@@ -30,9 +30,9 @@ class WordsSettings(models.Model):
         choices=NUMBER_REPETITIONS_CHOICES,
         default=3,
     )
-    number_write = models.IntegerField(default=5)
+    number_write = models.IntegerField(default=5, validators=[MinValueValidator(2)])
     max_number_read = models.IntegerField(
-        default=10, validators=[MaxValueValidator(30)]
+        default=10, validators=[MaxValueValidator(30), MinValueValidator(3)]
     )
     translation_list = models.BooleanField(
         choices=TRANSLATION_CHOICES,

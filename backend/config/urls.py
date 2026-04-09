@@ -6,6 +6,7 @@ urlpatterns = [
     # app
     path("api/core/", include("core.urls")),
     path("api/users/", include("users.urls")),
+    path("api/settings/", include("settings.urls")),
     # auth
     path("auth/", include("djoser.urls")),
     path("auth/", include("djoser.urls.authtoken")),

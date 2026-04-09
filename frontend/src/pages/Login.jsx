@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
-import useLogin from "@/hooks/useLogin";
 import { useNavigate } from "react-router-dom";
+import { useLogin } from "@/hooks";
 
-import Input from "@/components/inputs/Input";
+import { Input } from "@/components";
 
 const Login = () => {
   const [email, setEmail] = useState("");

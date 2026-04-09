@@ -1,19 +1,13 @@
 import React, { useState } from "react";
 import Load from "@/components/other/Load";
-import ListSimple from "@/components/list/ListSimple";
-import FilterItem from "@/components/filters/FilterItem";
+import ListSimple from "@/components/lists/ListSimple";
 import useGetRequestToken from "@/hooks/useGetRequestToken";
 import Paginator from "@/components/paginations/Paginator";
+import BorderButton from "@/components/buttons/BorderButton";
+import statusOptions from "@/assets/statusOption";
+import CardFlip from "@/components/cards/CardFlip";
 
-const statusOptions = [
-  { value: "", label: "Все" },
-  { value: "1", label: "Неизвестно" },
-  { value: "2", label: "Изучаю" },
-  { value: "3", label: "Повторяю" },
-  { value: "4", label: "Изучил" },
-];
-
-const ListWord = () => {
+const ListWord = ({ isActiveTab }) => {
   const [page, setPage] = useState(1);
   const [status, setStatus] = useState("");
 
@@ -22,7 +16,7 @@ const ListWord = () => {
   if (status) params.append("status", status);
 
   const dataAllWords = useGetRequestToken(`api/users/ListWord/?${params}`);
-  console.log(`api/users/ListWord/?${params}`)
+  console.log(`api/users/ListWord/?${params}`);
 
   // Сброс страницы при смене фильтра
   const handleStatusChange = (newStatus) => {
@@ -40,24 +34,29 @@ const ListWord = () => {
     <main>
       {/* Фильтр по статусам */}
       <div className="flex gap-2 mb-4 flex-wrap">
-        {statusOptions.map((option) => (
-          <button
-            key={option.value}
+        {statusOptions.map((option, index) => (
+          <BorderButton
+            key={index}
             onClick={() => handleStatusChange(option.value)}
-            className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors
-              ${status === option.value
-                ? "bg-col_bright_2 text-col_con"
-                : "bg-col_bright_1 hover:bg-col_bright_4 text-col_con"
-              }`}
-          >
-            {option.label}
-          </button>
+            active={status}
+            value={option.value}
+            content={option.label}
+          />
         ))}
       </div>
 
-      <div className="space-y-3">
+      <div
+        className={
+          isActiveTab === "tab2"
+            ? "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"
+            : undefined
+        }
+      >
         {dataAllWords.data?.results?.map((item, index) => (
-          <ListSimple key={index} item={item} />
+          <div key={index}>
+            {isActiveTab === "tab1" && <ListSimple item={item} />}
+            {isActiveTab === "tab2" && <CardFlip item={item} />}
+          </div>
         ))}
       </div>
 

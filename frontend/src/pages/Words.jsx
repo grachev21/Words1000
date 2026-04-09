@@ -1,7 +1,6 @@
-import ListWord from "@/components/organism/ListWord";
-import CardWord from "@/components/organism/CardWord";
-import TabButton from "@/components/buttons/TabButton";
 import { useState } from "react";
+import { ListWord, TabButton } from "@/components";
+
 
 const Words = () => {
   const [isActiveTab, setActiveTab] = useState("tab1");
@@ -23,20 +22,9 @@ const Words = () => {
             setActiveTab={setActiveTab}
           />
         </div>
-
-        {isActiveTab == "tab1" && (
-          <div className="p-4 rounded-lg">
-            <ListWord />
-            list word
-          </div>
-        )}
-
-        {isActiveTab == "tab2" && (
-          <div className="p-4 rounded-lg">
-            <CardWord />
-            card word
-          </div>
-        )}
+        <div className="p-4 rounded-lg">
+          <ListWord isActiveTab={isActiveTab} />
+        </div>
       </div>
     </main>
   );

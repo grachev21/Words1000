@@ -5,8 +5,9 @@ from users import views
 
 router = DefaultRouter()
 router.register(
-    r"RemainderCardInfo", views.RemainderCardInfoSet, basename="remaindercardinfo"
+    r"RemainderCardInfo", views.RemainderCardInfoSet 
 )
+
 router.register(r"ChartWeek", views.ChartWeekSet, basename="chartweek")
 router.register(r"ChartMonth", views.ChartMonthSet, basename="chartmonth")
 router.register(r"ChartYear", views.ChartYearSet, basename="chartyear")

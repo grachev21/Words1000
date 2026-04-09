@@ -1,19 +1,13 @@
 import useGetRequestToken from "@/hooks/useGetRequestToken";
-import TitleAndDescription from "@/components/text/Typography";
-import AllWords from "@/components/organism/AllWords";
-import CardInfo from "@/components/cards/CardInfo";
-import Chart from "@/components/organism/Chart";
-
-import { FaDatabase, FaBookReader } from "react-icons/fa";
+import { FaDatabase, FaBookReader} from "react-icons/fa";
+import { MdTranslate } from "react-icons/md";
 import { MdEventRepeat } from "react-icons/md";
 import { TbWriting } from "react-icons/tb";
-import { MdTranslate } from "react-icons/md";
-
-import Load from "@/components/other/Load";
 import { GrStatusUnknown } from "react-icons/gr";
+import { TitleAndDescription, AllWords, CardInfo, Chart, Load } from "@/components";
 
 const Home = () => {
-  const dataWoordsSettings = useGetRequestToken("/api/core/CardInfoSettings/"); 
+  const dataWoordsSettings = useGetRequestToken("/api/core/CardInfoSettings/");
   const dataWordsUser = useGetRequestToken("api/users/RemainderCardInfo/");
   const dataChartWeek = useGetRequestToken("/api/users/ChartWeek/");
   const dataChartMonth = useGetRequestToken("/api/users/ChartMonth/");
@@ -31,9 +25,7 @@ const Home = () => {
         start={"Все слова,"}
         center={"|_Тут"}
         finish={"!"}
-        description={
-          "Пробегает вся 1000 слов, те которые вы уже выучили имеют странный вид..."
-        }
+        description={"Пробегает вся 1000 слов, те которые вы уже выучили имеют странный вид..."}
       />
 
       <AllWords />
@@ -49,9 +41,7 @@ const Home = () => {
         <CardInfo
           name={"Количество слов за день"}
           icon={FaDatabase}
-          description={
-            "Это то количество слов которые вы должны выучить за один день"
-          }
+          description={"Это то количество слов которые вы должны выучить за один день"}
           className="text-col_bright_1 w-7 h-7"
           data={dataWoordsSettings.data[0].number_words}
         />
@@ -75,9 +65,7 @@ const Home = () => {
         <CardInfo
           name={"Количество предложений"}
           icon={FaBookReader}
-          description={
-            "Это количество предложений которое вы будите читать с заучиваемым словом"
-          }
+          description={"Это количество предложений которое вы будите читать с заучиваемым словом"}
           className="text-col_bright_4 w-7 h-7"
           data={dataWoordsSettings.data[0].max_number_read}
         />
@@ -85,9 +73,7 @@ const Home = () => {
         <CardInfo
           name={"Перевод слов в списке"}
           icon={MdTranslate}
-          description={
-            "Это то количество слов которые вы должны выучить за один день"
-          }
+          description={"Это то количество слов которые вы должны выучить за один день"}
           className="text-col_bright_5 w-7 h-7"
           data={dataWoordsSettings.data[0].translation_list ? "Да" : "Нет"}
         />
@@ -104,9 +90,7 @@ const Home = () => {
         <CardInfo
           name={"Оставлось выучить за сегодня"}
           icon={FaBookReader}
-          description={
-            "Это то количество слов которые вы должны выучить за один день"
-          }
+          description={"Это то количество слов которые вы должны выучить за один день"}
           className="text-col_bright_1 w-7 h-7"
           data={dataWordsUser.data.remainder_day}
         />

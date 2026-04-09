@@ -1,3 +1,6 @@
+import CardFlip from "@/components/cards/CardFlip";
+
+
 const CardWord = () => {
   return (
     <main>
@@ -19,7 +22,7 @@ const CardWord = () => {
           console.log("hello")
         });
       });
-    </script>*/}
+    </script> */}
     </main>
   );
 };
