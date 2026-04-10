@@ -1,6 +1,6 @@
-import DropDownMenu from "@/components/navigations/DropDownMenu";
+import DropDownMenu from "@/components/navigation/DropDownMenu";
 import Logo from "@/components/logo/Logo";
-import Menu from "@/components/navigations/Menu";
+import Menu from "@/components/navigation/Menu";
 import ThemeToggle from "@/components/buttons/ThemeToggle";
 
 const menu = [

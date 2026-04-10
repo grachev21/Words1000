@@ -24,6 +24,7 @@ const Login = () => {
       max_number_read: isMaxNumberRead,
       translation_list: isTranslationList,
     };
+    console.log(credentials);
 
     const result = await dataPut.putData(
       `api/settings/SettingsWords/${dataGet.data[0].id}/`,
@@ -50,7 +51,7 @@ const Login = () => {
   }, [dataGet.data]);
 
   if (dataGet.loading) return <Load />;
-  console.log(dataGet.data);
+  console.log(isNumberWords)
 
   return (
     <form
@@ -71,29 +72,27 @@ const Login = () => {
       >
         Настройки
       </h1>
-      <Error
-        error={dataPut.error}
-        item={"number_repetitions"}
-        content={"Количество повторений: "}
-      />
-      <SelectSimple
-        status={dataGet.data[0].number_repetitions_display}
-        currentStatus={dataGet.data[0].number_repetitions}
-        content={"Количество повторений"}
-      />
       <Error error={dataPut.error} item={"number_words"} content={"Количество слов: "} />
       <InputQuantity
         content={"Количество слов за день"}
         id={"number_words"}
         onDataSend={(value) => setNumberWords(value)}
         value={isNumberWords}
+        min={5}
+        max={100}
       />
 
-      <InputQuantity
-        content={"Количество повторений за один день"}
-        id={"number_repetitions"}
+      {/* Доделать */}
+      <Error
+        error={dataPut.error}
+        item={"number_repetitions"}
+        content={"Количество повторений: "}
+      />
+      <SelectSimple
         onDataSend={(value) => setNumberRepetitions(value)}
-        value={isNumberRepetitions}
+        status={dataGet.data[0].number_repetitions_display}
+        currentStatus={dataGet.data[0].number_repetitions}
+        content={"Количество повторений"}
       />
 
       <Error
@@ -103,7 +102,7 @@ const Login = () => {
       />
       <InputQuantity
         onDataSend={(value) => setNumberWrite(value)}
-        content={"Мксимальное количество предложений при чтении"}
+        content={"Максимальное количество предложений при чтении"}
         id={"number_write"}
         value={isNumberWrite}
       />
@@ -111,11 +110,11 @@ const Login = () => {
       <Error
         error={dataPut.error}
         item={"max_number_read"}
-        content={"Мксимальное количество предложений при чтении: "}
+        content={"Максимальное количество предложений при чтении: "}
       />
       <InputQuantity
         onDataSend={(value) => setMaxNumberRead(value)}
-        content={"Мксимальное количество предложений при чтении"}
+        content={"Максимальное количество предложений при чтении"}
         id={"max_number_read"}
         value={isMaxNumberRead}
       />
@@ -139,7 +138,7 @@ const Login = () => {
           w-full
           px-12 py-3
           text-sm font-medium text-col_con
-          bg-col_bright_1
+          bg-col_bright_4
           rounded-lg
           transition-colors cursor-pointer
           hover:bg-col_bright_2

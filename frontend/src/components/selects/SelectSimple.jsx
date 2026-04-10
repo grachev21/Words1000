@@ -1,13 +1,13 @@
 import { useState } from "react";
 
-const SelectSimple = ({ status, currentStatus, content }) => {
+const SelectSimple = ({ status, currentStatus, content, onDataSend }) => {
   const [selectedValue, setSelectedValue] = useState(currentStatus);
 
   const currentItemStatus = status.find((item) => item.key === currentStatus);
 
   const handleChange = (e) => {
     setSelectedValue(e.target.value);
-    console.log("Выбрано:", e.target.value);
+    if (onDataSend) onDataSend(e.target.value);
   };
 
   return (

@@ -31,9 +31,9 @@ export { default as ListSimple } from "@/components/lists/ListSimple";
 export { default as Logo } from "@/components/logo/Logo";
 
 // navigations
-export { default as DropDownMenu } from "@/components/navigations/DropdownMenu";
-export { default as Header } from "@/components/navigations/Header";
-export { default as Menu } from "@/components/navigations/Menu";
+export { default as DropDownMenu } from "@/components/navigation/DropdownMenu";
+export { default as Header } from "@/components/navigation/Header";
+export { default as Menu } from "@/components/navigation/Menu";
 
 // organisms
 export { default as AllWords } from "@/components/organisms/AllWords";

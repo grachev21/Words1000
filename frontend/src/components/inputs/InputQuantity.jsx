@@ -1,30 +1,38 @@
 import { useState, useEffect } from "react";
 
-const InputQuantity = ({ content, id, onDataSend, value }) => {
+const InputQuantity = ({ content, id, onDataSend, value, min, max }) => {
   const [isQuantity, setQuantity] = useState(value ?? 0);
 
+  // Устанавливает значение в поле
   useEffect(() => {
     if (value !== undefined) {
       setQuantity(value);
     }
   }, [value]);
 
+  // Изменения с кнопки плюс
   const changeQuantityPlus = () => {
-    const newValue = isQuantity + 1;
+    if (isQuantity < max) {
+      const newValue = isQuantity + 1;
+    }
     setQuantity(newValue);
-    if (onDataSend) onDataSend(newValue); // Передаем число, а не событие
+    if (onDataSend) onDataSend(newValue);
   };
 
+  // Изменения с кнопки минус
   const changeQuantityMinus = () => {
-    const newValue = isQuantity - 1;
+    if (isQuantity < min) {
+      const newValue = isQuantity - 1;
+    }
     setQuantity(newValue);
-    if (onDataSend) onDataSend(newValue); // Передаем число, а не событие
+    if (onDataSend) onDataSend(newValue);
   };
 
+  // Изменения при вводе с клавиатуры
   const handleInputChange = (e) => {
     const newValue = parseInt(e.target.value) || 0;
     setQuantity(newValue);
-    if (onDataSend) onDataSend(newValue); // Передаем число, а не событие
+    if (onDataSend) onDataSend(newValue);
   };
 
   return (
@@ -64,6 +72,8 @@ const InputQuantity = ({ content, id, onDataSend, value }) => {
           id={id}
           value={isQuantity}
           onChange={handleInputChange}
+          min={min}
+          max={max}
           className="
             h-10 w-16
             mt-1
