@@ -102,9 +102,11 @@ const Login = () => {
       />
       <InputQuantity
         onDataSend={(value) => setNumberWrite(value)}
-        content={"Максимальное количество предложений при чтении"}
+        content={"Максимальное количество раз при наборе"}
         id={"number_write"}
         value={isNumberWrite}
+        min={2}
+        max={100}
       />
 
       <Error
@@ -117,6 +119,8 @@ const Login = () => {
         content={"Максимальное количество предложений при чтении"}
         id={"max_number_read"}
         value={isMaxNumberRead}
+        min={3}
+        max={30}
       />
 
       <Error
